@@ -12,16 +12,14 @@
         android:hint="@string/query"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/locationEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content" />
+        style="@style/SearchEditText" />
 
     <EditText
         android:id="@+id/locationEditText"
         android:hint="@string/near"
         app:layout_constraintStart_toEndOf="@id/queryEditText"
         app:layout_constraintEnd_toEndOf="@+id/searchButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content" />
+        style="@style/SearchEditText" />
 
     <ImageView
         android:id="@+id/searchButton"
