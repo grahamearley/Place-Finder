@@ -2,4 +2,5 @@
     <string name="app_name">Place Finder</string>
     <string name="query">Query…</string>
     <string name="near">Near…</string>
+    <string name="could_not_load_places_error">These places couldn\'t be loaded right now. Try again later.</string>
 </resources>

@@ -27,6 +27,11 @@ class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
         statusTextView.hide()
     }
 
+    override fun setStatusText(stringRes: Int) {
+        val text = getString(stringRes)
+        setStatusText(text)
+    }
+
     override fun setStatusText(text: String) {
         statusTextView.text = text
     }

@@ -1,5 +1,6 @@
 package website.grahamearley.placefinder.list
 
+import website.grahamearley.placefinder.R
 import website.grahamearley.placefinder.data.FoursquareInteractor
 import website.grahamearley.placefinder.data.FoursquareInteractorContract
 import website.grahamearley.placefinder.enqueue
@@ -16,11 +17,18 @@ class PlaceListPresenter(override val view: PlaceListViewContract) : PlaceListPr
                     ?.map { it.venue.name }
 
             updateVenuesList(venueNames)
+        }, onFailure = { _ ->
+            showErrorStatus()
         })
     }
 
     private fun updateVenuesList(names: List<String>?) {
-        view.showStatusText()
         view.setStatusText(names?.joinToString(separator = ",").orEmpty())
+        view.showStatusText()
+    }
+
+    private fun showErrorStatus() {
+        view.setStatusText(R.string.could_not_load_places_error)
+        view.showStatusText()
     }
 }
