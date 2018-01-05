@@ -7,7 +7,8 @@ import website.grahamearley.placefinder.API_BASE_URL
 import website.grahamearley.placefinder.FoursquareResponse
 
 /**
- * Created by grahamearley on 1/5/18.
+ *  Makes calls to the Foursquare API, implementing the
+ *    Foursquare Interactor contract.
  */
 class FoursquareInteractor : FoursquareInteractorContract {
     override fun getPlacesCall(query: String, near: String): Call<FoursquareResponse> {
@@ -16,9 +17,8 @@ class FoursquareInteractor : FoursquareInteractorContract {
                 .addConverterFactory(MoshiConverterFactory.create())
                 .build()
                 .create(FoursquareApi::class.java)
-                .requestVenues(section = "food",
-                        near = near,
+                .requestVenues(near = near,
                         query = query,
-                        venuePhotos = 1) // 1 => get photos
+                        venuePhotos = 1) // 1 => include photos
     }
 }

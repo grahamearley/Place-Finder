@@ -16,7 +16,6 @@ interface FoursquareApi {
     fun requestVenues(@Query("client_id") clientId: String = CLIENT_ID,
                       @Query("client_secret") clientSecret: String = CLIENT_SECRET,
                       @Query("v") version: String = API_VERSION,
-                      @Query("section") section: String = "food",
                       @Query("near") near: String,
                       @Query("query") query: String,
                       @Query("venuePhotos") venuePhotos: Int): Call<FoursquareResponse>
