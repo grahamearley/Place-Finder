@@ -1,8 +1,12 @@
-package website.grahamearley.placefinder
+package website.grahamearley.placefinder.data
 
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
+import website.grahamearley.placefinder.API_VERSION
+import website.grahamearley.placefinder.CLIENT_ID
+import website.grahamearley.placefinder.CLIENT_SECRET
+import website.grahamearley.placefinder.FoursquareResponse
 
 /**
  * An interface for requesting venues from the Foursquare API.
