@@ -2,8 +2,7 @@ package website.grahamearley.placefinder.list
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.StaggeredGridLayoutManager
-import android.view.KeyEvent
+import android.support.v7.widget.GridLayoutManager
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_place_list.*
 import website.grahamearley.placefinder.*
@@ -22,9 +21,8 @@ class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
     }
 
     private fun initializeUi() {
-        val recyclerSpanCount = 2
-        recyclerView.layoutManager = StaggeredGridLayoutManager(recyclerSpanCount,
-                StaggeredGridLayoutManager.VERTICAL)
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = GridLayoutManager(this, 2)
 
         searchButton.setOnClickListener { onSearchButtonClick() }
 
