@@ -7,12 +7,12 @@ import android.view.ViewGroup
 /**
  * Adapter for displaying lists of Venue cards.
  */
-class VenueRecyclerAdapter(private val venues: List<Venue>) : RecyclerView.Adapter<VenueViewHolder>() {
+class VenueRecyclerAdapter(private val venues: List<VenueItem>) : RecyclerView.Adapter<VenueViewHolder>() {
 
     override fun getItemCount(): Int = venues.size
 
     override fun onBindViewHolder(holder: VenueViewHolder?, position: Int) {
-        val venue = venues[position]
+        val venue = venues[position].venue
         holder?.apply {
             venueImageView.hide() // todo: show pics! with picasso
 

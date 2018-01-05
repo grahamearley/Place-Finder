@@ -2,12 +2,13 @@ package website.grahamearley.placefinder.list
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.StaggeredGridLayoutManager
 import kotlinx.android.synthetic.main.activity_place_list.*
-import website.grahamearley.placefinder.R
-import website.grahamearley.placefinder.hide
+import website.grahamearley.placefinder.*
 import website.grahamearley.placefinder.list.contract.PlaceListPresenterContract
 import website.grahamearley.placefinder.list.contract.PlaceListViewContract
-import website.grahamearley.placefinder.show
 
 
 class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
@@ -18,7 +19,24 @@ class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_place_list)
 
+        val recyclerSpanCount = 2
+        recyclerView.layoutManager = StaggeredGridLayoutManager(recyclerSpanCount,
+                StaggeredGridLayoutManager.VERTICAL)
+
         searchButton.setOnClickListener { onSearchButtonClick() }
+    }
+
+    override fun showListItems() {
+        recyclerView.show()
+    }
+
+    override fun hideListItems() {
+        recyclerView.hide()
+    }
+
+    override fun setListItems(venues: List<VenueItem>) {
+        val adapter = VenueRecyclerAdapter(venues)
+        recyclerView.adapter = adapter
     }
 
     override fun showStatusText() {

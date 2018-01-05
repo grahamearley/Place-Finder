@@ -1,6 +1,7 @@
 package website.grahamearley.placefinder.list
 
 import website.grahamearley.placefinder.R
+import website.grahamearley.placefinder.VenueItem
 import website.grahamearley.placefinder.data.FoursquareInteractor
 import website.grahamearley.placefinder.data.FoursquareInteractorContract
 import website.grahamearley.placefinder.enqueue
@@ -17,21 +18,23 @@ class PlaceListPresenter(override val view: PlaceListViewContract) : PlaceListPr
 
         val call = interactor.getPlacesCall(query, near)
         call.enqueue(onResponse = { response ->
-            val venueNames = response?.body()?.response?.groups
+            val venues = response?.body()?.response?.groups
                     ?.flatMap { it.items }
-                    ?.map { it.venue.name }
 
-            updateVenuesList(venueNames)
+            updateVenuesList(venues)
         }, onFailure = { _ ->
             showErrorStatus()
         })
     }
 
-    private fun updateVenuesList(names: List<String>?) {
+    private fun updateVenuesList(venues: List<VenueItem>?) {
         view.hideProgressBar()
 
-        view.setStatusText(names?.joinToString(separator = ",").orEmpty())
-        view.showStatusText()
+        if (venues == null || venues.isEmpty()) {
+            view.setStatusText(R.string.no_places_found)
+        } else {
+            view.setListItems(venues)
+        }
     }
 
     private fun showErrorStatus() {
