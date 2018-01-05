@@ -14,6 +14,8 @@ class PlaceListPresenter(override val view: PlaceListViewContract) : PlaceListPr
 
     override fun onNewVenueQuery(query: String, near: String) {
         view.hideStatusText()
+        view.hideListItems()
+
         view.showProgressBar()
 
         val call = interactor.getPlacesCall(query, near)
@@ -28,17 +30,21 @@ class PlaceListPresenter(override val view: PlaceListViewContract) : PlaceListPr
     }
 
     private fun updateVenuesList(venues: List<VenueItem>?) {
+        view.hideListItems()
         view.hideProgressBar()
 
         if (venues == null || venues.isEmpty()) {
             view.setStatusText(R.string.no_places_found)
+            view.showStatusText()
         } else {
             view.setListItems(venues)
+            view.showListItems()
         }
     }
 
     private fun showErrorStatus() {
         view.hideProgressBar()
+        view.hideListItems()
 
         view.setStatusText(R.string.could_not_load_places_error)
         view.showStatusText()

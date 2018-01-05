@@ -2,8 +2,6 @@ package website.grahamearley.placefinder.list
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.StaggeredGridLayoutManager
 import kotlinx.android.synthetic.main.activity_place_list.*
 import website.grahamearley.placefinder.*
