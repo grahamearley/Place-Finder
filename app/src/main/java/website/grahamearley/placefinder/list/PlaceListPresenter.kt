@@ -4,6 +4,8 @@ import website.grahamearley.placefinder.R
 import website.grahamearley.placefinder.data.FoursquareInteractor
 import website.grahamearley.placefinder.data.FoursquareInteractorContract
 import website.grahamearley.placefinder.enqueue
+import website.grahamearley.placefinder.list.contract.PlaceListPresenterContract
+import website.grahamearley.placefinder.list.contract.PlaceListViewContract
 
 class PlaceListPresenter(override val view: PlaceListViewContract) : PlaceListPresenterContract {
 

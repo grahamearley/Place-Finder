@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_place_list.*
 import website.grahamearley.placefinder.R
 import website.grahamearley.placefinder.hide
+import website.grahamearley.placefinder.list.contract.PlaceListPresenterContract
+import website.grahamearley.placefinder.list.contract.PlaceListViewContract
 import website.grahamearley.placefinder.show
 
 
