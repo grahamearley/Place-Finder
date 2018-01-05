@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Place Finder</string>
+    <string name="query">Query…</string>
+    <string name="near">Near…</string>
 </resources>
