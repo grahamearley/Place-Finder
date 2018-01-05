@@ -3,6 +3,8 @@ package website.grahamearley.placefinder.list
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.StaggeredGridLayoutManager
+import android.view.KeyEvent
+import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_place_list.*
 import website.grahamearley.placefinder.*
 import website.grahamearley.placefinder.list.contract.PlaceListPresenterContract
@@ -16,12 +18,23 @@ class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_place_list)
+        initializeUi()
+    }
 
+    private fun initializeUi() {
         val recyclerSpanCount = 2
         recyclerView.layoutManager = StaggeredGridLayoutManager(recyclerSpanCount,
                 StaggeredGridLayoutManager.VERTICAL)
 
         searchButton.setOnClickListener { onSearchButtonClick() }
+
+        val keyboardSearchButtonListener = TextView.OnEditorActionListener { _, _, _ ->
+            onSearchButtonClick()
+            true
+        }
+
+        queryEditText.setOnEditorActionListener(keyboardSearchButtonListener)
+        locationEditText.setOnEditorActionListener(keyboardSearchButtonListener)
     }
 
     override fun showListItems() {
