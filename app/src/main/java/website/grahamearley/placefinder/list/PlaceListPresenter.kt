@@ -1,5 +1,6 @@
 package website.grahamearley.placefinder.list
 
+import android.util.Log
 import website.grahamearley.placefinder.R
 import website.grahamearley.placefinder.VenueItem
 import website.grahamearley.placefinder.data.FoursquareInteractor
@@ -15,18 +16,23 @@ class PlaceListPresenter(override val view: PlaceListViewContract) : PlaceListPr
     override fun onNewVenueQuery(query: String, near: String) {
         view.hideStatusText()
         view.hideListItems()
+        
+        if (near.isEmpty()) {
+            view.setStatusText(R.string.you_need_to_specify_a_location_for_your_search)
+            view.showStatusText()
+        } else {
+            view.showProgressBar()
 
-        view.showProgressBar()
+            val call = interactor.getPlacesCall(query, near)
+            call.enqueue(onResponse = { response ->
+                val venues = response?.body()?.response?.groups
+                        ?.flatMap { it.items }
 
-        val call = interactor.getPlacesCall(query, near)
-        call.enqueue(onResponse = { response ->
-            val venues = response?.body()?.response?.groups
-                    ?.flatMap { it.items }
-
-            updateVenuesList(venues)
-        }, onFailure = { _ ->
-            showErrorStatus()
-        })
+                updateVenuesList(venues)
+            }, onFailure = { _ ->
+                showErrorStatus()
+            })
+        }
     }
 
     private fun updateVenuesList(venues: List<VenueItem>?) {
