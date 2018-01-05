@@ -45,6 +45,14 @@ class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
         presenter.onNewVenueQuery(query, location)
     }
 
+    override fun showProgressBar() {
+        progressBar.show()
+    }
+
+    override fun hideProgressBar() {
+        progressBar.hide()
+    }
+
     private fun getQueryText(): String = queryEditText.text.toString()
 
     private fun getLocationText(): String = locationEditText.text.toString()

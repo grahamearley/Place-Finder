@@ -12,6 +12,9 @@ class PlaceListPresenter(override val view: PlaceListViewContract) : PlaceListPr
     override val interactor: FoursquareInteractorContract = FoursquareInteractor()
 
     override fun onNewVenueQuery(query: String, near: String) {
+        view.hideStatusText()
+        view.showProgressBar()
+
         val call = interactor.getPlacesCall(query, near)
         call.enqueue(onResponse = { response ->
             val venueNames = response?.body()?.response?.groups
@@ -25,11 +28,15 @@ class PlaceListPresenter(override val view: PlaceListViewContract) : PlaceListPr
     }
 
     private fun updateVenuesList(names: List<String>?) {
+        view.hideProgressBar()
+
         view.setStatusText(names?.joinToString(separator = ",").orEmpty())
         view.showStatusText()
     }
 
     private fun showErrorStatus() {
+        view.hideProgressBar()
+
         view.setStatusText(R.string.could_not_load_places_error)
         view.showStatusText()
     }

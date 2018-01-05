@@ -17,4 +17,8 @@ interface PlaceListViewContract {
     fun setStatusText(text: String)
 
     fun onSearchButtonClick()
+
+    fun showProgressBar()
+
+    fun hideProgressBar()
 }
