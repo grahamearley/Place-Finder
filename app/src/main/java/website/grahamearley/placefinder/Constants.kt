@@ -1,0 +1,6 @@
+package website.grahamearley.placefinder
+
+const val CLIENT_ID = "42BTFJUEW13FZQBDZ0PTPVFY2PDHDVRSJMKFZQKEZ2EUTE0W"
+const val CLIENT_SECRET = "R2IYPTXQKCFNOSGUSH2T02AOKN4FQRZ1AWXI4FV5BI2WU2VV"
+const val API_VERSION = "20170801"
+const val API_BASE_URL = "https://api.foursquare.com/v2/"
