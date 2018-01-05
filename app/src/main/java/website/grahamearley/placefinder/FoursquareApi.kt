@@ -5,9 +5,9 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 /**
- * A service for requesting venues from the Foursquare API.
+ * An interface for requesting venues from the Foursquare API.
  */
-interface FoursquareService {
+interface FoursquareApi {
     @GET("venues/explore")
     fun requestVenues(@Query("client_id") clientId: String = CLIENT_ID,
                       @Query("client_secret") clientSecret: String = CLIENT_SECRET,
