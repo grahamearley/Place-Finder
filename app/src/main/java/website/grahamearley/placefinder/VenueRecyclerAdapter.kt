@@ -14,12 +14,10 @@ class VenueRecyclerAdapter(private val venues: List<VenueItem>) : RecyclerView.A
     override fun onBindViewHolder(holder: VenueViewHolder?, position: Int) {
         val venue = venues[position].venue
         holder?.apply {
-            val photo = venue.photos.groups.flatMap { it.items }
-                    .firstOrNull()
+            val photo = venue.getFirstPhotoOrNull()
 
             photo?.let {
-                val url = it.prefix + it.suffix
-                venueImageView.loadImage(url)
+                venueImageView.loadImage(it.getUrl())
                 venueImageView.show()
             } ?: venueImageView.hide()
 
