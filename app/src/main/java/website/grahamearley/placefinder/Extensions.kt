@@ -37,7 +37,6 @@ fun View.hide() {
 fun ImageView.loadImage(url: String) {
     Picasso.with(context)
             .load(url)
-            .placeholder(AppCompatResources.getDrawable(context, R.drawable.ic_image_blue_32dp))
             .error(AppCompatResources.getDrawable(context, R.drawable.ic_error_gray_32dp))
             .fit()
             .centerCrop()
