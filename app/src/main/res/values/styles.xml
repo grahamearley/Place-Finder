@@ -17,6 +17,7 @@
 
     <style name="VenueCardText.Title">
         <item name="android:textSize">20sp</item>
+        <item name="android:paddingTop">16dp</item>
     </style>
 
     <style name="VenueCardText.Category">

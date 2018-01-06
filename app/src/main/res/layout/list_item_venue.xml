@@ -24,7 +24,6 @@
             app:layout_constraintTop_toBottomOf="@id/venueImageView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_goneMarginTop="16dp"
             style="@style/VenueCardText.Title" />
 
         <TextView
