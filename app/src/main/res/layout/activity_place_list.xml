@@ -9,15 +9,28 @@
 
     <EditText
         android:id="@+id/queryEditText"
-        android:hint="@string/query"
+        android:hint="@string/looking_for"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/locationEditText"
+        app:layout_constraintEnd_toStartOf="@+id/inTextView"
         style="@style/SearchEditText" />
+
+    <TextView
+        android:id="@+id/inTextView"
+        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:text="@string/in"
+        android:gravity="center"
+        android:padding="8dp"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/queryEditText"
+        app:layout_constraintEnd_toStartOf="@id/locationEditText"
+        app:layout_constraintTop_toTopOf="@id/queryEditText"
+        app:layout_constraintBottom_toBottomOf="@id/queryEditText" />
 
     <EditText
         android:id="@+id/locationEditText"
-        android:hint="@string/near"
-        app:layout_constraintStart_toEndOf="@id/queryEditText"
+        android:hint="@string/location"
+        app:layout_constraintStart_toEndOf="@id/inTextView"
         app:layout_constraintEnd_toEndOf="@+id/searchButton"
         style="@style/SearchEditText" />
 
