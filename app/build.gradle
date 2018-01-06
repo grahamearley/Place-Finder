@@ -32,4 +32,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
     compile 'com.squareup.retrofit2:converter-moshi:2.3.0'
+
+    compile 'com.android.support:cardview-v7:26.1.0'
+    compile 'com.android.support:recyclerview-v7:26.1.0'
+
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }

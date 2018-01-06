@@ -62,8 +62,11 @@ data class Venue(
 		val hours: Hours,
 		val photos: Photos,
 		val hereNow: HereNow,
-		val featuredPhotos: FeaturedPhotos
-)
+		val featuredPhotos: FeaturedPhotos) {
+
+    fun getFirstFeaturedPhotoOrNull() = featuredPhotos.items.firstOrNull()
+
+}
 
 data class Price(
 		val tier: Int,
@@ -111,18 +114,7 @@ data class HereNow(
 
 data class FeaturedPhotos(
 		val count: Int,
-		val items: List<FeaturedPhotoItem>
-)
-
-data class FeaturedPhotoItem(
-		val id: String,
-		val createdAt: Int,
-		val prefix: String,
-		val suffix: String,
-		val width: Int,
-		val height: Int,
-		val user: User,
-		val visibility: String
+		val items: List<PhotoItem>
 )
 
 data class Location(
@@ -166,8 +158,14 @@ data class PhotoItem(
 		val width: Int,
 		val height: Int,
 		val user: User,
-		val visibility: String
-)
+		val visibility: String) {
+
+    fun getUrl(): String {
+        // cap300 => photo size with width or height of 300 (whichever is larger)
+        return prefix + "cap300" + suffix
+    }
+
+}
 
 data class UserProfilePhoto(
 		val prefix: String,

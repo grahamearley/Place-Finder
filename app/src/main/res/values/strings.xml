@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Place Finder</string>
+    <string name="query">Query…</string>
+    <string name="near">Near…</string>
+    <string name="could_not_load_places_error">These places couldn\'t be loaded right now. Try again later.</string>
+    <string name="no_places_found">No places found for that search.</string>
+    <string name="you_need_to_specify_a_location_for_your_search">You need to specify a location for your search.</string>
 </resources>
