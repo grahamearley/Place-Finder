@@ -14,6 +14,7 @@ import website.grahamearley.placefinder.list.contract.PlaceListViewContract
 class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
 
     override val presenter: PlaceListPresenterContract = PlaceListPresenter(this)
+    private val adapter = VenueRecyclerAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +27,7 @@ class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
 
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = GridLayoutManager(this, 2)
+        recyclerView.adapter = this.adapter
 
         searchButton.setOnClickListener { onSearchButtonClick() }
 
@@ -47,8 +49,7 @@ class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
     }
 
     override fun setListItems(venues: List<VenueItem>) {
-        val adapter = VenueRecyclerAdapter(venues)
-        recyclerView.adapter = adapter
+        adapter.setVenues(venues)
     }
 
     override fun showStatusText() {

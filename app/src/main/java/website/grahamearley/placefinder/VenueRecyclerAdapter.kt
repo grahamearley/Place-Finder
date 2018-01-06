@@ -7,7 +7,14 @@ import android.view.ViewGroup
 /**
  * Adapter for displaying lists of Venue cards.
  */
-class VenueRecyclerAdapter(private val venues: List<VenueItem>) : RecyclerView.Adapter<VenueViewHolder>() {
+class VenueRecyclerAdapter : RecyclerView.Adapter<VenueViewHolder>() {
+
+    private var venues: List<VenueItem> = emptyList()
+
+    fun setVenues(venues: List<VenueItem>) {
+        this.venues = venues
+        notifyDataSetChanged()
+    }
 
     override fun getItemCount(): Int = venues.size
 
