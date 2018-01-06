@@ -14,16 +14,16 @@ class VenueRecyclerAdapter(private val venues: List<VenueItem>) : RecyclerView.A
     override fun onBindViewHolder(holder: VenueViewHolder?, position: Int) {
         val venue = venues[position].venue
         holder?.apply {
-            val photo = venue.getFirstFeaturedPhotoOrNull()
+            val photo = venue?.getFirstFeaturedPhotoOrNull()
 
             photo?.let {
                 venueImageView.loadImage(it.getUrl())
                 venueImageView.show()
             } ?: venueImageView.hide()
 
-            titleTextView.text = venue.name
-            addressTextView.text = venue.location.formattedAddress.firstOrNull()
-            categoryTextView.text = venue.categories.firstOrNull()?.name
+            titleTextView.text = venue?.name
+            addressTextView.text = venue?.getStreetAddressOrNull()
+            categoryTextView.text = venue?.getFirstCategoryOrNull()
         }
     }
 

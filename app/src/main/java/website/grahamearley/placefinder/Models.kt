@@ -27,9 +27,9 @@ data class VenueGroup(
 )
 
 data class VenueItem(
-		val reasons: Reasons,
-		val venue: Venue,
-		val tips: List<Tip>
+		val reasons: Reasons?,
+		val venue: Venue?,
+		val tips: List<Tip>?
 )
 
 data class Reasons(
@@ -45,10 +45,10 @@ data class ReasonItem(
 
 data class Venue(
 		val id: String,
-		val name: String,
+		val name: String?,
 		val contact: Contact,
-		val location: Location,
-		val categories: List<Category>,
+		val location: Location?,
+		val categories: List<Category>?,
 		val verified: Boolean,
 		val stats: Stats,
 		val url: String,
@@ -62,9 +62,13 @@ data class Venue(
 		val hours: Hours,
 		val photos: Photos,
 		val hereNow: HereNow,
-		val featuredPhotos: FeaturedPhotos) {
+		val featuredPhotos: FeaturedPhotos?) {
 
-    fun getFirstFeaturedPhotoOrNull() = featuredPhotos.items.firstOrNull()
+    fun getFirstFeaturedPhotoOrNull() = featuredPhotos?.items?.firstOrNull()
+
+    fun getFirstCategoryOrNull() = categories?.firstOrNull()?.name
+
+    fun getStreetAddressOrNull() = location?.formattedAddress?.firstOrNull()
 
 }
 
