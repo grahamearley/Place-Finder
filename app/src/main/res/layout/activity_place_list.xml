@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="website.grahamearley.placefinder.list.PlaceListActivity"
+    android:animateLayoutChanges="true"
     android:background="@color/lightGray">
 
     <android.support.v7.widget.RecyclerView

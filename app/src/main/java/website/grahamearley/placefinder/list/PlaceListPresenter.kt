@@ -1,6 +1,5 @@
 package website.grahamearley.placefinder.list
 
-import android.util.Log
 import website.grahamearley.placefinder.R
 import website.grahamearley.placefinder.VenueItem
 import website.grahamearley.placefinder.data.FoursquareInteractor
@@ -14,6 +13,8 @@ class PlaceListPresenter(override val view: PlaceListViewContract) : PlaceListPr
     override val interactor: FoursquareInteractorContract = FoursquareInteractor()
 
     override fun onNewVenueQuery(query: String, near: String) {
+        view.setSearchBarGravityToBottom()
+
         view.hideStatusText()
         view.hideListItems()
         

@@ -3,6 +3,8 @@ package website.grahamearley.placefinder.list
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
+import android.view.Gravity
+import android.widget.FrameLayout
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_place_list.*
 import kotlinx.android.synthetic.main.search_bar.*
@@ -38,6 +40,12 @@ class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
 
         queryEditText.setOnEditorActionListener(keyboardSearchButtonListener)
         locationEditText.setOnEditorActionListener(keyboardSearchButtonListener)
+
+        if (adapter.isEmpty()) {
+            setSearchBarGravityToCenter()
+        } else {
+            setSearchBarGravityToBottom()
+        }
     }
 
     override fun showListItems() {
@@ -82,6 +90,20 @@ class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
 
     override fun hideProgressBar() {
         progressBar.hide()
+    }
+
+    override fun setSearchBarGravityToCenter() {
+        setSearchBarGravity(Gravity.CENTER)
+    }
+
+    override fun setSearchBarGravityToBottom() {
+        setSearchBarGravity(Gravity.BOTTOM)
+    }
+
+    private fun setSearchBarGravity(gravity: Int) {
+        val layoutParams = searchBar.layoutParams as FrameLayout.LayoutParams
+        layoutParams.gravity = gravity
+        searchBar.layoutParams = layoutParams
     }
 
     private fun getQueryText(): String = queryEditText.text.toString()

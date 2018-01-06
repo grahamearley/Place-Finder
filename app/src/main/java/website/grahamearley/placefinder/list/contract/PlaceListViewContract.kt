@@ -29,4 +29,6 @@ interface PlaceListViewContract {
     fun showProgressBar()
 
     fun hideProgressBar()
+    fun setSearchBarGravityToCenter()
+    fun setSearchBarGravityToBottom()
 }

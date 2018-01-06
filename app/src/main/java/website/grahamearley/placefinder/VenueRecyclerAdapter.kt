@@ -18,6 +18,8 @@ class VenueRecyclerAdapter : RecyclerView.Adapter<VenueViewHolder>() {
 
     override fun getItemCount(): Int = venues.size
 
+    fun isEmpty(): Boolean = venues.isEmpty()
+
     override fun onBindViewHolder(holder: VenueViewHolder?, position: Int) {
         val venue = venues[position].venue
         holder?.apply {
