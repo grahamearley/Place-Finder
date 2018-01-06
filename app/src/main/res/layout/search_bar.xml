@@ -10,7 +10,7 @@
 
     <EditText
         android:id="@+id/queryEditText"
-        android:hint="@string/looking_for"
+        android:hint="@string/search"
         android:layout_marginLeft="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/inTextView"
