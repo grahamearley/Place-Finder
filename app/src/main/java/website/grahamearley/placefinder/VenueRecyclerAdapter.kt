@@ -14,7 +14,7 @@ class VenueRecyclerAdapter(private val venues: List<VenueItem>) : RecyclerView.A
     override fun onBindViewHolder(holder: VenueViewHolder?, position: Int) {
         val venue = venues[position].venue
         holder?.apply {
-            val photo = venue.getFirstPhotoOrNull()
+            val photo = venue.getFirstFeaturedPhotoOrNull()
 
             photo?.let {
                 venueImageView.loadImage(it.getUrl())

@@ -64,7 +64,7 @@ data class Venue(
 		val hereNow: HereNow,
 		val featuredPhotos: FeaturedPhotos) {
 
-    fun getFirstPhotoOrNull() = photos.groups.flatMap { it.items }.firstOrNull()
+    fun getFirstFeaturedPhotoOrNull() = featuredPhotos.items.firstOrNull()
 
 }
 
