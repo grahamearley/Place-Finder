@@ -22,6 +22,8 @@ class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
     }
 
     private fun initializeUi() {
+        searchBar.setElevation(R.dimen.search_elevation)
+
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = GridLayoutManager(this, 2)
 

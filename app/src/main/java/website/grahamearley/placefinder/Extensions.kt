@@ -1,5 +1,7 @@
 package website.grahamearley.placefinder
 
+import android.support.annotation.DimenRes
+import android.support.v4.view.ViewCompat
 import android.support.v7.content.res.AppCompatResources
 import android.view.View
 import android.widget.ImageView
@@ -32,6 +34,11 @@ fun View.show() {
 
 fun View.hide() {
     this.visibility = View.GONE
+}
+
+fun View.setElevation(@DimenRes dimenRes: Int) {
+    val elevation = this.context.resources.getDimensionPixelSize(dimenRes).toFloat()
+    ViewCompat.setElevation(this, elevation)
 }
 
 fun ImageView.loadImage(url: String) {
