@@ -7,15 +7,15 @@ import org.junit.Assert.*
 /**
  * Unit tests for the [Venue] data model's methods.
  */
-class VenueModelUnitTests {
+class VenueUnitTests {
 
     private val featuredPhoto1 = PhotoItem(id = "1", createdAt = 0,
-            prefix = "www.grahamearley.website", suffix = "/picture.jpg",
+            prefix = "www.grahamearley.website/", suffix = "/picture.jpg",
             width = 100, height = 100,
             user = null, visibility = "visible")
 
     private val featuredPhoto2 = PhotoItem(id = "2", createdAt = 0,
-            prefix = "www.grahamearley.website", suffix = "/picture.png",
+            prefix = "www.grahamearley.website/", suffix = "/picture.png",
             width = 200, height = 500,
             user = null, visibility = "invisible")
 
