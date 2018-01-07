@@ -122,16 +122,16 @@ data class FeaturedPhotos(
 )
 
 data class Location(
-		val address: String,
-		val crossStreet: String,
-		val lat: Double,
-		val lng: Double,
-		val postalCode: String,
-		val cc: String,
-		val city: String,
-		val state: String,
-		val country: String,
-		val formattedAddress: List<String>
+		val address: String? = null,
+		val crossStreet: String? = null,
+		val lat: Double? = null,
+		val lng: Double? = null,
+		val postalCode: String? = null,
+		val cc: String? = null,
+		val city: String? = null,
+		val state: String? = null,
+		val country: String? = null,
+		val formattedAddress: List<String?>? = null
 )
 
 data class Menu(

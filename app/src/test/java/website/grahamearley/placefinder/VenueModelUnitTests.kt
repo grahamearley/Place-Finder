@@ -29,8 +29,12 @@ class VenueModelUnitTests {
 
     private val populatedCategories = listOf(category1, category2)
     private val emptyCategories = emptyList<Category?>()
-    private val nullCategories = listOf<Category?>(null, null, null)
+    private val nullCategories = listOf(null, null, null)
 
+    private val locationWithPopulatedAddress = Location(formattedAddress = listOf("1234 Street Lane", "Minneapolis, MN", "USA"))
+    private val locationWithAddressOfNulls = Location(formattedAddress = listOf(null, null, null))
+    private val locationWithNullAddress = Location(formattedAddress = null)
+    private val locationWithEmptyAddress = Location(formattedAddress = emptyList())
 
     @Test
     fun getFeaturedPhoto_isCorrectForPopulatedList() {
@@ -78,5 +82,35 @@ class VenueModelUnitTests {
     fun getCategory_isNullForEmptyList() {
         val venueWithPopulatedCategoryList = Venue(categories = emptyCategories)
         assertEquals(null, venueWithPopulatedCategoryList.getFirstCategoryOrNull())
+    }
+
+    @Test
+    fun getStreetAddress_isCorrectForPopulatedAddress() {
+        val venueWithPopulatedAddress = Venue(location = locationWithPopulatedAddress)
+        assertEquals("1234 Street Lane", venueWithPopulatedAddress.getStreetAddressOrNull())
+    }
+
+    @Test
+    fun getStreetAddress_isNullForAddressOfNulls() {
+        val venueWithAddressOfNulls = Venue(location = locationWithAddressOfNulls)
+        assertEquals(null, venueWithAddressOfNulls.getStreetAddressOrNull())
+    }
+
+    @Test
+    fun getStreetAddress_isNullForNullAddress() {
+        val venueWithNullAddress = Venue(location = locationWithNullAddress)
+        assertEquals(null, venueWithNullAddress.getStreetAddressOrNull())
+    }
+
+    @Test
+    fun getStreetAddress_isNullForEmptyAddress() {
+        val venueWithEmptyAddress = Venue(location = locationWithEmptyAddress)
+        assertEquals(null, venueWithEmptyAddress.getStreetAddressOrNull())
+    }
+
+    @Test
+    fun getStreetAddress_isNullForNullLocation() {
+        val venueWithNullLocation = Venue(location = null)
+        assertEquals(null, venueWithNullLocation.getStreetAddressOrNull())
     }
 }
