@@ -44,25 +44,25 @@ data class ReasonItem(
 )
 
 data class Venue(
-		val id: String,
-		val name: String?,
-		val contact: Contact,
-		val location: Location?,
-		val categories: List<Category>?,
-		val verified: Boolean,
-		val stats: Stats,
-		val url: String,
-		val price: Price,
-		val hasMenu: Boolean,
-		val rating: Double,
-		val ratingColor: String,
-		val ratingSignals: Int,
-		val menu: Menu,
-		val allowMenuUrlEdit: Boolean,
-		val hours: Hours,
-		val photos: Photos,
-		val hereNow: HereNow,
-		val featuredPhotos: FeaturedPhotos?) {
+		val id: String? = null,
+		val name: String? = null,
+		val contact: Contact? = null,
+		val location: Location? = null,
+		val categories: List<Category>? = null,
+		val verified: Boolean? = null,
+		val stats: Stats? = null,
+		val url: String? = null,
+		val price: Price? = null,
+		val hasMenu: Boolean? = null,
+		val rating: Double? = null,
+		val ratingColor: String? = null,
+		val ratingSignals: Int? = null,
+		val menu: Menu? = null,
+		val allowMenuUrlEdit: Boolean? = null,
+		val hours: Hours? = null,
+		val photos: Photos? = null,
+		val hereNow: HereNow? = null,
+		val featuredPhotos: FeaturedPhotos? = null){
 
     fun getFirstFeaturedPhotoOrNull() = featuredPhotos?.items?.firstOrNull()
 
@@ -117,8 +117,8 @@ data class HereNow(
 )
 
 data class FeaturedPhotos(
-		val count: Int,
-		val items: List<PhotoItem>
+		val count: Int?,
+		val items: List<PhotoItem?>?
 )
 
 data class Location(
@@ -161,7 +161,7 @@ data class PhotoItem(
 		val suffix: String,
 		val width: Int,
 		val height: Int,
-		val user: User,
+		val user: User?,
 		val visibility: String) {
 
     fun getUrl(): String {
