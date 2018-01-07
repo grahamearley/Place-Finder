@@ -1,9 +1,12 @@
 package website.grahamearley.placefinder
 
+import android.app.Activity
+import android.content.Context
 import android.support.annotation.DimenRes
 import android.support.v4.view.ViewCompat
 import android.support.v7.content.res.AppCompatResources
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import retrofit2.Call
@@ -48,4 +51,13 @@ fun ImageView.loadImage(url: String) {
             .fit()
             .centerCrop()
             .into(this)
+}
+
+fun Activity.hideSoftKeyboard() {
+    val view = this.currentFocus
+
+    if (view != null) {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
 }

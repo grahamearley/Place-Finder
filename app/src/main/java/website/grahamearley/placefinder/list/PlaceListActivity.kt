@@ -81,6 +81,7 @@ class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
         val query = getQueryText()
         val location = getLocationText()
 
+        hideSoftKeyboard()
         presenter.onNewVenueQuery(query, location)
     }
 
