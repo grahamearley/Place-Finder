@@ -24,15 +24,14 @@ class PlaceListPresenter(override val view: PlaceListViewContract) : PlaceListPr
         } else {
             view.showProgressBar()
 
-            val call = interactor.getPlacesCall(query, near)
-            call.enqueue(onResponse = { response ->
-                val venues = response?.body()?.response?.groups
-                        ?.flatMap { it.items }
-
-                updateVenuesList(venues)
-            }, onFailure = { _ ->
-                showErrorStatus()
-            })
+            interactor.getPlacesAsync(query, near,
+                    onResponse = { response ->
+                        val venues = response?.body()?.response?.groups
+                                            ?.flatMap { it.items }
+                        updateVenuesList(venues)
+                    }, onFailure = { _ ->
+                        showErrorStatus()
+                    })
         }
     }
 
