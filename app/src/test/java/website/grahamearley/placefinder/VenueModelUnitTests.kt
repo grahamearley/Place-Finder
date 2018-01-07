@@ -20,34 +20,63 @@ class VenueModelUnitTests {
             user = null, visibility = "invisible")
 
     private val populatedFeaturedPhotos = FeaturedPhotos(count = 2, items = listOf(featuredPhoto1, featuredPhoto2))
-
     private val emptyFeaturedPhotos = FeaturedPhotos(count = 0, items = emptyList())
-
     private val nullFeaturedPhotos = FeaturedPhotos(count = null, items = null)
-
     private val featuredPhotosNullList = FeaturedPhotos(count = 3, items = listOf(null, null, null))
 
+    private val category1 = Category(name = "Museum")
+    private val category2 = Category(name = "Coffee Shop")
+
+    private val populatedCategories = listOf(category1, category2)
+    private val emptyCategories = emptyList<Category?>()
+    private val nullCategories = listOf<Category?>(null, null, null)
+
+
     @Test
-    fun venue_getFeaturedPhoto_isCorrectForPopulatedList() {
+    fun getFeaturedPhoto_isCorrectForPopulatedList() {
         val venueWithPopulatedPhotos = Venue(featuredPhotos = populatedFeaturedPhotos)
         assertEquals(featuredPhoto1, venueWithPopulatedPhotos.getFirstFeaturedPhotoOrNull())
     }
 
     @Test
-    fun venue_getFeaturedPhoto_isNullForListOfNulls() {
-        val venueWithListOfNulls = Venue(featuredPhotos = featuredPhotosNullList)
-        assertEquals(null, venueWithListOfNulls.getFirstFeaturedPhotoOrNull())
+    fun getFeaturedPhoto_isNullForListOfNulls() {
+        val venueWithPhotoListOfNulls = Venue(featuredPhotos = featuredPhotosNullList)
+        assertEquals(null, venueWithPhotoListOfNulls.getFirstFeaturedPhotoOrNull())
     }
 
     @Test
-    fun venue_getFeaturedPhoto_isNullForNullList() {
-        val venueWithNullList = Venue(featuredPhotos = nullFeaturedPhotos)
-        assertEquals(null, venueWithNullList.getFirstFeaturedPhotoOrNull())
+    fun getFeaturedPhoto_isNullForNullList() {
+        val venueWithNullPhotoList = Venue(featuredPhotos = nullFeaturedPhotos)
+        assertEquals(null, venueWithNullPhotoList.getFirstFeaturedPhotoOrNull())
     }
 
     @Test
-    fun venue_getFeaturedPhoto_isNullForEmptyList() {
-        val venueWithEmptyList = Venue(featuredPhotos = emptyFeaturedPhotos)
-        assertEquals(null, venueWithEmptyList.getFirstFeaturedPhotoOrNull())
+    fun getFeaturedPhoto_isNullForEmptyList() {
+        val venueWithEmptyPhotoList = Venue(featuredPhotos = emptyFeaturedPhotos)
+        assertEquals(null, venueWithEmptyPhotoList.getFirstFeaturedPhotoOrNull())
+    }
+
+    @Test
+    fun getCategory_isCorrectForPopulatedList() {
+        val venueWithPopulatedCategoryList = Venue(categories = populatedCategories)
+        assertEquals("Museum", venueWithPopulatedCategoryList.getFirstCategoryOrNull())
+    }
+
+    @Test
+    fun getCategory_isNullForListOfNulls() {
+        val venueWithPopulatedCategoryList = Venue(categories = nullCategories)
+        assertEquals(null, venueWithPopulatedCategoryList.getFirstCategoryOrNull())
+    }
+
+    @Test
+    fun getCategory_isNullForNullList() {
+        val venueWithPopulatedCategoryList = Venue(categories = null)
+        assertEquals(null, venueWithPopulatedCategoryList.getFirstCategoryOrNull())
+    }
+
+    @Test
+    fun getCategory_isNullForEmptyList() {
+        val venueWithPopulatedCategoryList = Venue(categories = emptyCategories)
+        assertEquals(null, venueWithPopulatedCategoryList.getFirstCategoryOrNull())
     }
 }

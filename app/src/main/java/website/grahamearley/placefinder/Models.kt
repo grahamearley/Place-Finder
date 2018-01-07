@@ -48,7 +48,7 @@ data class Venue(
 		val name: String? = null,
 		val contact: Contact? = null,
 		val location: Location? = null,
-		val categories: List<Category>? = null,
+		val categories: List<Category?>? = null,
 		val verified: Boolean? = null,
 		val stats: Stats? = null,
 		val url: String? = null,
@@ -85,12 +85,12 @@ data class Contact(
 )
 
 data class Category(
-		val id: String,
-		val name: String,
-		val pluralName: String,
-		val shortName: String,
-		val icon: Icon,
-		val primary: Boolean
+		val id: String? = null,
+		val name: String? = null,
+		val pluralName: String? = null,
+		val shortName: String? = null,
+		val icon: Icon? = null,
+		val primary: Boolean? = null
 )
 
 data class Icon(
