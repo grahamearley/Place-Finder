@@ -98,8 +98,8 @@ class PlaceDetailPresenter(override val view: PlaceDetailViewContract) : PlaceDe
     }
 
     override fun onWebsiteButtonClicked() {
-        phoneNumber?.let { phoneNumber ->
-            view.launchUrl(phoneNumber)
+        website?.let { website ->
+            view.launchUrl(website)
         } ?: view.showWebsiteNotAvailableSnackbar()
     }
 }
