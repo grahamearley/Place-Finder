@@ -415,4 +415,54 @@ class VenueDetailUnitTests {
         assertFalse("Website button is not visible when there is no website.", websiteButtonIsVisible)
     }
 
+    @Test
+    fun launchesMenuWhenButtonClicked() {
+        val menu = Menu(mobileUrl = "menu.com")
+        presenter.venueItem = VenueItem(venue = Venue(menu = menu))
+        presenter.onMenuButtonClicked()
+
+        verify(mockedView).launchUrl("menu.com")
+    }
+
+    @Test
+    fun showsErrorWhenMenuButtonClickedWithNoMenu() {
+        presenter.venueItem = VenueItem(venue = Venue())
+        presenter.onViewCreated()
+
+        verify(mockedView).showMenuNotAvailableSnackbar()
+    }
+
+    @Test
+    fun launchesWebsiteWhenButtonClicked() {
+        presenter.venueItem = VenueItem(venue = Venue(url = "food.com"))
+        presenter.onWebsiteButtonClicked()
+
+        verify(mockedView).launchUrl("food.com")
+    }
+
+    @Test
+    fun showsErrorWhenWebsiteButtonClickedWithNoWebsite() {
+        presenter.venueItem = VenueItem(venue = Venue())
+        presenter.onWebsiteButtonClicked()
+
+        verify(mockedView).showWebsiteNotAvailableSnackbar()
+    }
+
+    @Test
+    fun dialsPhoneWhenPhoneButtonPressed() {
+        val contact = Contact(phone = "8675309")
+        presenter.venueItem = VenueItem(venue = Venue(contact = contact))
+        presenter.onPhoneButtonClicked()
+
+        verify(mockedView).launchDialer("8675309")
+    }
+
+    @Test
+    fun showsErrorWhenPhoneButtonClickedWithNoPhone() {
+        presenter.venueItem = VenueItem(venue = Venue())
+        presenter.onPhoneButtonClicked()
+
+        verify(mockedView).showPhoneNumberNotAvailableSnackbar()
+    }
+
 }
