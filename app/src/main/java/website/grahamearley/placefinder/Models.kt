@@ -5,8 +5,8 @@ package website.grahamearley.placefinder
  */
 
 data class FoursquareResponse(
-		val meta: Meta,
-		val response: Response
+		val meta: Meta? = null,
+		val response: Response? = null
 )
 
 data class Meta(
@@ -15,21 +15,21 @@ data class Meta(
 )
 
 data class Response(
-		val headerFullLocation: String,
-		val headerLocationGranularity: String,
+		val headerFullLocation: String? = null,
+		val headerLocationGranularity: String? = null,
 		val groups: List<VenueGroup>
 )
 
 data class VenueGroup(
-		val type: String,
-		val name: String,
+		val type: String? = null,
+		val name: String? = null,
 		val items: List<VenueItem>
 )
 
 data class VenueItem(
-		val reasons: Reasons?,
-		val venue: Venue?,
-		val tips: List<Tip>?
+		val reasons: Reasons? = null,
+		val venue: Venue? = null,
+		val tips: List<Tip>? = null
 )
 
 data class Reasons(
