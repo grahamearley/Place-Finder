@@ -66,6 +66,8 @@ data class Venue(
 
     fun getFirstFeaturedPhotoOrNull() = featuredPhotos?.items?.firstOrNull()
 
+    fun getPhotoUrlsOrNull() = photos?.groups?.flatMap { it.items.orEmpty() }?.map(PhotoItem::getUrl)
+
     fun getFirstCategoryOrNull() = categories?.firstOrNull()?.name
 
     fun getStreetAddressOrNull() = location?.formattedAddress?.firstOrNull()
@@ -148,21 +150,21 @@ data class Photos(
 )
 
 data class PhotoGroup(
-		val type: String,
-		val name: String,
-		val count: Int,
-		val items: List<PhotoItem>
+		val type: String? = null,
+		val name: String? = null,
+		val count: Int? = null,
+		val items: List<PhotoItem>? = null
 )
 
 data class PhotoItem(
-		val id: String,
-		val createdAt: Int,
-		val prefix: String,
-		val suffix: String,
-		val width: Int,
-		val height: Int,
-		val user: User?,
-		val visibility: String) {
+		val id: String? = null,
+		val createdAt: Int? = null,
+		val prefix: String? = null,
+		val suffix: String? = null,
+		val width: Int? = null,
+		val height: Int? = null,
+		val user: User? = null,
+		val visibility: String? = null) {
 
     fun getUrl(): String {
         // cap300 => photo size with width or height of 300 (whichever is larger)
