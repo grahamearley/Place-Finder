@@ -59,6 +59,16 @@ class VenueDetailUnitTests {
             null
         }
 
+        Mockito.`when`(mockedView.showVenueImages()).then {
+            venueImagesAreVisible = true
+            null
+        }
+
+        Mockito.`when`(mockedView.hideVenueImages()).then {
+            venueImagesAreVisible = false
+            null
+        }
+
         Mockito.`when`(mockedView.showVenueName()).then {
             venueNameIsVisible = true
             null
@@ -332,7 +342,7 @@ class VenueDetailUnitTests {
     fun showsMenuIfHasMenu() {
         menuButtonIsVisible = false
 
-        val menu = Menu(url = "menu.com")
+        val menu = Menu(mobileUrl = "menu.com")
         presenter.venueItem = VenueItem(venue = Venue(menu = menu))
         presenter.onViewCreated()
 
@@ -351,7 +361,7 @@ class VenueDetailUnitTests {
 
         verify(mockedView).hideMenuButton()
 
-        assertTrue("Menu button is not visible when it doesn't exist.", menuButtonIsVisible)
+        assertFalse("Menu button is not visible when it doesn't exist.", menuButtonIsVisible)
     }
 
     @Test
@@ -377,7 +387,7 @@ class VenueDetailUnitTests {
 
         verify(mockedView).hidePhoneButton()
 
-        assertTrue("Phone button is not visible when there is no number.", phoneButtonIsVisible)
+        assertFalse("Phone button is not visible when there is no number.", phoneButtonIsVisible)
     }
 
     @Test
@@ -402,7 +412,7 @@ class VenueDetailUnitTests {
 
         verify(mockedView).hideWebsiteButton()
 
-        assertTrue("Website button is not visible when there is no website.", websiteButtonIsVisible)
+        assertFalse("Website button is not visible when there is no website.", websiteButtonIsVisible)
     }
 
 }
