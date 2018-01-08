@@ -55,7 +55,7 @@ interface PlaceDetailViewContract {
     fun launchUrl(url: String)
     fun launchDialer(phoneNumber: String)
 
-    fun showMenuNotAvailableSnackbar()
-    fun showPhoneNumberNotAvailableSnackbar()
-    fun showWebsiteNotAvailableSnackbar()
+    fun showMenuNotAvailableError()
+    fun showPhoneNumberNotAvailableError()
+    fun showWebsiteNotAvailableError()
 }

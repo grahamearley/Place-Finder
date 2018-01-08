@@ -452,7 +452,7 @@ class VenueDetailUnitTests {
         presenter.venueItem = VenueItem(venue = Venue())
         presenter.onMenuButtonClicked()
 
-        verify(mockedView).showMenuNotAvailableSnackbar()
+        verify(mockedView).showMenuNotAvailableError()
     }
 
     @Test
@@ -468,7 +468,7 @@ class VenueDetailUnitTests {
         presenter.venueItem = VenueItem(venue = Venue())
         presenter.onWebsiteButtonClicked()
 
-        verify(mockedView).showWebsiteNotAvailableSnackbar()
+        verify(mockedView).showWebsiteNotAvailableError()
     }
 
     @Test
@@ -485,6 +485,6 @@ class VenueDetailUnitTests {
         presenter.venueItem = VenueItem(venue = Venue())
         presenter.onPhoneButtonClicked()
 
-        verify(mockedView).showPhoneNumberNotAvailableSnackbar()
+        verify(mockedView).showPhoneNumberNotAvailableError()
     }
 }
