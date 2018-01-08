@@ -8,9 +8,9 @@ import website.grahamearley.placefinder.enqueue
 import website.grahamearley.placefinder.list.contract.PlaceListPresenterContract
 import website.grahamearley.placefinder.list.contract.PlaceListViewContract
 
-class PlaceListPresenter(override val view: PlaceListViewContract) : PlaceListPresenterContract {
-
-    override val interactor: FoursquareInteractorContract = FoursquareInteractor()
+class PlaceListPresenter(override val view: PlaceListViewContract,
+                         override val interactor: FoursquareInteractorContract
+                            = FoursquareInteractor()) : PlaceListPresenterContract {
 
     override fun onNewVenueQuery(query: String, near: String) {
         view.setSearchBarGravityToBottom()
