@@ -38,9 +38,9 @@ data class Reasons(
 )
 
 data class ReasonItem(
-		val summary: String,
-		val type: String,
-		val reasonName: String
+		val summary: String? = null,
+		val type: String? = null,
+		val reasonName: String? = null
 )
 
 data class Venue(
@@ -81,9 +81,9 @@ data class Price(
 )
 
 data class Contact(
-		val phone: String,
-		val formattedPhone: String,
-		val twitter: String
+		val phone: String? = null,
+		val formattedPhone: String? = null,
+		val twitter: String? = null
 )
 
 data class Category(
@@ -137,11 +137,11 @@ data class Location(
 )
 
 data class Menu(
-		val type: String,
-		val label: String,
-		val anchor: String,
-		val url: String,
-		val mobileUrl: String
+		val type: String? = null,
+		val label: String? = null,
+		val anchor: String? = null,
+		val url: String? = null,
+		val mobileUrl: String? = null
 )
 
 data class Photos(
@@ -179,16 +179,16 @@ data class UserProfilePhoto(
 )
 
 data class Tip(
-		val id: String,
-		val createdAt: Int,
-		val text: String,
-		val type: String,
-		val url: String,
-		val canonicalUrl: String,
-		val logView: Boolean,
-		val agreeCount: Int,
-		val disagreeCount: Int,
-		val user: User
+		val id: String? = null,
+		val createdAt: Int? = null,
+		val text: String? = null,
+		val type: String? = null,
+		val url: String? = null,
+		val canonicalUrl: String? = null,
+		val logView: Boolean? = null,
+		val agreeCount: Int? = null,
+		val disagreeCount: Int? = null,
+		val user: User? = null
 )
 
 data class User(
