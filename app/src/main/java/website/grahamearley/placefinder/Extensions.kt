@@ -14,7 +14,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 /**
- * Created by grahamearley on 1/5/18.
+ * Utility extension functions for various classes.
  */
 
 fun <T> Call<T>.enqueue(onResponse: (response: Response<T>?) -> Unit,

@@ -19,6 +19,7 @@ class PlaceListPresenter(override val view: PlaceListViewContract,
         view.hideListItems()
         
         if (near.isEmpty()) {
+            view.hideProgressBar()
             view.setStatusText(R.string.you_need_to_specify_a_location_for_your_search)
             view.showStatusText()
         } else {
