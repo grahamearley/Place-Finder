@@ -6,5 +6,11 @@ package website.grahamearley.placefinder.detail.contract
 interface PlaceDetailPresenterContract {
     val view: PlaceDetailViewContract
 
-    fun initializeView()
+    fun onViewCreated()
+
+    fun onMenuButtonClicked()
+
+    fun onPhoneButtonClicked()
+
+    fun onWebsiteButtonClicked()
 }

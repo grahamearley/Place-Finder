@@ -36,4 +36,16 @@ interface PlaceDetailViewContract {
     fun setRatingColor(color: String)
     fun showRating()
     fun hideRating()
+
+    fun setMenuUrl(url: String)
+    fun showMenuButton()
+    fun hideMenuButton()
+
+    fun setPhoneNumber(phoneNumber: String)
+    fun showPhoneButton()
+    fun hidePhoneButton()
+
+    fun setWebsite(url: String)
+    fun showWebsiteButton()
+    fun hideWebsiteButton()
 }
