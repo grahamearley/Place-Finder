@@ -233,7 +233,7 @@ class VenueDetailUnitTests {
 
         verify(mockedView).hideVenueImages()
 
-        assertTrue("Images are not visible when they don't exist.", venueImagesAreVisible)
+        assertFalse("Images are not visible when they don't exist.", venueImagesAreVisible)
     }
 
     @Test
