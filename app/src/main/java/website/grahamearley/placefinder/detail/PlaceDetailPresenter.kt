@@ -29,14 +29,22 @@ class PlaceDetailPresenter(override val view: PlaceDetailViewContract) : PlaceDe
         } ?: view.hideReason()
 
         images?.let { images ->
-            view.setVenueImages(images)
-            view.showVenueImages()
+            if (images.isEmpty()) {
+                view.hideVenueImages()
+            } else {
+                view.setVenueImages(images)
+                view.showVenueImages()
+            }
         } ?: view.hideVenueImages()
 
         tips?.let { tips ->
-            view.setVenueTips(tips)
-            view.showVenueTips()
-        }
+            if (tips.isEmpty()) {
+                view.hideVenueTips()
+            } else {
+                view.setVenueTips(tips)
+                view.showVenueTips()
+            }
+        } ?: view.hideVenueTips()
 
         name?.let { name ->
             view.setVenueName(name)
