@@ -1,8 +1,9 @@
-package website.grahamearley.placefinder
+package website.grahamearley.placefinder.list
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import website.grahamearley.placefinder.*
 
 /**
  * Adapter for displaying lists of Venue cards.

@@ -1,4 +1,4 @@
-package website.grahamearley.placefinder
+package website.grahamearley.placefinder.list
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
