@@ -427,7 +427,7 @@ class VenueDetailUnitTests {
     @Test
     fun showsErrorWhenMenuButtonClickedWithNoMenu() {
         presenter.venueItem = VenueItem(venue = Venue())
-        presenter.onViewCreated()
+        presenter.onMenuButtonClicked()
 
         verify(mockedView).showMenuNotAvailableSnackbar()
     }
