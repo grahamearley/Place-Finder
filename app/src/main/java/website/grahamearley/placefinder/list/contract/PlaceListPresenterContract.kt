@@ -3,7 +3,7 @@ package website.grahamearley.placefinder.list.contract
 import website.grahamearley.placefinder.data.FoursquareInteractorContract
 
 /**
- * Created by grahamearley on 1/5/18.
+ * Interface for the Place List presenter.
  */
 interface PlaceListPresenterContract {
     val view: PlaceListViewContract

@@ -1,6 +1,5 @@
 package website.grahamearley.placefinder.detail.contract
 
-import android.support.annotation.StringRes
 import website.grahamearley.placefinder.Tip
 
 /**

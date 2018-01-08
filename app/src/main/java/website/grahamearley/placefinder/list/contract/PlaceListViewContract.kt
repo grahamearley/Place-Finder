@@ -5,7 +5,7 @@ import website.grahamearley.placefinder.Venue
 import website.grahamearley.placefinder.VenueItem
 
 /**
- * Created by grahamearley on 1/5/18.
+ * Interface for the Place List view.
  */
 interface PlaceListViewContract {
     val presenter: PlaceListPresenterContract
