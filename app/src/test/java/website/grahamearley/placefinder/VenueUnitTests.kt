@@ -9,17 +9,19 @@ import org.junit.Assert.*
  */
 class VenueUnitTests {
 
-    private val featuredPhoto1 = PhotoItem(id = "1", createdAt = 0,
+    private val photo1 = PhotoItem(id = "1", createdAt = 0,
             prefix = "www.grahamearley.website/", suffix = "/picture.jpg",
             width = 100, height = 100,
             user = null, visibility = "visible")
+    private val photo1expectedUrl = "www.grahamearley.website/cap300/picture.jpg"
 
-    private val featuredPhoto2 = PhotoItem(id = "2", createdAt = 0,
+    private val photo2 = PhotoItem(id = "2", createdAt = 0,
             prefix = "www.grahamearley.website/", suffix = "/picture.png",
             width = 200, height = 500,
             user = null, visibility = "invisible")
+    private val photo2expectedUrl = "www.grahamearley.website/cap300/picture.png"
 
-    private val populatedFeaturedPhotos = FeaturedPhotos(count = 2, items = listOf(featuredPhoto1, featuredPhoto2))
+    private val populatedFeaturedPhotos = FeaturedPhotos(count = 2, items = listOf(photo1, photo2))
     private val emptyFeaturedPhotos = FeaturedPhotos(count = 0, items = emptyList())
     private val nullFeaturedPhotos = FeaturedPhotos(count = null, items = null)
     private val featuredPhotosNullList = FeaturedPhotos(count = 3, items = listOf(null, null, null))
@@ -39,7 +41,7 @@ class VenueUnitTests {
     @Test
     fun getFeaturedPhoto_isCorrectForPopulatedList() {
         val venueWithPopulatedPhotos = Venue(featuredPhotos = populatedFeaturedPhotos)
-        assertEquals(featuredPhoto1, venueWithPopulatedPhotos.getFirstFeaturedPhotoOrNull())
+        assertEquals(photo1, venueWithPopulatedPhotos.getFirstFeaturedPhotoOrNull())
     }
 
     @Test
@@ -112,5 +114,37 @@ class VenueUnitTests {
     fun getStreetAddress_isNullForNullLocation() {
         val venueWithNullLocation = Venue(location = null)
         assertEquals(null, venueWithNullLocation.getStreetAddressOrNull())
+    }
+
+    @Test
+    fun getPhotoUrls_isCorrectForPopulatedList() {
+        val photoGroup1 = PhotoGroup(items = listOf(photo1, photo1, photo2))
+        val photoGroup2 = PhotoGroup(items = listOf(photo1))
+        val photoGroup3 = PhotoGroup(items = null)
+
+        val venueWithPhotos = Venue(photos = Photos(count = 4,
+                groups = listOf(photoGroup1, photoGroup2, photoGroup3)))
+
+        val expected = listOf(photo1expectedUrl, photo1expectedUrl,
+                photo2expectedUrl, photo1expectedUrl)
+        assertEquals(expected, venueWithPhotos.getPhotoUrlsOrNull())
+    }
+
+    @Test
+    fun getPhotoUrls_isNullForEmptyList() {
+        val photoGroup1 = PhotoGroup(items = emptyList())
+        val photoGroup2 = PhotoGroup(items = emptyList())
+
+        val venueWithNoPhotos = Venue(photos = Photos(count = 0,
+                groups = listOf(photoGroup1, photoGroup2)))
+
+        assertEquals(emptyList<String>(), venueWithNoPhotos.getPhotoUrlsOrNull())
+    }
+
+    @Test
+    fun getPhotoUrls_isNullForNullPhotos() {
+        val venueWithNullPhotos = Venue(photos = null)
+
+        assertEquals(null, venueWithNullPhotos.getPhotoUrlsOrNull())
     }
 }
