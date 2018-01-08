@@ -86,14 +86,20 @@ class PlaceDetailPresenter(override val view: PlaceDetailViewContract) : PlaceDe
     }
 
     override fun onMenuButtonClicked() {
-
+        menuUrl?.let { menuUrl ->
+            view.launchUrl(menuUrl)
+        } ?: view.showMenuNotAvailableSnackbar()
     }
 
     override fun onPhoneButtonClicked() {
-
+        phoneNumber?.let { phoneNumber ->
+            view.launchDialer(phoneNumber)
+        } ?: view.showPhoneNumberNotAvailableSnackbar()
     }
 
     override fun onWebsiteButtonClicked() {
-
+        phoneNumber?.let { phoneNumber ->
+            view.launchUrl(phoneNumber)
+        } ?: view.showWebsiteNotAvailableSnackbar()
     }
 }
