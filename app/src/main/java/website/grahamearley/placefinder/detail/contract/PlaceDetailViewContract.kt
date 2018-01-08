@@ -1,5 +1,6 @@
 package website.grahamearley.placefinder.detail.contract
 
+import android.support.annotation.StringRes
 import website.grahamearley.placefinder.Tip
 
 /**
@@ -32,8 +33,8 @@ interface PlaceDetailViewContract {
     fun showVenueCategory()
     fun hideVenueCategory()
 
-    fun setRating(rating: String)
-    fun setRatingColor(color: String)
+    fun setRating(rating: Double)
+    fun setRatingColor(color: String?)
     fun showRating()
     fun hideRating()
 
@@ -48,4 +49,13 @@ interface PlaceDetailViewContract {
     fun setWebsite(url: String)
     fun showWebsiteButton()
     fun hideWebsiteButton()
+
+    fun setOnClickListeners()
+
+    fun launchUrl(url: String)
+    fun launchDialer(phoneNumber: String)
+
+    fun showMenuNotAvailableSnackbar()
+    fun showPhoneNumberNotAvailableSnackbar()
+    fun showWebsiteNotAvailableSnackbar()
 }
