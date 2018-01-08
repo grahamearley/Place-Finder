@@ -5,8 +5,8 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
-import website.grahamearley.placefinder.list.PlaceListPresenter
-import website.grahamearley.placefinder.list.contract.PlaceListViewContract
+import website.grahamearley.placefinder.ui.list.PlaceListPresenter
+import website.grahamearley.placefinder.ui.list.contract.PlaceListViewContract
 import org.mockito.Mockito.*
 import website.grahamearley.placefinder.data.FoursquareInteractorContract
 

@@ -1,4 +1,4 @@
-package website.grahamearley.placefinder.list
+package website.grahamearley.placefinder.ui.list
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -9,8 +9,8 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_place_list.*
 import kotlinx.android.synthetic.main.search_bar.*
 import website.grahamearley.placefinder.*
-import website.grahamearley.placefinder.list.contract.PlaceListPresenterContract
-import website.grahamearley.placefinder.list.contract.PlaceListViewContract
+import website.grahamearley.placefinder.ui.list.contract.PlaceListPresenterContract
+import website.grahamearley.placefinder.ui.list.contract.PlaceListViewContract
 
 
 class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {

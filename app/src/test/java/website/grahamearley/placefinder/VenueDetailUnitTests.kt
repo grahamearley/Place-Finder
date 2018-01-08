@@ -8,8 +8,8 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
-import website.grahamearley.placefinder.detail.PlaceDetailPresenter
-import website.grahamearley.placefinder.detail.contract.PlaceDetailViewContract
+import website.grahamearley.placefinder.ui.detail.PlaceDetailPresenter
+import website.grahamearley.placefinder.ui.detail.contract.PlaceDetailViewContract
 
 /**
  * Unit tests for the venue detail activity, testing the contract

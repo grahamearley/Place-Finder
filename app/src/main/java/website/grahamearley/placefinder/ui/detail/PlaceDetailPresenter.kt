@@ -1,8 +1,8 @@
-package website.grahamearley.placefinder.detail
+package website.grahamearley.placefinder.ui.detail
 
 import website.grahamearley.placefinder.VenueItem
-import website.grahamearley.placefinder.detail.contract.PlaceDetailPresenterContract
-import website.grahamearley.placefinder.detail.contract.PlaceDetailViewContract
+import website.grahamearley.placefinder.ui.detail.contract.PlaceDetailPresenterContract
+import website.grahamearley.placefinder.ui.detail.contract.PlaceDetailViewContract
 
 /**
  * Presenter implementation for the Venue detail view.

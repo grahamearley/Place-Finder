@@ -1,4 +1,4 @@
-package website.grahamearley.placefinder.detail.contract
+package website.grahamearley.placefinder.ui.detail.contract
 
 import website.grahamearley.placefinder.VenueItem
 

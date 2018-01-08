@@ -1,12 +1,11 @@
-package website.grahamearley.placefinder.list
+package website.grahamearley.placefinder.ui.list
 
 import website.grahamearley.placefinder.R
 import website.grahamearley.placefinder.VenueItem
 import website.grahamearley.placefinder.data.FoursquareInteractor
 import website.grahamearley.placefinder.data.FoursquareInteractorContract
-import website.grahamearley.placefinder.enqueue
-import website.grahamearley.placefinder.list.contract.PlaceListPresenterContract
-import website.grahamearley.placefinder.list.contract.PlaceListViewContract
+import website.grahamearley.placefinder.ui.list.contract.PlaceListPresenterContract
+import website.grahamearley.placefinder.ui.list.contract.PlaceListViewContract
 
 class PlaceListPresenter(override val view: PlaceListViewContract,
                          override val interactor: FoursquareInteractorContract

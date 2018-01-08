@@ -1,7 +1,6 @@
-package website.grahamearley.placefinder.list.contract
+package website.grahamearley.placefinder.ui.list.contract
 
 import android.support.annotation.StringRes
-import website.grahamearley.placefinder.Venue
 import website.grahamearley.placefinder.VenueItem
 
 /**

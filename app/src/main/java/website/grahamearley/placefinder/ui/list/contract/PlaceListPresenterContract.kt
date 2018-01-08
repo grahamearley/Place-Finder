@@ -1,4 +1,4 @@
-package website.grahamearley.placefinder.list.contract
+package website.grahamearley.placefinder.ui.list.contract
 
 import website.grahamearley.placefinder.data.FoursquareInteractorContract
 
