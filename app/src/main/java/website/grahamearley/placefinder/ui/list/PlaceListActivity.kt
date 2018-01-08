@@ -58,6 +58,13 @@ class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
 
     override fun setListItems(venues: List<VenueItem>) {
         adapter.setVenues(venues)
+        adapter.setOnVenueClickListener { venueItem ->
+            presenter.onVenueItemClicked(venueItem)
+        }
+    }
+
+    override fun launchVenueDetailView(venueItem: VenueItem) {
+        // TODO
     }
 
     override fun showStatusText() {

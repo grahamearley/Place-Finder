@@ -35,6 +35,10 @@ class PlaceListPresenter(override val view: PlaceListViewContract,
         }
     }
 
+    override fun onVenueItemClicked(venueItem: VenueItem) {
+        view.launchVenueDetailView(venueItem)
+    }
+
     private fun updateVenuesList(venues: List<VenueItem>?) {
         view.hideListItems()
         view.hideProgressBar()

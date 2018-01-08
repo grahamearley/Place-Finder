@@ -11,6 +11,7 @@ import website.grahamearley.placefinder.*
 class VenueRecyclerAdapter : RecyclerView.Adapter<VenueViewHolder>() {
 
     private var venues: List<VenueItem> = emptyList()
+    private var onItemClicked: (VenueItem) -> Unit = {}
 
     fun setVenues(venues: List<VenueItem>) {
         this.venues = venues
@@ -22,7 +23,8 @@ class VenueRecyclerAdapter : RecyclerView.Adapter<VenueViewHolder>() {
     fun isEmpty(): Boolean = venues.isEmpty()
 
     override fun onBindViewHolder(holder: VenueViewHolder?, position: Int) {
-        val venue = venues[position].venue
+        val venueItem = venues[position]
+        val venue = venueItem.venue
         holder?.apply {
             val photo = venue?.getFirstFeaturedPhotoOrNull()
 
@@ -34,12 +36,18 @@ class VenueRecyclerAdapter : RecyclerView.Adapter<VenueViewHolder>() {
             titleTextView.text = venue?.name
             addressTextView.text = venue?.getStreetAddressOrNull()
             categoryTextView.text = venue?.getFirstCategoryOrNull()
+
+            itemView.setOnClickListener { onItemClicked(venueItem) }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): VenueViewHolder {
         val itemView = LayoutInflater.from(parent?.context).inflate(R.layout.list_item_venue, parent, false)
         return VenueViewHolder(itemView)
+    }
+
+    fun setOnVenueClickListener(onItemClicked: (VenueItem) -> Unit) {
+        this.onItemClicked = onItemClicked
     }
 }
 

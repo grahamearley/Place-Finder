@@ -1,5 +1,6 @@
 package website.grahamearley.placefinder.ui.list.contract
 
+import website.grahamearley.placefinder.VenueItem
 import website.grahamearley.placefinder.data.FoursquareInteractorContract
 
 /**
@@ -10,4 +11,5 @@ interface PlaceListPresenterContract {
     val interactor: FoursquareInteractorContract
 
     fun onNewVenueQuery(query: String, near: String)
+    fun onVenueItemClicked(venueItem: VenueItem)
 }

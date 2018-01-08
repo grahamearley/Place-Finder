@@ -10,24 +10,21 @@ interface PlaceListViewContract {
     val presenter: PlaceListPresenterContract
 
     fun showListItems()
-
     fun hideListItems()
-
     fun setListItems(venues: List<VenueItem>)
 
     fun showStatusText()
-
     fun hideStatusText()
-
     fun setStatusText(@StringRes stringRes: Int)
-
     fun setStatusText(text: String)
 
     fun onSearchButtonClick()
 
     fun showProgressBar()
-
     fun hideProgressBar()
+
     fun setSearchBarGravityToCenter()
     fun setSearchBarGravityToBottom()
+
+    fun launchVenueDetailView(venueItem: VenueItem)
 }
