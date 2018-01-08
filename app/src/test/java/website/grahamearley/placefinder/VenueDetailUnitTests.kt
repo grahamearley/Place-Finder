@@ -191,7 +191,18 @@ class VenueDetailUnitTests {
 
         verify(mockedView).hideVenueTips()
 
-        assertFalse("Tips are not visible when they don't exist.", venueTipsAreVisible)
+        assertFalse("Tips are not visible when the list is empty.", venueTipsAreVisible)
+    }
+
+    @Test
+    fun hidesTipsIfTipsAreNull() {
+        venueTipsAreVisible = true
+        presenter.venueItem = VenueItem()
+        presenter.onViewCreated()
+
+        verify(mockedView).hideVenueTips()
+
+        assertFalse("Tips are not visible when they are null.", venueTipsAreVisible)
     }
 
     @Test
@@ -233,7 +244,19 @@ class VenueDetailUnitTests {
 
         verify(mockedView).hideVenueImages()
 
-        assertFalse("Images are not visible when they don't exist.", venueImagesAreVisible)
+        assertFalse("Images are not visible when their list is empty.", venueImagesAreVisible)
+    }
+
+    @Test
+    fun hidesImagesIfImagesAreNull() {
+        venueImagesAreVisible = true
+
+        presenter.venueItem = VenueItem(venue = Venue())
+        presenter.onViewCreated()
+
+        verify(mockedView).hideVenueImages()
+
+        assertFalse("Images are not visible when they are null.", venueImagesAreVisible)
     }
 
     @Test
@@ -464,5 +487,4 @@ class VenueDetailUnitTests {
 
         verify(mockedView).showPhoneNumberNotAvailableSnackbar()
     }
-
 }
