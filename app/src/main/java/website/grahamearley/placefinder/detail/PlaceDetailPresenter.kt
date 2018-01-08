@@ -23,7 +23,58 @@ class PlaceDetailPresenter(override val view: PlaceDetailViewContract) : PlaceDe
     private val website get() = venueItem?.venue?.url
 
     override fun onViewCreated() {
+        reason?.summary?.let { summary ->
+            view.setReason(summary)
+            view.showReason()
+        } ?: view.hideReason()
 
+        images?.let { images ->
+            view.setVenueImages(images)
+            view.showVenueImages()
+        } ?: view.hideVenueImages()
+
+        tips?.let { tips ->
+            view.setVenueTips(tips)
+            view.showVenueTips()
+        }
+
+        name?.let { name ->
+            view.setVenueName(name)
+            view.showVenueName()
+        } ?: view.hideVenueName()
+
+        address?.let { address ->
+            view.setVenueAddress(address)
+            view.showVenueAddress()
+        } ?: view.hideVenueAddress()
+
+        category?.let { category ->
+            view.setVenueCategory(category)
+            view.showVenueCategory()
+        } ?: view.hideVenueCategory()
+
+        rating?.let { rating ->
+            view.setRating(rating)
+            view.setRatingColor(ratingColor)
+            view.showRating()
+        } ?: view.hideRating()
+
+        view.setOnClickListeners()
+
+        menuUrl?.let { menuUrl ->
+            view.setMenuUrl(menuUrl)
+            view.showMenuButton()
+        } ?: view.hideMenuButton()
+
+        phoneNumber?.let { phoneNumber ->
+            view.setPhoneNumber(phoneNumber)
+            view.showPhoneButton()
+        } ?: view.hidePhoneButton()
+
+        website?.let { website ->
+            view.setWebsite(website)
+            view.showWebsiteButton()
+        } ?: view.hideWebsiteButton()
     }
 
     override fun onMenuButtonClicked() {
