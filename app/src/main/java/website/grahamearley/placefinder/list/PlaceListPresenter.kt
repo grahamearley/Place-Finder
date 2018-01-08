@@ -8,9 +8,9 @@ import website.grahamearley.placefinder.enqueue
 import website.grahamearley.placefinder.list.contract.PlaceListPresenterContract
 import website.grahamearley.placefinder.list.contract.PlaceListViewContract
 
-class PlaceListPresenter(override val view: PlaceListViewContract) : PlaceListPresenterContract {
-
-    override val interactor: FoursquareInteractorContract = FoursquareInteractor()
+class PlaceListPresenter(override val view: PlaceListViewContract,
+                         override val interactor: FoursquareInteractorContract
+                            = FoursquareInteractor()) : PlaceListPresenterContract {
 
     override fun onNewVenueQuery(query: String, near: String) {
         view.setSearchBarGravityToBottom()
@@ -19,20 +19,20 @@ class PlaceListPresenter(override val view: PlaceListViewContract) : PlaceListPr
         view.hideListItems()
         
         if (near.isEmpty()) {
+            view.hideProgressBar()
             view.setStatusText(R.string.you_need_to_specify_a_location_for_your_search)
             view.showStatusText()
         } else {
             view.showProgressBar()
 
-            val call = interactor.getPlacesCall(query, near)
-            call.enqueue(onResponse = { response ->
-                val venues = response?.body()?.response?.groups
-                        ?.flatMap { it.items }
-
-                updateVenuesList(venues)
-            }, onFailure = { _ ->
-                showErrorStatus()
-            })
+            interactor.getPlacesAsync(query, near,
+                    onResponse = { response ->
+                        val venues = response?.body()?.response?.groups
+                                            ?.flatMap { it.items }
+                        updateVenuesList(venues)
+                    }, onFailure = { _ ->
+                        showErrorStatus()
+                    })
         }
     }
 

@@ -5,8 +5,8 @@ package website.grahamearley.placefinder
  */
 
 data class FoursquareResponse(
-		val meta: Meta,
-		val response: Response
+		val meta: Meta? = null,
+		val response: Response? = null
 )
 
 data class Meta(
@@ -15,21 +15,21 @@ data class Meta(
 )
 
 data class Response(
-		val headerFullLocation: String,
-		val headerLocationGranularity: String,
+		val headerFullLocation: String? = null,
+		val headerLocationGranularity: String? = null,
 		val groups: List<VenueGroup>
 )
 
 data class VenueGroup(
-		val type: String,
-		val name: String,
+		val type: String? = null,
+		val name: String? = null,
 		val items: List<VenueItem>
 )
 
 data class VenueItem(
-		val reasons: Reasons?,
-		val venue: Venue?,
-		val tips: List<Tip>?
+		val reasons: Reasons? = null,
+		val venue: Venue? = null,
+		val tips: List<Tip>? = null
 )
 
 data class Reasons(
@@ -44,25 +44,25 @@ data class ReasonItem(
 )
 
 data class Venue(
-		val id: String,
-		val name: String?,
-		val contact: Contact,
-		val location: Location?,
-		val categories: List<Category>?,
-		val verified: Boolean,
-		val stats: Stats,
-		val url: String,
-		val price: Price,
-		val hasMenu: Boolean,
-		val rating: Double,
-		val ratingColor: String,
-		val ratingSignals: Int,
-		val menu: Menu,
-		val allowMenuUrlEdit: Boolean,
-		val hours: Hours,
-		val photos: Photos,
-		val hereNow: HereNow,
-		val featuredPhotos: FeaturedPhotos?) {
+		val id: String? = null,
+		val name: String? = null,
+		val contact: Contact? = null,
+		val location: Location? = null,
+		val categories: List<Category?>? = null,
+		val verified: Boolean? = null,
+		val stats: Stats? = null,
+		val url: String? = null,
+		val price: Price? = null,
+		val hasMenu: Boolean? = null,
+		val rating: Double? = null,
+		val ratingColor: String? = null,
+		val ratingSignals: Int? = null,
+		val menu: Menu? = null,
+		val allowMenuUrlEdit: Boolean? = null,
+		val hours: Hours? = null,
+		val photos: Photos? = null,
+		val hereNow: HereNow? = null,
+		val featuredPhotos: FeaturedPhotos? = null){
 
     fun getFirstFeaturedPhotoOrNull() = featuredPhotos?.items?.firstOrNull()
 
@@ -85,12 +85,12 @@ data class Contact(
 )
 
 data class Category(
-		val id: String,
-		val name: String,
-		val pluralName: String,
-		val shortName: String,
-		val icon: Icon,
-		val primary: Boolean
+		val id: String? = null,
+		val name: String? = null,
+		val pluralName: String? = null,
+		val shortName: String? = null,
+		val icon: Icon? = null,
+		val primary: Boolean? = null
 )
 
 data class Icon(
@@ -117,21 +117,21 @@ data class HereNow(
 )
 
 data class FeaturedPhotos(
-		val count: Int,
-		val items: List<PhotoItem>
+		val count: Int?,
+		val items: List<PhotoItem?>?
 )
 
 data class Location(
-		val address: String,
-		val crossStreet: String,
-		val lat: Double,
-		val lng: Double,
-		val postalCode: String,
-		val cc: String,
-		val city: String,
-		val state: String,
-		val country: String,
-		val formattedAddress: List<String>
+		val address: String? = null,
+		val crossStreet: String? = null,
+		val lat: Double? = null,
+		val lng: Double? = null,
+		val postalCode: String? = null,
+		val cc: String? = null,
+		val city: String? = null,
+		val state: String? = null,
+		val country: String? = null,
+		val formattedAddress: List<String?>? = null
 )
 
 data class Menu(
@@ -161,7 +161,7 @@ data class PhotoItem(
 		val suffix: String,
 		val width: Int,
 		val height: Int,
-		val user: User,
+		val user: User?,
 		val visibility: String) {
 
     fun getUrl(): String {

@@ -1,18 +1,23 @@
 package website.grahamearley.placefinder.data
 
-import retrofit2.Call
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import website.grahamearley.placefinder.API_BASE_URL
 import website.grahamearley.placefinder.FoursquareResponse
+import website.grahamearley.placefinder.enqueue
 
 /**
  *  Makes calls to the Foursquare API, implementing the
  *    Foursquare Interactor contract.
  */
 class FoursquareInteractor : FoursquareInteractorContract {
-    override fun getPlacesCall(query: String, near: String): Call<FoursquareResponse> {
-        return Retrofit.Builder()
+
+    override fun getPlacesAsync(query: String, near: String,
+                                onResponse: (response: Response<FoursquareResponse>?) -> Unit,
+                                onFailure: (throwable: Throwable?) -> Unit) {
+
+        val call = Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(MoshiConverterFactory.create())
                 .build()
@@ -20,5 +25,8 @@ class FoursquareInteractor : FoursquareInteractorContract {
                 .requestVenues(near = near,
                         query = query,
                         venuePhotos = 1) // 1 => include photos
+
+        call.enqueue(onResponse, onFailure)
+
     }
 }
