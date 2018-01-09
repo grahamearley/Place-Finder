@@ -3,7 +3,7 @@
 
     <!-- Shared element transitions based on docs:
               https://developer.android.com/training/material/animations.html -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="BaseTheme">
         <item name="android:windowEnterTransition">@transition/explode</item>
         <item name="android:windowExitTransition">@transition/explode</item>
 
