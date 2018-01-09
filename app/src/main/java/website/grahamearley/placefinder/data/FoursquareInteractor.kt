@@ -28,7 +28,17 @@ class FoursquareInteractor : FoursquareInteractorContract {
                                    onFailure: (throwable: Throwable?) -> Unit) {
 
         val call = getFoursquareRetrofitApi()
-                .requestTips(venueId = venueId)
+                .requestVenueTips(venueId = venueId)
+
+        call.enqueue(onResponse, onFailure)
+    }
+
+    override fun getVenuePhotosAsync(venueId: String,
+                                     onResponse: (response: Response<FoursquareResponse>?) -> Unit,
+                                     onFailure: (throwable: Throwable?) -> Unit) {
+
+        val call = getFoursquareRetrofitApi()
+                .requestVenuePhotos(venueId = venueId)
 
         call.enqueue(onResponse, onFailure)
     }

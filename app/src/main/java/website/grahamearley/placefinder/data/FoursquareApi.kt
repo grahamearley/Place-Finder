@@ -10,7 +10,7 @@ import website.grahamearley.placefinder.CLIENT_SECRET
 import website.grahamearley.placefinder.FoursquareResponse
 
 /**
- * An interface for requesting venues from the Foursquare API.
+ * An interface for making requests from the Foursquare API.
  */
 interface FoursquareApi {
     @GET("venues/explore")
@@ -22,7 +22,13 @@ interface FoursquareApi {
                       @Query("venuePhotos") venuePhotos: Int): Call<FoursquareResponse>
 
     @GET("venues/{venue_id}/tips")
-    fun requestTips(@Path("venue_id") venueId: String,
+    fun requestVenueTips(@Path("venue_id") venueId: String,
+                    @Query("client_id") clientId: String = CLIENT_ID,
+                    @Query("client_secret") clientSecret: String = CLIENT_SECRET,
+                    @Query("v") version: String = API_VERSION): Call<FoursquareResponse>
+
+    @GET("venues/{venue_id}/photos")
+    fun requestVenuePhotos(@Path("venue_id") venueId: String,
                     @Query("client_id") clientId: String = CLIENT_ID,
                     @Query("client_secret") clientSecret: String = CLIENT_SECRET,
                     @Query("v") version: String = API_VERSION): Call<FoursquareResponse>
