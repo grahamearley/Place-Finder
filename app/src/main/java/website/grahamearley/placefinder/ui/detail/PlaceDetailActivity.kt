@@ -1,6 +1,7 @@
 package website.grahamearley.placefinder.ui.detail
 
 import android.app.Activity
+import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -18,7 +19,7 @@ class PlaceDetailActivity : PlaceDetailViewContract, AppCompatActivity() {
             val intent = Intent(fromActivity, PlaceDetailActivity::class.java)
             intent.putExtra(EXTRA_VENUE_ITEM, venueItem)
 
-            fromActivity.startActivity(intent)
+            fromActivity.startActivityWithTransitionIfPossible(intent)
         }
 
         private const val EXTRA_VENUE_ITEM = "EXTRA_VENUE_ITEM"
