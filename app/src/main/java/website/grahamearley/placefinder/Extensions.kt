@@ -1,7 +1,10 @@
 package website.grahamearley.placefinder
 
 import android.app.Activity
+import android.app.ActivityOptions
 import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.support.annotation.DimenRes
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
@@ -67,6 +70,15 @@ fun Activity.hideSoftKeyboard() {
 
 fun Context.showToast(@StringRes stringRes: Int) {
     Toast.makeText(this, stringRes, Toast.LENGTH_LONG).show()
+}
+
+fun Activity.startActivityWithTransitionIfPossible(intent: Intent) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        startActivity(intent,
+                ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+    } else {
+        startActivity(intent)
+    }
 }
 
 fun View.showSnackbar(@StringRes stringRes: Int) {
