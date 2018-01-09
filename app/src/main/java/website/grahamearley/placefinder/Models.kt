@@ -22,7 +22,8 @@ data class Response(
 		val headerFullLocation: String? = null,
 		val headerLocationGranularity: String? = null,
 		val groups: List<VenueGroup>? = null,
-        val tips: Tips? = null
+        val tips: Tips? = null,
+        val photos: Photos? = null
 )
 
 data class Tips(
@@ -162,7 +163,8 @@ data class Menu(
 @Parcelize
 data class Photos(
 		val count: Int? = null,
-		val groups: List<PhotoGroup>? = null
+		val groups: List<PhotoGroup>? = null,
+        val items: List<PhotoItem>? = null
 ): Parcelable
 
 @SuppressLint("ParcelCreator")
