@@ -109,6 +109,9 @@ class VenueListUnitTests {
         listItemsAreVisible = true
 
         val errorInteractor = object: FoursquareInteractorContract {
+            override fun getVenueTipsAsync(venueId: String, onResponse: (response: retrofit2.Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
+            override fun getVenuePhotosAsync(venueId: String, onResponse: (response: retrofit2.Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
+
             override fun getPlacesAsync(query: String, near: String, onResponse: (response: retrofit2.Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {
                 onFailure(null)
             }
@@ -132,6 +135,9 @@ class VenueListUnitTests {
         progressBarIsVisible = true
 
         val itemsInteractor = object: FoursquareInteractorContract {
+            override fun getVenueTipsAsync(venueId: String, onResponse: (response: retrofit2.Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
+            override fun getVenuePhotosAsync(venueId: String, onResponse: (response: retrofit2.Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
+
             override fun getPlacesAsync(query: String, near: String, onResponse: (response: retrofit2.Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {
                 val foursquareResponse = FoursquareResponse(response = dummyResponse)
                 val retrofitResponse = retrofit2.Response.success(foursquareResponse)
@@ -158,6 +164,9 @@ class VenueListUnitTests {
         progressBarIsVisible = true
 
         val emptyInteractor = object: FoursquareInteractorContract {
+            override fun getVenueTipsAsync(venueId: String, onResponse: (response: retrofit2.Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
+            override fun getVenuePhotosAsync(venueId: String, onResponse: (response: retrofit2.Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
+
             override fun getPlacesAsync(query: String, near: String, onResponse: (response: retrofit2.Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {
                 val foursquareResponse = FoursquareResponse(response = dummyResponseEmpty)
                 val retrofitResponse = retrofit2.Response.success(foursquareResponse)

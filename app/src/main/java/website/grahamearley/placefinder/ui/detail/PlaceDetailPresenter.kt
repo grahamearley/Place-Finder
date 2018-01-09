@@ -1,50 +1,49 @@
 package website.grahamearley.placefinder.ui.detail
 
 import website.grahamearley.placefinder.VenueItem
+import website.grahamearley.placefinder.data.FoursquareInteractor
+import website.grahamearley.placefinder.data.FoursquareInteractorContract
 import website.grahamearley.placefinder.ui.detail.contract.PlaceDetailPresenterContract
 import website.grahamearley.placefinder.ui.detail.contract.PlaceDetailViewContract
 
 /**
  * Presenter implementation for the Venue detail view.
  */
-class PlaceDetailPresenter(override val view: PlaceDetailViewContract) : PlaceDetailPresenterContract {
+class PlaceDetailPresenter(override val view: PlaceDetailViewContract,
+                           private val interactor: FoursquareInteractorContract = FoursquareInteractor())
+    : PlaceDetailPresenterContract {
+
     override var venueItem: VenueItem? = null
+        set(item) {
+            field = item
+            onVenueItemSet()
+        }
 
     private val reason get() = venueItem?.reasons?.items?.firstOrNull()
     private val images get() = venueItem?.venue?.getPhotoUrlsOrNull()
-    private val tips get() = venueItem?.tips
     private val name get() = venueItem?.venue?.name
     private val address get() = venueItem?.venue?.getStreetAddressOrNull()
     private val category get() = venueItem?.venue?.getFirstCategoryOrNull()
     private val rating get() = venueItem?.venue?.rating
     private val ratingColor get() = venueItem?.venue?.ratingColor
-    private val menuUrl get() = venueItem?.venue?.menu?.mobileUrl
+    private val menuUrl get() = venueItem?.venue?.menu?.url
     private val phoneNumber get() = venueItem?.venue?.contact?.phone
     private val website get() = venueItem?.venue?.url
 
-    override fun onViewCreated() {
+    override fun onVenueItemSet() {
         reason?.summary?.let { summary ->
             view.setReason(summary)
             view.showReason()
         } ?: view.hideReason()
 
-        images?.let { images ->
-            if (images.isEmpty()) {
-                view.hideVenueImages()
-            } else {
-                view.setVenueImages(images)
-                view.showVenueImages()
-            }
-        } ?: view.hideVenueImages()
-
-        tips?.let { tips ->
-            if (tips.isEmpty()) {
-                view.hideVenueTips()
-            } else {
-                view.setVenueTips(tips)
-                view.showVenueTips()
-            }
-        } ?: view.hideVenueTips()
+        val venueId = venueItem?.venue?.id
+        if (venueId != null) {
+            loadTips(venueId)
+            loadPhotos(venueId)
+        } else {
+            view.hideVenueTips()
+            view.hideVenueImages()
+        }
 
         name?.let { name ->
             view.setVenueName(name)
@@ -69,18 +68,15 @@ class PlaceDetailPresenter(override val view: PlaceDetailViewContract) : PlaceDe
 
         view.setOnClickListeners()
 
-        menuUrl?.let { menuUrl ->
-            view.setMenuUrl(menuUrl)
+        menuUrl?.let {
             view.showMenuButton()
         } ?: view.hideMenuButton()
 
-        phoneNumber?.let { phoneNumber ->
-            view.setPhoneNumber(phoneNumber)
+        phoneNumber?.let {
             view.showPhoneButton()
         } ?: view.hidePhoneButton()
 
-        website?.let { website ->
-            view.setWebsite(website)
+        website?.let {
             view.showWebsiteButton()
         } ?: view.hideWebsiteButton()
     }
@@ -101,5 +97,37 @@ class PlaceDetailPresenter(override val view: PlaceDetailViewContract) : PlaceDe
         website?.let { website ->
             view.launchUrl(website)
         } ?: view.showWebsiteNotAvailableError()
+    }
+
+    override fun loadTips(venueId: String) {
+        interactor.getVenueTipsAsync(venueId, onResponse = { response ->
+                val tips = response?.body()?.response?.tips?.items
+
+                if (tips != null && tips.isNotEmpty()) {
+                    view.setVenueTips(tips)
+                    view.showVenueTips()
+                } else {
+                    view.hideVenueTips()
+                }
+
+            }, onFailure = {
+                view.hideVenueTips()
+            })
+    }
+
+    override fun loadPhotos(venueId: String) {
+        interactor.getVenuePhotosAsync(venueId, onResponse = { response ->
+                val photoUrls = response?.body()?.response?.photos?.items?.map { it.getUrl() }
+
+                if (photoUrls != null && photoUrls.isNotEmpty()) {
+                    view.setVenueImages(photoUrls)
+                    view.showVenueImages()
+                } else {
+                    view.hideVenueImages()
+                }
+
+            }, onFailure = {
+                view.hideVenueImages()
+            })
     }
 }

@@ -9,11 +9,15 @@ interface PlaceDetailPresenterContract {
     val view: PlaceDetailViewContract
     var venueItem: VenueItem?
 
-    fun onViewCreated()
+    fun onVenueItemSet()
 
     fun onMenuButtonClicked()
 
     fun onPhoneButtonClicked()
 
     fun onWebsiteButtonClicked()
+
+    fun loadTips(venueId: String)
+
+    fun loadPhotos(venueId: String)
 }

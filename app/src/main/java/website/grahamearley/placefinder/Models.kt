@@ -14,20 +14,27 @@ data class FoursquareResponse(
 )
 
 data class Meta(
-		val code: Int,
-		val requestId: String
+		val code: Int? = null,
+		val requestId: String? = null
 )
 
 data class Response(
 		val headerFullLocation: String? = null,
 		val headerLocationGranularity: String? = null,
-		val groups: List<VenueGroup>
+		val groups: List<VenueGroup>? = null,
+        val tips: Tips? = null,
+        val photos: Photos? = null
+)
+
+data class Tips(
+        val count: Int? = null,
+        val items: List<Tip>? = null
 )
 
 data class VenueGroup(
 		val type: String? = null,
 		val name: String? = null,
-		val items: List<VenueItem>
+		val items: List<VenueItem>? = null
 )
 
 @SuppressLint("ParcelCreator")
@@ -41,8 +48,8 @@ data class VenueItem (
 @SuppressLint("ParcelCreator")
 @Parcelize
 data class Reasons(
-		val count: Int,
-		val items: List<ReasonItem>
+		val count: Int? = null,
+		val items: List<ReasonItem>? = null
 ): Parcelable
 
 @SuppressLint("ParcelCreator")
@@ -84,9 +91,9 @@ data class Venue(
 @SuppressLint("ParcelCreator")
 @Parcelize
 data class Price(
-		val tier: Int,
-		val message: String,
-		val currency: String
+		val tier: Int? = null,
+		val message: String? = null,
+		val currency: String? = null
 ): Parcelable
 
 @SuppressLint("ParcelCreator")
@@ -110,21 +117,21 @@ data class Category(
 @SuppressLint("ParcelCreator")
 @Parcelize
 data class Icon(
-		val prefix: String,
-		val suffix: String
+		val prefix: String? = null,
+		val suffix: String? = null
 ): Parcelable
 
 @SuppressLint("ParcelCreator")
 @Parcelize
 data class Hours(
-		val status: String
+		val status: String? = null
 ): Parcelable
 
 @SuppressLint("ParcelCreator")
 @Parcelize
 data class FeaturedPhotos(
-		val count: Int?,
-		val items: List<PhotoItem?>?
+		val count: Int? = null,
+		val items: List<PhotoItem?>? = null
 ): Parcelable
 
 @SuppressLint("ParcelCreator")
@@ -155,8 +162,9 @@ data class Menu(
 @SuppressLint("ParcelCreator")
 @Parcelize
 data class Photos(
-		val count: Int,
-		val groups: List<PhotoGroup>
+		val count: Int? = null,
+		val groups: List<PhotoGroup>? = null,
+        val items: List<PhotoItem>? = null
 ): Parcelable
 
 @SuppressLint("ParcelCreator")
@@ -191,7 +199,7 @@ data class PhotoItem(
 @Parcelize
 data class Tip(
 		val id: String? = null,
-		val createdAt: Int? = null,
+		val createdAt: Long? = null,
 		val text: String? = null,
 		val type: String? = null,
 		val url: String? = null,
@@ -205,9 +213,9 @@ data class Tip(
 @Parcelize
 data class User(
 		val id: String,
-		val firstName: String = "",
-        val lastName: String = "",
-		val gender: String,
-		val photo: PhotoItem,
-		val type: String = ""
+		val firstName: String? = null,
+        val lastName: String? = null,
+		val gender: String? = null,
+		val photo: PhotoItem? = null,
+		val type: String? = null
 ): Parcelable

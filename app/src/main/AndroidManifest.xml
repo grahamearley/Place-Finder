@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="website.grahamearley.placefinder.ui.list.PlaceListActivity"
+        <activity
+            android:name=".ui.list.PlaceListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,6 +20,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.detail.PlaceDetailActivity"
+            android:label="@string/place_details"
+            android:parentActivityName=".ui.list.PlaceListActivity"/>
     </application>
 
 </manifest>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootView"
+    tools:context="website.grahamearley.placefinder.ui.detail.PlaceDetailActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/venueInformationLayout"
+        android:background="@android:color/white">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll"
+            android:layout_marginBottom="16dp">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/photoRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="96dp"
+                android:background="@color/lightGray"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/nameTextView"
+                app:layout_constraintEnd_toStartOf="@id/ratingTextView"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/photoRecyclerView"
+                tools:text="Maya Cuisine"
+                style="@style/DetailText.Name" />
+
+            <TextView
+                android:id="@+id/ratingTextView"
+                app:layout_constraintTop_toBottomOf="@id/photoRecyclerView"
+                app:layout_constraintStart_toEndOf="@id/nameTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="10"
+                style="@style/DetailText.Rating" />
+
+            <TextView
+                android:id="@+id/addressTextView"
+                tools:text="1234 Address Street, Minneapolis MN"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nameTextView"
+                app:layout_constraintEnd_toStartOf="@id/ratingTextView"
+                style="@style/DetailText.Address" />
+
+            <TextView
+                android:id="@+id/categoryTextView"
+                android:textColor="@color/colorAccent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addressTextView"
+                app:layout_constraintEnd_toStartOf="@id/ratingTextView"
+                tools:text="Mexican Restaurant"
+                style="@style/DetailText.Category" />
+
+            <TextView
+                android:id="@+id/reasonTextView"
+                app:layout_constraintTop_toBottomOf="@id/categoryTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="This is a good restaurant!"
+                style="@style/DetailText.Reason" />
+
+            <ImageView
+                android:id="@+id/phoneButton"
+                style="@style/VenueDetailIconButton"
+                android:src="@drawable/ic_phone_white_24dp"
+                app:layout_constraintEnd_toStartOf="@id/menuButton"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/reasonTextView"
+                android:contentDescription="@string/call" />
+
+            <ImageView
+                android:id="@+id/menuButton"
+                android:src="@drawable/ic_restaurant_menu_white_24dp"
+                app:layout_constraintTop_toBottomOf="@id/reasonTextView"
+                app:layout_constraintStart_toEndOf="@id/phoneButton"
+                app:layout_constraintEnd_toStartOf="@id/websiteButton"
+                style="@style/VenueDetailIconButton"
+                android:contentDescription="@string/see_menu"/>
+
+            <ImageView
+                android:id="@+id/websiteButton"
+                android:src="@drawable/ic_link_white_24dp"
+                app:layout_constraintTop_toBottomOf="@id/reasonTextView"
+                app:layout_constraintStart_toEndOf="@id/menuButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/VenueDetailIconButton"
+                android:contentDescription="@string/open_website"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/tipsRecyclerView"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:background="@color/lightGray"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</android.support.design.widget.CoordinatorLayout>

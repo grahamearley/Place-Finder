@@ -1,5 +1,6 @@
 package website.grahamearley.placefinder.ui.list
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
@@ -9,6 +10,7 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_place_list.*
 import kotlinx.android.synthetic.main.search_bar.*
 import website.grahamearley.placefinder.*
+import website.grahamearley.placefinder.ui.detail.PlaceDetailActivity
 import website.grahamearley.placefinder.ui.list.contract.PlaceListPresenterContract
 import website.grahamearley.placefinder.ui.list.contract.PlaceListViewContract
 
@@ -64,7 +66,7 @@ class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
     }
 
     override fun launchVenueDetailView(venueItem: VenueItem) {
-        // TODO
+        PlaceDetailActivity.launch(this, venueItem)
     }
 
     override fun showStatusText() {

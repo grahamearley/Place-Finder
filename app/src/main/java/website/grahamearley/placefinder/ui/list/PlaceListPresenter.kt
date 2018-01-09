@@ -27,7 +27,7 @@ class PlaceListPresenter(override val view: PlaceListViewContract,
             interactor.getPlacesAsync(query, near,
                     onResponse = { response ->
                         val venues = response?.body()?.response?.groups
-                                            ?.flatMap { it.items }
+                                            ?.flatMap { it.items.orEmpty() }
                         updateVenuesList(venues)
                     }, onFailure = { _ ->
                         showErrorStatus()
