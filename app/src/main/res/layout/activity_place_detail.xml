@@ -54,4 +54,42 @@
         tools:text="Mexican Restaurant"
         style="@style/DetailText.Category" />
 
+    <ImageView
+        android:id="@+id/phoneButton"
+        style="@style/VenueDetailIconButton"
+        android:src="@drawable/ic_phone_white_24dp"
+        app:layout_constraintEnd_toStartOf="@id/menuButton"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/categoryTextView"
+        android:contentDescription="@string/call" />
+
+    <ImageView
+        android:id="@+id/menuButton"
+        android:src="@drawable/ic_restaurant_menu_white_24dp"
+        app:layout_constraintTop_toBottomOf="@id/categoryTextView"
+        app:layout_constraintStart_toEndOf="@id/phoneButton"
+        app:layout_constraintEnd_toStartOf="@id/websiteButton"
+        style="@style/VenueDetailIconButton"
+        android:contentDescription="@string/see_menu"/>
+
+    <ImageView
+        android:id="@+id/websiteButton"
+        android:src="@drawable/ic_link_white_24dp"
+        app:layout_constraintTop_toBottomOf="@id/categoryTextView"
+        app:layout_constraintStart_toEndOf="@id/menuButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/VenueDetailIconButton"
+        android:contentDescription="@string/open_website"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/tipsRecyclerView"
+        app:layout_constraintTop_toBottomOf="@id/phoneButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+
 </android.support.constraint.ConstraintLayout>

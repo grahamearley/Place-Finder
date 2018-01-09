@@ -8,4 +8,7 @@
     <string name="in">in</string>
     <string name="place_details">Place Details</string>
     <string name="there_was_an_error_loading_details_for_that_place">There was an error loading details for that place</string>
+    <string name="call">Call</string>
+    <string name="see_menu">See menu</string>
+    <string name="open_website">Open website</string>
 </resources>
