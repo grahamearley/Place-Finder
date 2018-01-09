@@ -14,4 +14,6 @@
     <string name="menu_not_available">Menu not available.</string>
     <string name="phone_number_not_available">Phone number not available</string>
     <string name="website_not_available">Website not available.</string>
+    <string name="tacos">Tacos</string>
+    <string name="minneapolis">Minneapolis</string>
 </resources>

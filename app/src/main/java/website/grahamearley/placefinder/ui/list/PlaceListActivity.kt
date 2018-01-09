@@ -1,6 +1,5 @@
 package website.grahamearley.placefinder.ui.list
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
@@ -16,6 +15,11 @@ import website.grahamearley.placefinder.ui.list.contract.PlaceListViewContract
 
 
 class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
+
+    companion object {
+        const val QUERY_TEXT = "QUERY_TEXT"
+        const val LOCATION_TEXT = "LOCATION_TEXT"
+    }
 
     override val presenter: PlaceListPresenterContract = PlaceListPresenter(this)
     private val adapter = VenueRecyclerAdapter()
@@ -48,6 +52,13 @@ class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
         } else {
             setSearchBarGravityToBottom()
         }
+
+        setInitialSearchTerms()
+    }
+
+    private fun setInitialSearchTerms() {
+        queryEditText.setText(R.string.tacos)
+        locationEditText.setText(R.string.minneapolis)
     }
 
     override fun showListItems() {
@@ -119,5 +130,21 @@ class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
     private fun getQueryText(): String = queryEditText.text.toString()
 
     private fun getLocationText(): String = locationEditText.text.toString()
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        outState?.putString(QUERY_TEXT, queryEditText.text.toString())
+        outState?.putString(LOCATION_TEXT, locationEditText.text.toString())
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        val queryText = savedInstanceState?.getString(QUERY_TEXT)
+        val locationText = savedInstanceState?.getString(LOCATION_TEXT)
+
+        queryEditText.setText(queryText)
+        locationEditText.setText(locationText)
+
+        super.onRestoreInstanceState(savedInstanceState)
+    }
 }
 
