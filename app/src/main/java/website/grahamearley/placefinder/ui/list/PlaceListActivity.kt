@@ -66,8 +66,7 @@ class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
     }
 
     override fun launchVenueDetailView(venueItem: VenueItem) {
-        val intent = Intent(this, PlaceDetailActivity::class.java)
-        startActivity(intent)
+        PlaceDetailActivity.launch(this, venueItem)
     }
 
     override fun showStatusText() {
