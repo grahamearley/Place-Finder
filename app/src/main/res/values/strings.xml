@@ -6,4 +6,5 @@
     <string name="no_places_found">No places found.</string>
     <string name="you_need_to_specify_a_location_for_your_search">You need to specify a location for your search.</string>
     <string name="in">in</string>
+    <string name="place_details">Place Details</string>
 </resources>
