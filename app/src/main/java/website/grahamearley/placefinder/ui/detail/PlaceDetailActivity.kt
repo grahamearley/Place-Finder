@@ -59,7 +59,6 @@ class PlaceDetailActivity : PlaceDetailViewContract, AppCompatActivity() {
         photoRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         photoRecyclerView.adapter = imageAdapter
 
-        tipsRecyclerView.setHasFixedSize(true)
         tipsRecyclerView.layoutManager = LinearLayoutManager(this)
         tipsRecyclerView.adapter = tipAdapter
     }
