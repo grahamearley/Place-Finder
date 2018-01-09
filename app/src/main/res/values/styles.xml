@@ -37,4 +37,41 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="DetailText">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">24dp</item>
+        <item name="android:layout_marginRight">24dp</item>
+    </style>
+
+    <style name="DetailText.Reason">
+        <item name="android:background">@color/colorAccent</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:layout_marginRight">0dp</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="DetailText.Name">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">16dp</item>
+    </style>
+
+    <style name="DetailText.Rating">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:background">@color/gray</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+    </style>
+
+    <style name="DetailText.Address">
+    </style>
+
+    <style name="DetailText.Category">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
 </resources>

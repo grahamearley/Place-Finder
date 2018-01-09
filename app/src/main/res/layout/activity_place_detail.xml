@@ -1,9 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="website.grahamearley.placefinder.ui.detail.PlaceDetailActivity">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/photoRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="96dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/reasonTextView"
+        app:layout_constraintTop_toBottomOf="@id/photoRecyclerView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="This is a good restaurant!"
+        style="@style/DetailText.Reason" />
+
+    <TextView
+        android:id="@+id/nameTextView"
+        app:layout_constraintEnd_toStartOf="@id/ratingTextView"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reasonTextView"
+        tools:text="Maya Cuisine"
+        style="@style/DetailText.Name" />
+
+    <TextView
+        android:id="@+id/ratingTextView"
+        app:layout_constraintTop_toBottomOf="@id/reasonTextView"
+        app:layout_constraintStart_toEndOf="@id/nameTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="10"
+        style="@style/DetailText.Rating" />
+
+    <TextView
+        android:id="@+id/addressTextView"
+        tools:text="1234 Address Street, Minneapolis MN"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nameTextView"
+        style="@style/DetailText.Address" />
+
+    <TextView
+        android:id="@+id/categoryTextView"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addressTextView"
+        tools:text="Mexican Restaurant"
+        style="@style/DetailText.Category" />
 
 </android.support.constraint.ConstraintLayout>
