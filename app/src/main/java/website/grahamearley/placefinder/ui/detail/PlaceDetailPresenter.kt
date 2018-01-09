@@ -18,7 +18,7 @@ class PlaceDetailPresenter(override val view: PlaceDetailViewContract) : PlaceDe
     private val category get() = venueItem?.venue?.getFirstCategoryOrNull()
     private val rating get() = venueItem?.venue?.rating
     private val ratingColor get() = venueItem?.venue?.ratingColor
-    private val menuUrl get() = venueItem?.venue?.menu?.mobileUrl
+    private val menuUrl get() = venueItem?.venue?.menu?.url
     private val phoneNumber get() = venueItem?.venue?.contact?.phone
     private val website get() = venueItem?.venue?.url
 

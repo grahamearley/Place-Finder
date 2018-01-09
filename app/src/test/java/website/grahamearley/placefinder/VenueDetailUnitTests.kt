@@ -365,7 +365,7 @@ class VenueDetailUnitTests {
     fun showsMenuIfHasMenu() {
         menuButtonIsVisible = false
 
-        val menu = Menu(mobileUrl = "menu.com")
+        val menu = Menu(url = "menu.com")
         presenter.venueItem = VenueItem(venue = Venue(menu = menu))
         presenter.onViewCreated()
 
@@ -437,7 +437,7 @@ class VenueDetailUnitTests {
 
     @Test
     fun launchesMenuWhenButtonClicked() {
-        val menu = Menu(mobileUrl = "menu.com")
+        val menu = Menu(url = "menu.com")
         presenter.venueItem = VenueItem(venue = Venue(menu = menu))
         presenter.onMenuButtonClicked()
 
