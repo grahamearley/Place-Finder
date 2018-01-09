@@ -1,6 +1,7 @@
 package website.grahamearley.placefinder.ui.detail
 
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import website.grahamearley.placefinder.*
@@ -40,7 +41,8 @@ class TipRecyclerAdapter : RecyclerView.Adapter<TipViewHolder>() {
                 tipTextView.show()
             } ?: tipTextView.hide()
 
-            tip.createdAt?.let { createdAtMillis ->
+            tip.createdAt?.let { createdAtSeconds ->
+                val createdAtMillis = createdAtSeconds * 1000
                 val date = Date(createdAtMillis)
                 val dateString = SimpleDateFormat.getDateInstance().format(date)
                 tipDateTextView.text = dateString
