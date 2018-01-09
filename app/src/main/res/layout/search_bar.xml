@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/pill_white"
+    android:background="@drawable/pill_primary"
     android:layout_margin="16dp"
     android:layout_gravity="bottom"
     android:id="@+id/searchBar">
@@ -27,6 +27,7 @@
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
         android:textSize="18sp"
+        android:textColor="@android:color/white"
         app:layout_constraintStart_toEndOf="@id/queryEditText"
         app:layout_constraintEnd_toStartOf="@id/locationEditText"
         app:layout_constraintTop_toTopOf="@id/queryEditText"
