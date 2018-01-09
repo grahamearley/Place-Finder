@@ -2,6 +2,7 @@ package website.grahamearley.placefinder.ui.detail
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import website.grahamearley.placefinder.R
 import website.grahamearley.placefinder.Tip
 import website.grahamearley.placefinder.ui.detail.contract.PlaceDetailPresenterContract
@@ -161,5 +162,17 @@ class PlaceDetailActivity : PlaceDetailViewContract, AppCompatActivity() {
 
     override fun showWebsiteNotAvailableError() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> {
+                // Mimic back button when "up" button is pressed:
+                finish()
+                return true
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 }
