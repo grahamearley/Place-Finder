@@ -21,7 +21,13 @@ data class Meta(
 data class Response(
 		val headerFullLocation: String? = null,
 		val headerLocationGranularity: String? = null,
-		val groups: List<VenueGroup>? = null
+		val groups: List<VenueGroup>? = null,
+        val tips: Tips? = null
+)
+
+data class Tips(
+        val count: Int? = null,
+        val items: List<Tip>? = null
 )
 
 data class VenueGroup(

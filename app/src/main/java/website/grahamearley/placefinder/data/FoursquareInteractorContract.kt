@@ -10,4 +10,8 @@ interface FoursquareInteractorContract {
     fun getPlacesAsync(query: String, near: String,
                        onResponse: (response: Response<FoursquareResponse>?) -> Unit,
                        onFailure: (throwable: Throwable?) -> Unit)
+
+    fun getVenueTipsAsync(venueId: String,
+                          onResponse: (response: Response<FoursquareResponse>?) -> Unit,
+                          onFailure: (throwable: Throwable?) -> Unit)
 }
