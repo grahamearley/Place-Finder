@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.support.annotation.DimenRes
 import android.support.annotation.StringRes
+import android.support.design.widget.Snackbar
 import android.support.v4.view.ViewCompat
 import android.support.v7.content.res.AppCompatResources
 import android.view.View
@@ -66,4 +67,8 @@ fun Activity.hideSoftKeyboard() {
 
 fun Context.showToast(@StringRes stringRes: Int) {
     Toast.makeText(this, stringRes, Toast.LENGTH_LONG).show()
+}
+
+fun View.showSnackbar(@StringRes stringRes: Int) {
+    Snackbar.make(this, stringRes, Snackbar.LENGTH_LONG).show()
 }

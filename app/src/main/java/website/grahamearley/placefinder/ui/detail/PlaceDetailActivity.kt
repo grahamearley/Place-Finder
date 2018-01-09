@@ -148,15 +148,15 @@ class PlaceDetailActivity : PlaceDetailViewContract, AppCompatActivity() {
     }
 
     override fun showMenuNotAvailableError() {
-        // TODO
+        rootView.showSnackbar(R.string.menu_not_available)
     }
 
     override fun showPhoneNumberNotAvailableError() {
-        // TODO
+        rootView.showSnackbar(R.string.phone_number_not_available)
     }
 
     override fun showWebsiteNotAvailableError() {
-        // TODO
+        rootView.showSnackbar(R.string.website_not_available)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
