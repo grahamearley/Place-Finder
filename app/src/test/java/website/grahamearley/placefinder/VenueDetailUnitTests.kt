@@ -8,6 +8,8 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
+import retrofit2.Response
+import website.grahamearley.placefinder.data.FoursquareInteractorContract
 import website.grahamearley.placefinder.ui.detail.PlaceDetailPresenter
 import website.grahamearley.placefinder.ui.detail.contract.PlaceDetailViewContract
 
@@ -147,7 +149,6 @@ class VenueDetailUnitTests {
         presenter.venueItem = VenueItem(
                 reasons = Reasons(count = 1,
                         items = listOf(ReasonItem(summary = "Here's a reason"))))
-        presenter.onViewCreated()
 
         verify(mockedView).setReason("Here's a reason")
         verify(mockedView).showReason()
@@ -162,22 +163,49 @@ class VenueDetailUnitTests {
         presenter.venueItem = VenueItem(
                 reasons = Reasons(count = 0,
                         items = emptyList()))
-        presenter.onViewCreated()
+
         verify(mockedView).hideReason()
 
         assertFalse("Reason is not visible when it doesn't exist.", reasonIsVisible)
     }
 
     @Test
+    fun hidesTipsAndImagesIfNoVenueId() {
+        venueTipsAreVisible = false
+
+        val noIdVenue = Venue()
+        presenter.venueItem = VenueItem(venue = noIdVenue)
+
+        verify(mockedView).hideVenueImages()
+        verify(mockedView).hideVenueTips()
+
+        assertFalse("Tips are not visible when there is no venue ID.", venueTipsAreVisible)
+        assertFalse("Images are not visible when there is no venue ID.", venueImagesAreVisible)
+    }
+
+    @Test
     fun showsTipsIfHasTips() {
         venueTipsAreVisible = false
 
-        val tip = Tip(text = "Good coffee!")
-        val tips = listOf(tip)
-        presenter.venueItem = VenueItem(tips = tips)
-        presenter.onViewCreated()
+        val tipList = listOf(Tip(text = "Good coffee!"))
+        val tips = Tips(items = tipList)
 
-        verify(mockedView).setVenueTips(tips)
+        val interactorWithTips = object: FoursquareInteractorContract {
+            override fun getPlacesAsync(query: String, near: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
+            override fun getVenuePhotosAsync(venueId: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
+
+            override fun getVenueTipsAsync(venueId: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {
+                val foursquareResponse = FoursquareResponse(response = Response(tips = tips))
+                val retrofitResponse = retrofit2.Response.success(foursquareResponse)
+
+                onResponse(retrofitResponse)
+            }
+        }
+
+        val presenterWithDummyInteractor = PlaceDetailPresenter(mockedView, interactorWithTips)
+
+        presenterWithDummyInteractor.loadTips("dummy venue ID")
+        verify(mockedView).setVenueTips(tipList)
         verify(mockedView).showVenueTips()
 
         assertTrue("Tips are visible when they exist.", venueTipsAreVisible)
@@ -186,23 +214,48 @@ class VenueDetailUnitTests {
     @Test
     fun hidesTipsIfNoTips() {
         venueTipsAreVisible = true
-        presenter.venueItem = VenueItem(tips = emptyList())
-        presenter.onViewCreated()
 
+        val emptyTips = Tips(items = emptyList())
+
+        val interactorWithNoTips = object: FoursquareInteractorContract {
+            override fun getPlacesAsync(query: String, near: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
+            override fun getVenuePhotosAsync(venueId: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
+
+            override fun getVenueTipsAsync(venueId: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {
+                val foursquareResponse = FoursquareResponse(response = Response(tips = emptyTips))
+                val retrofitResponse = retrofit2.Response.success(foursquareResponse)
+
+                onResponse(retrofitResponse)
+            }
+        }
+
+        val presenterWithDummyInteractor = PlaceDetailPresenter(mockedView, interactorWithNoTips)
+
+        presenterWithDummyInteractor.loadTips("dummy venue ID")
         verify(mockedView).hideVenueTips()
 
-        assertFalse("Tips are not visible when the list is empty.", venueTipsAreVisible)
+        assertFalse("Tips are not visible when there aren't any.", venueTipsAreVisible)
     }
 
     @Test
-    fun hidesTipsIfTipsAreNull() {
+    fun hidesTipsIfRequestFails() {
         venueTipsAreVisible = true
-        presenter.venueItem = VenueItem()
-        presenter.onViewCreated()
 
+        val failingInteractor = object: FoursquareInteractorContract {
+            override fun getPlacesAsync(query: String, near: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
+            override fun getVenuePhotosAsync(venueId: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
+
+            override fun getVenueTipsAsync(venueId: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {
+                onFailure(null)
+            }
+        }
+
+        val presenterWithDummyInteractor = PlaceDetailPresenter(mockedView, failingInteractor)
+
+        presenterWithDummyInteractor.loadTips("dummy venue ID")
         verify(mockedView).hideVenueTips()
 
-        assertFalse("Tips are not visible when they are null.", venueTipsAreVisible)
+        assertFalse("Tips are not visible when request fails.", venueTipsAreVisible)
     }
 
     @Test
@@ -215,17 +268,24 @@ class VenueDetailUnitTests {
         val photoItem2 = PhotoItem(prefix = "photo.biz/", suffix = "/pic.jpg")
         val url2 = "photo.biz/cap300/pic.jpg"
 
-        val photoGroup1 = PhotoGroup(items = listOf(photoItem1, photoItem1))
-        val photoGroup2 = PhotoGroup(items = listOf(photoItem2))
-        val photoGroup3 = PhotoGroup(items = emptyList())
-        val groups = listOf(photoGroup1, photoGroup2, photoGroup3)
+        val expectedUrls = listOf(url1, url2)
 
-        val expectedUrls = listOf(url1, url1, url2)
+        val photos = Photos(count = 2, items = listOf(photoItem1, photoItem2))
 
-        val photos = Photos(count = 3, groups = groups)
+        val interactorWithPhotos = object: FoursquareInteractorContract {
+            override fun getPlacesAsync(query: String, near: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
+            override fun getVenueTipsAsync(venueId: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
 
-        presenter.venueItem = VenueItem(venue = Venue(photos = photos))
-        presenter.onViewCreated()
+            override fun getVenuePhotosAsync(venueId: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {
+                val foursquareResponse = FoursquareResponse(response = Response(photos = photos))
+                val retrofitResponse = retrofit2.Response.success(foursquareResponse)
+
+                onResponse(retrofitResponse)
+            }
+        }
+
+        val presenterWithDummyInteractor = PlaceDetailPresenter(mockedView, interactorWithPhotos)
+        presenterWithDummyInteractor.loadPhotos("venue ID!")
 
         verify(mockedView).setVenueImages(expectedUrls)
         verify(mockedView).showVenueImages()
@@ -237,33 +297,53 @@ class VenueDetailUnitTests {
     fun hidesImagesIfNoImages() {
         venueImagesAreVisible = true
 
-        val photos = Photos(count = 3, groups = emptyList())
+        val emptyPhotos = Photos(count = 0, items = emptyList())
 
-        presenter.venueItem = VenueItem(venue = Venue(photos = photos))
-        presenter.onViewCreated()
+        val interactorWithNoPhotos = object: FoursquareInteractorContract {
+            override fun getPlacesAsync(query: String, near: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
+            override fun getVenueTipsAsync(venueId: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
+
+            override fun getVenuePhotosAsync(venueId: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {
+                val foursquareResponse = FoursquareResponse(response = Response(photos = emptyPhotos))
+                val retrofitResponse = retrofit2.Response.success(foursquareResponse)
+
+                onResponse(retrofitResponse)
+            }
+        }
+
+        val presenterWithDummyInteractor = PlaceDetailPresenter(mockedView, interactorWithNoPhotos)
+        presenterWithDummyInteractor.loadPhotos("venue ID!")
 
         verify(mockedView).hideVenueImages()
 
-        assertFalse("Images are not visible when their list is empty.", venueImagesAreVisible)
+        assertFalse("Images are not visible when there are none.", venueImagesAreVisible)
     }
 
     @Test
     fun hidesImagesIfImagesAreNull() {
         venueImagesAreVisible = true
 
-        presenter.venueItem = VenueItem(venue = Venue())
-        presenter.onViewCreated()
+        val failingInteractor = object: FoursquareInteractorContract {
+            override fun getPlacesAsync(query: String, near: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
+            override fun getVenueTipsAsync(venueId: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
+
+            override fun getVenuePhotosAsync(venueId: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {
+                onFailure(null)
+            }
+        }
+
+        val presenterWithDummyInteractor = PlaceDetailPresenter(mockedView, failingInteractor)
+        presenterWithDummyInteractor.loadPhotos("venue ID!")
 
         verify(mockedView).hideVenueImages()
 
-        assertFalse("Images are not visible when they are null.", venueImagesAreVisible)
+        assertFalse("Images are not visible when request fails.", venueImagesAreVisible)
     }
 
     @Test
     fun showsNameIfHasName() {
         venueNameIsVisible = false
         presenter.venueItem = VenueItem(venue = Venue(name = "Asha Dining Hall"))
-        presenter.onViewCreated()
 
         verify(mockedView).setVenueName("Asha Dining Hall")
         verify(mockedView).showVenueName()
@@ -275,7 +355,6 @@ class VenueDetailUnitTests {
     fun hideNameIfNoName() {
         venueNameIsVisible = true
         presenter.venueItem = VenueItem(venue = Venue())
-        presenter.onViewCreated()
 
         verify(mockedView).hideVenueName()
 
@@ -288,7 +367,6 @@ class VenueDetailUnitTests {
 
         val location = Location(formattedAddress = listOf("address", "city"))
         presenter.venueItem = VenueItem(venue = Venue(location = location))
-        presenter.onViewCreated()
 
         verify(mockedView).setVenueAddress("address")
         verify(mockedView).showVenueAddress()
@@ -302,7 +380,6 @@ class VenueDetailUnitTests {
 
         val location = Location()
         presenter.venueItem = VenueItem(venue = Venue(location = location))
-        presenter.onViewCreated()
 
         verify(mockedView).hideVenueAddress()
 
@@ -316,7 +393,6 @@ class VenueDetailUnitTests {
         val category = Category(name = "Coffee Shop")
         val categoryList = listOf(category)
         presenter.venueItem = VenueItem(venue = Venue(categories = categoryList))
-        presenter.onViewCreated()
 
         verify(mockedView).setVenueCategory("Coffee Shop")
         verify(mockedView).showVenueCategory()
@@ -329,7 +405,6 @@ class VenueDetailUnitTests {
         venueCategoryIsVisible = true
 
         presenter.venueItem = VenueItem(venue = Venue(categories = emptyList()))
-        presenter.onViewCreated()
 
         verify(mockedView).hideVenueCategory()
 
@@ -341,7 +416,6 @@ class VenueDetailUnitTests {
         ratingIsVisible = false
 
         presenter.venueItem = VenueItem(venue = Venue(rating = 9.5))
-        presenter.onViewCreated()
 
         verify(mockedView).setRating(9.5)
         verify(mockedView).showRating()
@@ -354,7 +428,6 @@ class VenueDetailUnitTests {
         ratingIsVisible = true
 
         presenter.venueItem = VenueItem(venue = Venue())
-        presenter.onViewCreated()
 
         verify(mockedView).hideRating()
 
@@ -367,7 +440,6 @@ class VenueDetailUnitTests {
 
         val menu = Menu(url = "menu.com")
         presenter.venueItem = VenueItem(venue = Venue(menu = menu))
-        presenter.onViewCreated()
 
         verify(mockedView).showMenuButton()
 
@@ -379,7 +451,6 @@ class VenueDetailUnitTests {
         menuButtonIsVisible = true
 
         presenter.venueItem = VenueItem(venue = Venue())
-        presenter.onViewCreated()
 
         verify(mockedView).hideMenuButton()
 
@@ -392,7 +463,6 @@ class VenueDetailUnitTests {
 
         val contact = Contact(phone = "8675309")
         presenter.venueItem = VenueItem(venue = Venue(contact = contact))
-        presenter.onViewCreated()
 
         verify(mockedView).showPhoneButton()
 
@@ -404,7 +474,6 @@ class VenueDetailUnitTests {
         phoneButtonIsVisible = true
 
         presenter.venueItem = VenueItem(venue = Venue())
-        presenter.onViewCreated()
 
         verify(mockedView).hidePhoneButton()
 
@@ -416,7 +485,6 @@ class VenueDetailUnitTests {
         websiteButtonIsVisible = false
 
         presenter.venueItem = VenueItem(venue = Venue(url = "food.com"))
-        presenter.onViewCreated()
 
         verify(mockedView).showWebsiteButton()
 
@@ -428,7 +496,6 @@ class VenueDetailUnitTests {
         websiteButtonIsVisible = true
 
         presenter.venueItem = VenueItem(venue = Venue())
-        presenter.onViewCreated()
 
         verify(mockedView).hideWebsiteButton()
 
