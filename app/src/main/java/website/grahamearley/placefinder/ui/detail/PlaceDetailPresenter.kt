@@ -1,18 +1,22 @@
 package website.grahamearley.placefinder.ui.detail
 
 import website.grahamearley.placefinder.VenueItem
+import website.grahamearley.placefinder.data.FoursquareInteractor
+import website.grahamearley.placefinder.data.FoursquareInteractorContract
 import website.grahamearley.placefinder.ui.detail.contract.PlaceDetailPresenterContract
 import website.grahamearley.placefinder.ui.detail.contract.PlaceDetailViewContract
 
 /**
  * Presenter implementation for the Venue detail view.
  */
-class PlaceDetailPresenter(override val view: PlaceDetailViewContract) : PlaceDetailPresenterContract {
+class PlaceDetailPresenter(override val view: PlaceDetailViewContract,
+                           val interactor: FoursquareInteractorContract = FoursquareInteractor())
+    : PlaceDetailPresenterContract {
+
     override var venueItem: VenueItem? = null
 
     private val reason get() = venueItem?.reasons?.items?.firstOrNull()
     private val images get() = venueItem?.venue?.getPhotoUrlsOrNull()
-    private val tips get() = venueItem?.tips
     private val name get() = venueItem?.venue?.name
     private val address get() = venueItem?.venue?.getStreetAddressOrNull()
     private val category get() = venueItem?.venue?.getFirstCategoryOrNull()
@@ -37,14 +41,7 @@ class PlaceDetailPresenter(override val view: PlaceDetailViewContract) : PlaceDe
             }
         } ?: view.hideVenueImages()
 
-        tips?.let { tips ->
-            if (tips.isEmpty()) {
-                view.hideVenueTips()
-            } else {
-                view.setVenueTips(tips)
-                view.showVenueTips()
-            }
-        } ?: view.hideVenueTips()
+        venueItem?.venue?.id?.let(this::requestAndDisplayTips) ?: view.hideVenueTips()
 
         name?.let { name ->
             view.setVenueName(name)
@@ -98,5 +95,18 @@ class PlaceDetailPresenter(override val view: PlaceDetailViewContract) : PlaceDe
         website?.let { website ->
             view.launchUrl(website)
         } ?: view.showWebsiteNotAvailableError()
+    }
+
+    private fun requestAndDisplayTips(venueId: String) {
+        interactor.getVenueTipsAsync(venueId, onResponse = { response ->
+                        val tips = response?.body()?.response?.tips?.items
+
+                        tips?.let {
+                            view.setVenueTips(tips)
+                            view.showVenueTips()
+                        }
+                    }, onFailure = {
+                        view.hideVenueTips()
+                    })
     }
 }
