@@ -33,8 +33,10 @@ class PlaceDetailActivity : PlaceDetailViewContract, AppCompatActivity() {
     }
 
     override val presenter: PlaceDetailPresenterContract = PlaceDetailPresenter(this)
+
     private val venueItem by lazy { intent.getVenueItem() }
     private val imageAdapter = ImageRecyclerAdapter()
+    private val tipAdapter = TipRecyclerAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +58,10 @@ class PlaceDetailActivity : PlaceDetailViewContract, AppCompatActivity() {
         photoRecyclerView.setHasFixedSize(true)
         photoRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         photoRecyclerView.adapter = imageAdapter
+
+        tipsRecyclerView.setHasFixedSize(true)
+        tipsRecyclerView.layoutManager = LinearLayoutManager(this)
+        tipsRecyclerView.adapter = tipAdapter
     }
 
     override fun setReason(reason: String) {
@@ -75,15 +81,15 @@ class PlaceDetailActivity : PlaceDetailViewContract, AppCompatActivity() {
     override fun hideVenueImages() = photoRecyclerView.hide()
 
     override fun setVenueTips(tips: List<Tip>) {
-        // TODO
+        tipAdapter.setTips(tips)
     }
 
     override fun showVenueTips() {
-        // TODO
+        tipsRecyclerView.show()
     }
 
     override fun hideVenueTips() {
-        // TODO
+        tipsRecyclerView.hide()
     }
 
     override fun setVenueName(name: String) {
