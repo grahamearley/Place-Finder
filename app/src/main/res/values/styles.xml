@@ -48,14 +48,6 @@
         <item name="android:layout_marginRight">24dp</item>
     </style>
 
-    <style name="DetailText.Reason">
-        <item name="android:background">@color/colorAccent</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:layout_marginLeft">0dp</item>
-        <item name="android:layout_marginRight">0dp</item>
-        <item name="android:padding">16dp</item>
-    </style>
-
     <style name="DetailText.Name">
         <item name="android:textSize">24sp</item>
         <item name="android:textStyle">bold</item>
@@ -76,6 +68,10 @@
 
     <style name="DetailText.Category">
         <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="DetailText.Reason">
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
     <style name="VenueDetailIconButton">
