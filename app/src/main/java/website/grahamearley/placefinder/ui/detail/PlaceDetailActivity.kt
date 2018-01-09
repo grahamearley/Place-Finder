@@ -1,12 +1,12 @@
 package website.grahamearley.placefinder.ui.detail
 
 import android.app.Activity
-import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_place_detail.*
 import website.grahamearley.placefinder.*
@@ -33,8 +33,8 @@ class PlaceDetailActivity : PlaceDetailViewContract, AppCompatActivity() {
     }
 
     override val presenter: PlaceDetailPresenterContract = PlaceDetailPresenter(this)
-
     private val venueItem by lazy { intent.getVenueItem() }
+    private val imageAdapter = ImageRecyclerAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +48,14 @@ class PlaceDetailActivity : PlaceDetailViewContract, AppCompatActivity() {
             presenter.venueItem = venueItem
         }
 
+        initializeUi()
         presenter.onViewCreated()
+    }
+
+    private fun initializeUi() {
+        photoRecyclerView.setHasFixedSize(true)
+        photoRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        photoRecyclerView.adapter = imageAdapter
     }
 
     override fun setReason(reason: String) {
@@ -60,7 +67,7 @@ class PlaceDetailActivity : PlaceDetailViewContract, AppCompatActivity() {
     override fun hideReason() = reasonTextView.hide()
 
     override fun setVenueImages(urls: List<String>) {
-        // TODO
+        imageAdapter.setImageUrls(urls)
     }
 
     override fun showVenueImages() = photoRecyclerView.show()
