@@ -47,11 +47,9 @@ class PlaceDetailActivity : PlaceDetailViewContract, AppCompatActivity() {
             showToast(R.string.there_was_an_error_loading_details_for_that_place)
             finish()
         } else {
+            initializeUi()
             presenter.venueItem = venueItem
         }
-
-        initializeUi()
-        presenter.onViewCreated()
     }
 
     private fun initializeUi() {
