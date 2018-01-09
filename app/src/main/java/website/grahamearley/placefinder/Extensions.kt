@@ -18,6 +18,14 @@ import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import android.opengl.ETC1.getHeight
+import android.opengl.ETC1.getWidth
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.Bitmap
+
+
 
 /**
  * Utility extension functions for various classes.
@@ -57,6 +65,29 @@ fun ImageView.loadImage(url: String) {
             .fit()
             .centerCrop()
             .into(this)
+}
+
+/**
+ *  Image rounding solution from here: https://stackoverflow.com/a/37756752/5054197
+ */
+fun ImageView.loadImageRounded(url: String) {
+    Picasso.with(context)
+            .load(url)
+            .fit()
+            .centerCrop()
+            .into(this, object : com.squareup.picasso.Callback {
+                override fun onError() {
+                    this@loadImageRounded.setImageResource(R.drawable.ic_error_gray_32dp)
+                }
+
+                override fun onSuccess() {
+                    val imageBitmap = (this@loadImageRounded.drawable as BitmapDrawable).bitmap
+                    val imageDrawable = RoundedBitmapDrawableFactory.create(resources, imageBitmap)
+                    imageDrawable.isCircular = true
+                    imageDrawable.cornerRadius = Math.max(imageBitmap.width, imageBitmap.height) / 2.0f
+                    this@loadImageRounded.setImageDrawable(imageDrawable)
+                }
+            })
 }
 
 fun Activity.hideSoftKeyboard() {

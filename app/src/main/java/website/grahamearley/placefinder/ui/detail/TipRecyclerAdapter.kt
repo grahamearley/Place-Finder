@@ -1,7 +1,6 @@
 package website.grahamearley.placefinder.ui.detail
 
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import website.grahamearley.placefinder.*
@@ -27,7 +26,7 @@ class TipRecyclerAdapter : RecyclerView.Adapter<TipViewHolder>() {
 
         holder?.apply {
             tip.user?.photo?.getUrl()?.let { imageUrl ->
-                userImageView.loadImage(imageUrl)
+                userImageView.loadImageRounded(imageUrl)
                 userImageView.show()
             } ?: userImageView.hide()
 
