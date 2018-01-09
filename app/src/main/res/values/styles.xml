@@ -83,4 +83,24 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="TipCardText">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+    </style>
+
+    <style name="TipCardText.UserName">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TipCardText.Tip">
+    </style>
+
+    <style name="TipCardText.Date">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
 </resources>

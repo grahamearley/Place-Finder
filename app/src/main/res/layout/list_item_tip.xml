@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/userPhotoImageView"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            tools:src="@mipmap/ic_launcher"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/userNameTextView"
+            style="@style/TipCardText.UserName"
+            tools:text="Jim LeFleur"
+            app:layout_constraintStart_toEndOf="@id/userPhotoImageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/userPhotoImageView"
+            app:layout_constraintBottom_toBottomOf="@id/userPhotoImageView"/>
+
+        <TextView
+            android:id="@+id/tipTextView"
+            style="@style/TipCardText.Tip"
+            tools:text="This is a great place! I'm writing a nice long tip here too. Multiple lines even!"
+            app:layout_constraintTop_toBottomOf="@id/userPhotoImageView"
+            app:layout_constraintStart_toEndOf="@id/userPhotoImageView"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/tipDateTextView"
+            style="@style/TipCardText.Date"
+            tools:text="July 17, 1974"
+            app:layout_constraintTop_toBottomOf="@id/tipTextView"
+            app:layout_constraintStart_toEndOf="@id/userPhotoImageView"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>
