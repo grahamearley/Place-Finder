@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     app:cardCornerRadius="8dp"
+    android:foreground="?android:attr/selectableItemBackground"
     android:layout_margin="8dp">
 
     <android.support.constraint.ConstraintLayout
