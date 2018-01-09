@@ -191,7 +191,7 @@ data class PhotoItem(
 @Parcelize
 data class Tip(
 		val id: String? = null,
-		val createdAt: Int? = null,
+		val createdAt: Long? = null,
 		val text: String? = null,
 		val type: String? = null,
 		val url: String? = null,
