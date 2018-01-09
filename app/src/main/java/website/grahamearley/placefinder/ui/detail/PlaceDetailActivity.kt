@@ -3,6 +3,7 @@ package website.grahamearley.placefinder.ui.detail
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -116,52 +117,34 @@ class PlaceDetailActivity : PlaceDetailViewContract, AppCompatActivity() {
 
     override fun hideRating() = ratingTextView.hide()
 
-    override fun setMenuUrl(url: String) {
-        // TODO
-    }
+    override fun showMenuButton() = menuButton.show()
 
-    override fun showMenuButton() {
-        // TODO
-    }
+    override fun hideMenuButton() = menuButton.hide()
 
-    override fun hideMenuButton() {
-        // TODO
-    }
+    override fun showPhoneButton() = phoneButton.show()
 
-    override fun setPhoneNumber(phoneNumber: String) {
-        // TODO
-    }
+    override fun hidePhoneButton() = phoneButton.hide()
 
-    override fun showPhoneButton() {
-        // TODO
-    }
+    override fun showWebsiteButton() = websiteButton.show()
 
-    override fun hidePhoneButton() {
-        // TODO
-    }
-
-    override fun setWebsite(url: String) {
-        // TODO
-    }
-
-    override fun showWebsiteButton() {
-        // TODO
-    }
-
-    override fun hideWebsiteButton() {
-        // TODO
-    }
+    override fun hideWebsiteButton() = websiteButton.hide()
 
     override fun setOnClickListeners() {
-        // TODO
+        menuButton.setOnClickListener { presenter.onMenuButtonClicked() }
+        phoneButton.setOnClickListener { presenter.onPhoneButtonClicked() }
+        websiteButton.setOnClickListener { presenter.onWebsiteButtonClicked() }
     }
 
     override fun launchUrl(url: String) {
-        // TODO
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(url)
+        startActivity(intent)
     }
 
     override fun launchDialer(phoneNumber: String) {
-        // TODO
+        val intent = Intent(Intent.ACTION_DIAL)
+        intent.data = Uri.parse("tel:$phoneNumber")
+        startActivity(intent)
     }
 
     override fun showMenuNotAvailableError() {

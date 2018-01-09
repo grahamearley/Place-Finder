@@ -69,18 +69,15 @@ class PlaceDetailPresenter(override val view: PlaceDetailViewContract) : PlaceDe
 
         view.setOnClickListeners()
 
-        menuUrl?.let { menuUrl ->
-            view.setMenuUrl(menuUrl)
+        menuUrl?.let {
             view.showMenuButton()
         } ?: view.hideMenuButton()
 
-        phoneNumber?.let { phoneNumber ->
-            view.setPhoneNumber(phoneNumber)
+        phoneNumber?.let {
             view.showPhoneButton()
         } ?: view.hidePhoneButton()
 
-        website?.let { website ->
-            view.setWebsite(website)
+        website?.let {
             view.showWebsiteButton()
         } ?: view.hideWebsiteButton()
     }

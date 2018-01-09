@@ -369,7 +369,6 @@ class VenueDetailUnitTests {
         presenter.venueItem = VenueItem(venue = Venue(menu = menu))
         presenter.onViewCreated()
 
-        verify(mockedView).setMenuUrl("menu.com")
         verify(mockedView).showMenuButton()
 
         assertTrue("Menu button is visible when it exists.", menuButtonIsVisible)
@@ -395,7 +394,6 @@ class VenueDetailUnitTests {
         presenter.venueItem = VenueItem(venue = Venue(contact = contact))
         presenter.onViewCreated()
 
-        verify(mockedView).setPhoneNumber("8675309")
         verify(mockedView).showPhoneButton()
 
         assertTrue("Phone button is visible when there is a number.", phoneButtonIsVisible)
@@ -420,7 +418,6 @@ class VenueDetailUnitTests {
         presenter.venueItem = VenueItem(venue = Venue(url = "food.com"))
         presenter.onViewCreated()
 
-        verify(mockedView).setWebsite("food.com")
         verify(mockedView).showWebsiteButton()
 
         assertTrue("Website button is visible when there is a website.", websiteButtonIsVisible)
