@@ -45,6 +45,7 @@
         tools:text="1234 Address Street, Minneapolis MN"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/nameTextView"
+        app:layout_constraintEnd_toStartOf="@id/ratingTextView"
         style="@style/DetailText.Address" />
 
     <TextView
@@ -52,6 +53,7 @@
         android:textColor="@color/colorAccent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/addressTextView"
+        app:layout_constraintEnd_toStartOf="@id/ratingTextView"
         tools:text="Mexican Restaurant"
         style="@style/DetailText.Category" />
 
