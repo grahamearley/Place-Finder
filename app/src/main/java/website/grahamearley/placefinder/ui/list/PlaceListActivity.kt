@@ -23,6 +23,8 @@ class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
     companion object {
         const val QUERY_TEXT = "QUERY_TEXT"
         const val LOCATION_TEXT = "LOCATION_TEXT"
+
+        const val GRID_SPAN_COUNT = 2
     }
 
     override val presenter: PlaceListPresenterContract = PlaceListPresenter(this)
@@ -38,7 +40,7 @@ class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
         searchBar.setElevation(R.dimen.search_elevation)
 
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = GridLayoutManager(this, 2)
+        recyclerView.layoutManager = GridLayoutManager(this, GRID_SPAN_COUNT)
         recyclerView.adapter = this.adapter
 
         searchButton.setOnClickListener { onSearchButtonClick() }
