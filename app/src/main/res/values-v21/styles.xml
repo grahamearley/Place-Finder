@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Shared element transitions based on docs:
+    <!-- Transitions based on docs:
               https://developer.android.com/training/material/animations.html -->
     <style name="AppTheme" parent="BaseTheme">
         <item name="android:windowEnterTransition">@transition/explode</item>
