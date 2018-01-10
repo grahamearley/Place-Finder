@@ -22,7 +22,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/photoRecyclerView"
                 android:layout_width="0dp"
-                android:layout_height="96dp"
+                android:layout_height="128dp"
                 android:background="@color/lightGray"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
