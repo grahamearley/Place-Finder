@@ -75,6 +75,7 @@ class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
 
     override fun setListItems(venues: List<VenueItem>) {
         adapter.setVenues(venues)
+        recyclerView.scrollToPosition(0)
         adapter.setOnVenueClickListener { venueItem ->
             presenter.onVenueItemClicked(venueItem)
         }
