@@ -13,7 +13,11 @@ import website.grahamearley.placefinder.ui.detail.PlaceDetailActivity
 import website.grahamearley.placefinder.ui.list.contract.PlaceListPresenterContract
 import website.grahamearley.placefinder.ui.list.contract.PlaceListViewContract
 
-
+/**
+ * The PlaceListActivity allows the user to search for places
+ *  using a query term and a location term. A search will return
+ *  a list of [Venue]s, provided the search has results.
+ */
 class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
 
     companion object {

@@ -25,6 +25,7 @@ class VenueRecyclerAdapter : RecyclerView.Adapter<VenueViewHolder>() {
     override fun onBindViewHolder(holder: VenueViewHolder?, position: Int) {
         val venueItem = venues[position]
         val venue = venueItem.venue
+
         holder?.apply {
             val photo = venue?.getFirstFeaturedPhotoOrNull()
 

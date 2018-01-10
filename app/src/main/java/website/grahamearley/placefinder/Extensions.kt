@@ -25,8 +25,6 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawable
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.Bitmap
 
-
-
 /**
  * Utility extension functions for various classes.
  */

@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 /**
- * Adapter for displaying a list of tips.
+ * Adapter for displaying a list of [Tip]s.
  */
 class TipRecyclerAdapter : RecyclerView.Adapter<TipViewHolder>() {
 

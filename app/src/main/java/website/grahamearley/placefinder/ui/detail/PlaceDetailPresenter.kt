@@ -20,7 +20,6 @@ class PlaceDetailPresenter(override val view: PlaceDetailViewContract,
         }
 
     private val reason get() = venueItem?.reasons?.items?.firstOrNull()
-    private val images get() = venueItem?.venue?.getPhotoUrlsOrNull()
     private val name get() = venueItem?.venue?.name
     private val address get() = venueItem?.venue?.getStreetAddressOrNull()
     private val category get() = venueItem?.venue?.getFirstCategoryOrNull()
@@ -30,12 +29,12 @@ class PlaceDetailPresenter(override val view: PlaceDetailViewContract,
     private val phoneNumber get() = venueItem?.venue?.contact?.phone
     private val website get() = venueItem?.venue?.url
 
+    /**
+     * When the venue item is set, display the venue
+     *  information in the UI (or hide views when
+     *  info isn't available).
+     */
     override fun onVenueItemSet() {
-        reason?.summary?.let { summary ->
-            view.setReason(summary)
-            view.showReason()
-        } ?: view.hideReason()
-
         val venueId = venueItem?.venue?.id
         if (venueId != null) {
             loadTips(venueId)
@@ -44,6 +43,11 @@ class PlaceDetailPresenter(override val view: PlaceDetailViewContract,
             view.hideVenueTips()
             view.hideVenueImages()
         }
+
+        reason?.summary?.let { summary ->
+            view.setReason(summary)
+            view.showReason()
+        } ?: view.hideReason()
 
         name?.let { name ->
             view.setVenueName(name)

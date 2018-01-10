@@ -13,6 +13,12 @@ import website.grahamearley.placefinder.*
 import website.grahamearley.placefinder.ui.detail.contract.PlaceDetailPresenterContract
 import website.grahamearley.placefinder.ui.detail.contract.PlaceDetailViewContract
 
+/**
+ * The PlaceDetailActivity shows details about a place,
+ *  including images and tips. It allows the user to
+ *  call the place, see the place's menu, and/or visit
+ *  the place's website.
+ */
 class PlaceDetailActivity : PlaceDetailViewContract, AppCompatActivity() {
     companion object {
         fun launch(fromActivity: Activity, venueItem: VenueItem) {
@@ -54,7 +60,8 @@ class PlaceDetailActivity : PlaceDetailViewContract, AppCompatActivity() {
 
     private fun initializeUi() {
         photoRecyclerView.setHasFixedSize(true)
-        photoRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        photoRecyclerView.layoutManager = LinearLayoutManager(this,
+                LinearLayoutManager.HORIZONTAL, false)
         photoRecyclerView.adapter = imageAdapter
 
         tipsRecyclerView.layoutManager = LinearLayoutManager(this)
