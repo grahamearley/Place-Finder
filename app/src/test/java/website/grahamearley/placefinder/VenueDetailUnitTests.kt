@@ -8,8 +8,6 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
-import retrofit2.Response
-import website.grahamearley.placefinder.data.FoursquareInteractorContract
 import website.grahamearley.placefinder.ui.detail.PlaceDetailPresenter
 import website.grahamearley.placefinder.ui.detail.contract.PlaceDetailViewContract
 
@@ -190,21 +188,9 @@ class VenueDetailUnitTests {
         val tipList = listOf(Tip(text = "Good coffee!"))
         val tips = Tips(items = tipList)
 
-        val interactorWithTips = object: FoursquareInteractorContract {
-            override fun getPlacesAsync(query: String, near: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
-            override fun getVenuePhotosAsync(venueId: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
+        val foursquareResponse = FoursquareResponse(response = Response(tips = tips))
+        presenter.onTipsLoaded(foursquareResponse)
 
-            override fun getVenueTipsAsync(venueId: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {
-                val foursquareResponse = FoursquareResponse(response = Response(tips = tips))
-                val retrofitResponse = retrofit2.Response.success(foursquareResponse)
-
-                onResponse(retrofitResponse)
-            }
-        }
-
-        val presenterWithDummyInteractor = PlaceDetailPresenter(mockedView, interactorWithTips)
-
-        presenterWithDummyInteractor.loadTips("dummy venue ID")
         verify(mockedView).setVenueTips(tipList)
         verify(mockedView).showVenueTips()
 
@@ -214,24 +200,11 @@ class VenueDetailUnitTests {
     @Test
     fun hidesTipsIfNoTips() {
         venueTipsAreVisible = true
-
         val emptyTips = Tips(items = emptyList())
 
-        val interactorWithNoTips = object: FoursquareInteractorContract {
-            override fun getPlacesAsync(query: String, near: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
-            override fun getVenuePhotosAsync(venueId: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
+        val emptyResponse = FoursquareResponse(response = Response(tips = emptyTips))
+        presenter.onTipsLoaded(emptyResponse)
 
-            override fun getVenueTipsAsync(venueId: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {
-                val foursquareResponse = FoursquareResponse(response = Response(tips = emptyTips))
-                val retrofitResponse = retrofit2.Response.success(foursquareResponse)
-
-                onResponse(retrofitResponse)
-            }
-        }
-
-        val presenterWithDummyInteractor = PlaceDetailPresenter(mockedView, interactorWithNoTips)
-
-        presenterWithDummyInteractor.loadTips("dummy venue ID")
         verify(mockedView).hideVenueTips()
 
         assertFalse("Tips are not visible when there aren't any.", venueTipsAreVisible)
@@ -241,18 +214,7 @@ class VenueDetailUnitTests {
     fun hidesTipsIfRequestFails() {
         venueTipsAreVisible = true
 
-        val failingInteractor = object: FoursquareInteractorContract {
-            override fun getPlacesAsync(query: String, near: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
-            override fun getVenuePhotosAsync(venueId: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
-
-            override fun getVenueTipsAsync(venueId: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {
-                onFailure(null)
-            }
-        }
-
-        val presenterWithDummyInteractor = PlaceDetailPresenter(mockedView, failingInteractor)
-
-        presenterWithDummyInteractor.loadTips("dummy venue ID")
+        presenter.onTipsRequestError(Exception("Error getting venue tips!"))
         verify(mockedView).hideVenueTips()
 
         assertFalse("Tips are not visible when request fails.", venueTipsAreVisible)
@@ -272,20 +234,8 @@ class VenueDetailUnitTests {
 
         val photos = Photos(count = 2, items = listOf(photoItem1, photoItem2))
 
-        val interactorWithPhotos = object: FoursquareInteractorContract {
-            override fun getPlacesAsync(query: String, near: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
-            override fun getVenueTipsAsync(venueId: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
-
-            override fun getVenuePhotosAsync(venueId: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {
-                val foursquareResponse = FoursquareResponse(response = Response(photos = photos))
-                val retrofitResponse = retrofit2.Response.success(foursquareResponse)
-
-                onResponse(retrofitResponse)
-            }
-        }
-
-        val presenterWithDummyInteractor = PlaceDetailPresenter(mockedView, interactorWithPhotos)
-        presenterWithDummyInteractor.loadPhotos("venue ID!")
+        val foursquareResponse = FoursquareResponse(response = Response(photos = photos))
+        presenter.onPhotosLoaded(foursquareResponse)
 
         verify(mockedView).setVenueImages(expectedUrls)
         verify(mockedView).showVenueImages()
@@ -298,21 +248,9 @@ class VenueDetailUnitTests {
         venueImagesAreVisible = true
 
         val emptyPhotos = Photos(count = 0, items = emptyList())
+        val emptyResponse = FoursquareResponse(response = Response(photos = emptyPhotos))
 
-        val interactorWithNoPhotos = object: FoursquareInteractorContract {
-            override fun getPlacesAsync(query: String, near: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
-            override fun getVenueTipsAsync(venueId: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
-
-            override fun getVenuePhotosAsync(venueId: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {
-                val foursquareResponse = FoursquareResponse(response = Response(photos = emptyPhotos))
-                val retrofitResponse = retrofit2.Response.success(foursquareResponse)
-
-                onResponse(retrofitResponse)
-            }
-        }
-
-        val presenterWithDummyInteractor = PlaceDetailPresenter(mockedView, interactorWithNoPhotos)
-        presenterWithDummyInteractor.loadPhotos("venue ID!")
+        presenter.onPhotosLoaded(emptyResponse)
 
         verify(mockedView).hideVenueImages()
 
@@ -320,20 +258,10 @@ class VenueDetailUnitTests {
     }
 
     @Test
-    fun hidesImagesIfImagesAreNull() {
+    fun hidesImagesIfRequestFails() {
         venueImagesAreVisible = true
 
-        val failingInteractor = object: FoursquareInteractorContract {
-            override fun getPlacesAsync(query: String, near: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
-            override fun getVenueTipsAsync(venueId: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
-
-            override fun getVenuePhotosAsync(venueId: String, onResponse: (response: Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {
-                onFailure(null)
-            }
-        }
-
-        val presenterWithDummyInteractor = PlaceDetailPresenter(mockedView, failingInteractor)
-        presenterWithDummyInteractor.loadPhotos("venue ID!")
+        presenter.onPhotosRequestError(Exception("Error getting photos."))
 
         verify(mockedView).hideVenueImages()
 
