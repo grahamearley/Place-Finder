@@ -3,6 +3,7 @@ package website.grahamearley.placefinder.ui.detail
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import website.grahamearley.placefinder.FoursquareResponse
 import website.grahamearley.placefinder.VenueItem
 import website.grahamearley.placefinder.data.FoursquareInteractor
 import website.grahamearley.placefinder.data.FoursquareInteractorContract
@@ -13,8 +14,8 @@ import website.grahamearley.placefinder.ui.detail.contract.PlaceDetailViewContra
  * Presenter implementation for the Venue detail view.
  */
 class PlaceDetailPresenter(override val view: PlaceDetailViewContract,
-                           private val interactor: FoursquareInteractorContract = FoursquareInteractor())
-    : PlaceDetailPresenterContract {
+                           private val interactor: FoursquareInteractorContract
+                                = FoursquareInteractor()) : PlaceDetailPresenterContract {
 
     override var venueItem: VenueItem? = null
         set(item) {
@@ -111,18 +112,24 @@ class PlaceDetailPresenter(override val view: PlaceDetailViewContract,
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
-                    onSuccess = { foursquareResponse ->
-                        val tips = foursquareResponse.response?.tips?.items
-
-                        if (tips != null && tips.isNotEmpty()) {
-                            view.setVenueTips(tips)
-                            view.showVenueTips()
-                        } else {
-                            view.hideVenueTips()
-                        }
-                    },
-                    onError = { view.hideVenueTips() }
+                    onSuccess = this::onTipsLoaded,
+                    onError = this::onTipsRequestError
                 )
+    }
+
+    override fun onTipsLoaded(foursquareResponse: FoursquareResponse) {
+        val tips = foursquareResponse.response?.tips?.items
+
+        if (tips != null && tips.isNotEmpty()) {
+            view.setVenueTips(tips)
+            view.showVenueTips()
+        } else {
+            view.hideVenueTips()
+        }
+    }
+
+    override fun onTipsRequestError(throwable: Throwable) {
+        view.hideVenueTips()
     }
 
     override fun loadPhotos(venueId: String) {
@@ -130,19 +137,23 @@ class PlaceDetailPresenter(override val view: PlaceDetailViewContract,
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
-                    onSuccess = { foursquareResponse ->
-                        val photoUrls = foursquareResponse.response?.photos?.items?.map { it.getUrl() }
-
-                        if (photoUrls != null && photoUrls.isNotEmpty()) {
-                            view.setVenueImages(photoUrls)
-                            view.showVenueImages()
-                        } else {
-                            view.hideVenueImages()
-                        }
-                    },
-                    onError = {
-                        view.hideVenueImages()
-                    }
+                    onSuccess = this::onPhotosLoaded,
+                    onError = this::onPhotosRequestError
                 )
+    }
+
+    override fun onPhotosLoaded(foursquareResponse: FoursquareResponse) {
+        val photoUrls = foursquareResponse.response?.photos?.items?.map { it.getUrl() }
+
+        if (photoUrls != null && photoUrls.isNotEmpty()) {
+            view.setVenueImages(photoUrls)
+            view.showVenueImages()
+        } else {
+            view.hideVenueImages()
+        }
+    }
+
+    override fun onPhotosRequestError(throwable: Throwable) {
+        view.hideVenueImages()
     }
 }

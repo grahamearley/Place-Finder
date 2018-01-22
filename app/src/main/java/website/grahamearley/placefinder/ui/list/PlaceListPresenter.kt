@@ -1,6 +1,5 @@
 package website.grahamearley.placefinder.ui.list
 
-import android.util.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -32,14 +31,20 @@ class PlaceListPresenter(override val view: PlaceListViewContract,
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeBy(
-                            onSuccess = { foursquareResponse ->
-                                val venues = foursquareResponse?.response?.groups
-                                        ?.flatMap { it.items.orEmpty() }
-                                updateVenuesList(venues)
-                            },
-                            onError = { showErrorStatus() }
+                            onSuccess = this::onVenuesLoaded,
+                            onError = this::onVenuesRequestError
                     )
         }
+    }
+
+    override fun onVenuesLoaded(foursquareResponse: FoursquareResponse?) {
+        val venues = foursquareResponse?.response?.groups
+                ?.flatMap { it.items.orEmpty() }
+        updateVenuesList(venues)
+    }
+
+    override fun onVenuesRequestError(throwable: Throwable) {
+        showErrorStatus()
     }
 
     override fun onVenueItemClicked(venueItem: VenueItem) {
@@ -67,3 +72,4 @@ class PlaceListPresenter(override val view: PlaceListViewContract,
         view.showStatusText()
     }
 }
+

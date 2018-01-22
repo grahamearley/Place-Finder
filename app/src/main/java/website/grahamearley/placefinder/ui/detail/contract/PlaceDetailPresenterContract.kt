@@ -1,5 +1,6 @@
 package website.grahamearley.placefinder.ui.detail.contract
 
+import website.grahamearley.placefinder.FoursquareResponse
 import website.grahamearley.placefinder.VenueItem
 
 /**
@@ -18,6 +19,10 @@ interface PlaceDetailPresenterContract {
     fun onWebsiteButtonClicked()
 
     fun loadTips(venueId: String)
+    fun onTipsLoaded(foursquareResponse: FoursquareResponse)
+    fun onTipsRequestError(throwable: Throwable)
 
     fun loadPhotos(venueId: String)
+    fun onPhotosLoaded(foursquareResponse: FoursquareResponse)
+    fun onPhotosRequestError(throwable: Throwable)
 }
