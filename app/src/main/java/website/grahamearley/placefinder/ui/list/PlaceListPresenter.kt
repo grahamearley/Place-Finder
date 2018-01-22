@@ -1,5 +1,6 @@
 package website.grahamearley.placefinder.ui.list
 
+import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -13,7 +14,8 @@ import website.grahamearley.placefinder.ui.list.contract.PlaceListViewContract
 
 class PlaceListPresenter(override val view: PlaceListViewContract,
                          override val interactor: FoursquareInteractorContract
-                            = FoursquareInteractor()) : PlaceListPresenterContract {
+                            = FoursquareInteractor(),
+                         private val observationScheduler: Scheduler = AndroidSchedulers.mainThread()) : PlaceListPresenterContract {
 
     override fun onNewVenueQuery(query: String, near: String) {
         view.setSearchBarGravityToBottom()
@@ -29,7 +31,7 @@ class PlaceListPresenter(override val view: PlaceListViewContract,
             view.showProgressBar()
             interactor.requestPlaces(query, near)
                     .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+                    .observeOn(observationScheduler)
                     .subscribeBy(
                             onSuccess = this::onVenuesLoaded,
                             onError = this::onVenuesRequestError
@@ -61,6 +63,7 @@ class PlaceListPresenter(override val view: PlaceListViewContract,
         } else {
             view.setListItems(venues)
             view.showListItems()
+            view.hideStatusText()
         }
     }
 
