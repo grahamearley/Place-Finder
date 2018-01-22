@@ -1,5 +1,8 @@
 package website.grahamearley.placefinder.ui.detail
 
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 import website.grahamearley.placefinder.VenueItem
 import website.grahamearley.placefinder.data.FoursquareInteractor
 import website.grahamearley.placefinder.data.FoursquareInteractorContract
@@ -104,34 +107,42 @@ class PlaceDetailPresenter(override val view: PlaceDetailViewContract,
     }
 
     override fun loadTips(venueId: String) {
-        interactor.getVenueTipsAsync(venueId, onResponse = { response ->
-                val tips = response?.body()?.response?.tips?.items
+        interactor.requestVenueTips(venueId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                    onSuccess = { foursquareResponse ->
+                        val tips = foursquareResponse.response?.tips?.items
 
-                if (tips != null && tips.isNotEmpty()) {
-                    view.setVenueTips(tips)
-                    view.showVenueTips()
-                } else {
-                    view.hideVenueTips()
-                }
-
-            }, onFailure = {
-                view.hideVenueTips()
-            })
+                        if (tips != null && tips.isNotEmpty()) {
+                            view.setVenueTips(tips)
+                            view.showVenueTips()
+                        } else {
+                            view.hideVenueTips()
+                        }
+                    },
+                    onError = { view.hideVenueTips() }
+                )
     }
 
     override fun loadPhotos(venueId: String) {
-        interactor.getVenuePhotosAsync(venueId, onResponse = { response ->
-                val photoUrls = response?.body()?.response?.photos?.items?.map { it.getUrl() }
+        interactor.requestVenuePhotos(venueId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                    onSuccess = { foursquareResponse ->
+                        val photoUrls = foursquareResponse.response?.photos?.items?.map { it.getUrl() }
 
-                if (photoUrls != null && photoUrls.isNotEmpty()) {
-                    view.setVenueImages(photoUrls)
-                    view.showVenueImages()
-                } else {
-                    view.hideVenueImages()
-                }
-
-            }, onFailure = {
-                view.hideVenueImages()
-            })
+                        if (photoUrls != null && photoUrls.isNotEmpty()) {
+                            view.setVenueImages(photoUrls)
+                            view.showVenueImages()
+                        } else {
+                            view.hideVenueImages()
+                        }
+                    },
+                    onError = {
+                        view.hideVenueImages()
+                    }
+                )
     }
 }
