@@ -1,5 +1,7 @@
 package website.grahamearley.placefinder.data
 
+import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -19,17 +21,17 @@ interface FoursquareApi {
                       @Query("v") version: String = API_VERSION,
                       @Query("near") near: String,
                       @Query("query") query: String,
-                      @Query("venuePhotos") venuePhotos: Int): Call<FoursquareResponse>
+                      @Query("venuePhotos") venuePhotos: Int): Single<FoursquareResponse>
 
     @GET("venues/{venue_id}/tips")
     fun requestVenueTips(@Path("venue_id") venueId: String,
                     @Query("client_id") clientId: String = CLIENT_ID,
                     @Query("client_secret") clientSecret: String = CLIENT_SECRET,
-                    @Query("v") version: String = API_VERSION): Call<FoursquareResponse>
+                    @Query("v") version: String = API_VERSION): Single<FoursquareResponse>
 
     @GET("venues/{venue_id}/photos")
     fun requestVenuePhotos(@Path("venue_id") venueId: String,
                     @Query("client_id") clientId: String = CLIENT_ID,
                     @Query("client_secret") clientSecret: String = CLIENT_SECRET,
-                    @Query("v") version: String = API_VERSION): Call<FoursquareResponse>
+                    @Query("v") version: String = API_VERSION): Single<FoursquareResponse>
 }
