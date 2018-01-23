@@ -29,20 +29,6 @@ import android.graphics.Bitmap
  * Utility extension functions for various classes.
  */
 
-fun <T> Call<T>.enqueue(onResponse: (response: Response<T>?) -> Unit,
-                        onFailure: (throwable: Throwable?) -> Unit = {}) {
-    this.enqueue(object: Callback<T> {
-        override fun onFailure(call: Call<T>?, t: Throwable?) {
-            onFailure(t)
-        }
-
-        override fun onResponse(call: Call<T>?, response: Response<T>?) {
-            onResponse(response)
-        }
-
-    })
-}
-
 fun View.show() {
     this.visibility = View.VISIBLE
 }
