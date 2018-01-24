@@ -186,10 +186,7 @@ class VenueDetailUnitTests {
         venueTipsAreVisible = false
 
         val tipList = listOf(Tip(text = "Good coffee!"))
-        val tips = Tips(items = tipList)
-
-        val foursquareResponse = FoursquareResponse(response = Response(tips = tips))
-        presenter.onTipsLoaded(foursquareResponse)
+        presenter.onTipsLoaded(tipList)
 
         verify(mockedView).setVenueTips(tipList)
         verify(mockedView).showVenueTips()
@@ -200,10 +197,8 @@ class VenueDetailUnitTests {
     @Test
     fun hidesTipsIfNoTips() {
         venueTipsAreVisible = true
-        val emptyTips = Tips(items = emptyList())
 
-        val emptyResponse = FoursquareResponse(response = Response(tips = emptyTips))
-        presenter.onTipsLoaded(emptyResponse)
+        presenter.onTipsLoaded(emptyList())
 
         verify(mockedView).hideVenueTips()
 
@@ -232,10 +227,7 @@ class VenueDetailUnitTests {
 
         val expectedUrls = listOf(url1, url2)
 
-        val photos = Photos(count = 2, items = listOf(photoItem1, photoItem2))
-
-        val foursquareResponse = FoursquareResponse(response = Response(photos = photos))
-        presenter.onPhotosLoaded(foursquareResponse)
+        presenter.onPhotosLoaded(listOf(photoItem1.getUrl(), photoItem2.getUrl()))
 
         verify(mockedView).setVenueImages(expectedUrls)
         verify(mockedView).showVenueImages()
@@ -247,10 +239,7 @@ class VenueDetailUnitTests {
     fun hidesImagesIfNoImages() {
         venueImagesAreVisible = true
 
-        val emptyPhotos = Photos(count = 0, items = emptyList())
-        val emptyResponse = FoursquareResponse(response = Response(photos = emptyPhotos))
-
-        presenter.onPhotosLoaded(emptyResponse)
+        presenter.onPhotosLoaded(emptyList())
 
         verify(mockedView).hideVenueImages()
 

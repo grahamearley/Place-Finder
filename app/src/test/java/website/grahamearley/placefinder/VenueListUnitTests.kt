@@ -30,10 +30,6 @@ class VenueListUnitTests {
 
     private val dummyVenue = Venue(name = "Maya Cuisine")
     private val dummyVenueItem = VenueItem(venue = dummyVenue)
-    private val dummyVenueGroup = VenueGroup(items = listOf(dummyVenueItem))
-    private val dummyVenueGroupEmpty = VenueGroup(items = emptyList())
-    private val dummyResponse = Response(groups = listOf(dummyVenueGroup))
-    private val dummyResponseEmpty = Response(groups = listOf(dummyVenueGroupEmpty))
 
     private var progressBarIsVisible = false
     private var listItemsAreVisible = true
@@ -125,8 +121,7 @@ class VenueListUnitTests {
         statusTextIsVisible = true
         progressBarIsVisible = true
 
-        val foursquareResponse = FoursquareResponse(response = dummyResponse)
-        presenter.onVenuesLoaded(foursquareResponse)
+        presenter.onVenuesLoaded(listOf(dummyVenueItem))
 
         verify(mockedView).setListItems(Mockito.anyList())
         verify(mockedView).showListItems()
@@ -142,8 +137,7 @@ class VenueListUnitTests {
         listItemsAreVisible = true
         progressBarIsVisible = true
 
-        val emptyResponse = FoursquareResponse(response = dummyResponseEmpty)
-        presenter.onVenuesLoaded(emptyResponse)
+        presenter.onVenuesLoaded(emptyList())
 
         verify(mockedView).setStatusText(R.string.no_places_found)
         verify(mockedView).showStatusText()
