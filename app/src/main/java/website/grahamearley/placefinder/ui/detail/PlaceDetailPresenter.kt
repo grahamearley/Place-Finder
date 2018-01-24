@@ -4,6 +4,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import website.grahamearley.placefinder.FoursquareResponse
+import website.grahamearley.placefinder.Tip
 import website.grahamearley.placefinder.VenueItem
 import website.grahamearley.placefinder.data.FoursquareInteractor
 import website.grahamearley.placefinder.data.FoursquareInteractorContract
@@ -117,10 +118,8 @@ class PlaceDetailPresenter(override val view: PlaceDetailViewContract,
                 )
     }
 
-    override fun onTipsLoaded(foursquareResponse: FoursquareResponse) {
-        val tips = foursquareResponse.response?.tips?.items
-
-        if (tips != null && tips.isNotEmpty()) {
+    override fun onTipsLoaded(tips: List<Tip>) {
+        if (tips.isNotEmpty()) {
             view.setVenueTips(tips)
             view.showVenueTips()
         } else {
@@ -142,10 +141,8 @@ class PlaceDetailPresenter(override val view: PlaceDetailViewContract,
                 )
     }
 
-    override fun onPhotosLoaded(foursquareResponse: FoursquareResponse) {
-        val photoUrls = foursquareResponse.response?.photos?.items?.map { it.getUrl() }
-
-        if (photoUrls != null && photoUrls.isNotEmpty()) {
+    override fun onPhotosLoaded(photoUrls: List<String>) {
+        if (photoUrls.isNotEmpty()) {
             view.setVenueImages(photoUrls)
             view.showVenueImages()
         } else {

@@ -13,6 +13,6 @@ interface PlaceListPresenterContract {
 
     fun onNewVenueQuery(query: String, near: String)
     fun onVenueItemClicked(venueItem: VenueItem)
-    fun onVenuesLoaded(foursquareResponse: FoursquareResponse?)
+    fun onVenuesLoaded(venues: List<VenueItem>)
     fun onVenuesRequestError(throwable: Throwable)
 }

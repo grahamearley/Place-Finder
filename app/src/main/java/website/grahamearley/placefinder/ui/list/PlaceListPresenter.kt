@@ -39,10 +39,18 @@ class PlaceListPresenter(override val view: PlaceListViewContract,
         }
     }
 
-    override fun onVenuesLoaded(foursquareResponse: FoursquareResponse?) {
-        val venues = foursquareResponse?.response?.groups
-                ?.flatMap { it.items.orEmpty() }
-        updateVenuesList(venues)
+    override fun onVenuesLoaded(venues: List<VenueItem>) {
+        view.hideListItems()
+        view.hideProgressBar()
+
+        if (venues.isEmpty()) {
+            view.setStatusText(R.string.no_places_found)
+            view.showStatusText()
+        } else {
+            view.setListItems(venues)
+            view.showListItems()
+            view.hideStatusText()
+        }
     }
 
     override fun onVenuesRequestError(throwable: Throwable) {
@@ -51,20 +59,6 @@ class PlaceListPresenter(override val view: PlaceListViewContract,
 
     override fun onVenueItemClicked(venueItem: VenueItem) {
         view.launchVenueDetailView(venueItem)
-    }
-
-    private fun updateVenuesList(venues: List<VenueItem>?) {
-        view.hideListItems()
-        view.hideProgressBar()
-
-        if (venues == null || venues.isEmpty()) {
-            view.setStatusText(R.string.no_places_found)
-            view.showStatusText()
-        } else {
-            view.setListItems(venues)
-            view.showListItems()
-            view.hideStatusText()
-        }
     }
 
     private fun showErrorStatus() {
