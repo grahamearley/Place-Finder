@@ -1,33 +1,52 @@
 package website.grahamearley.placefinder.data
 
 import io.reactivex.Single
+import io.reactivex.SingleObserver
+import io.reactivex.SingleSource
+import io.reactivex.SingleTransformer
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import website.grahamearley.placefinder.API_BASE_URL
 import website.grahamearley.placefinder.FoursquareResponse
+import website.grahamearley.placefinder.Tip
+import website.grahamearley.placefinder.VenueItem
 
 /**
  *  Makes calls to the Foursquare API, implementing the
  *    Foursquare Interactor contract.
  */
 class FoursquareInteractor : FoursquareInteractorContract {
-
-    override fun requestPlaces(query: String, near: String): Single<FoursquareResponse> {
-        return getFoursquareRetrofitApi().requestVenues(near = near,
+    
+    override fun requestPlaces(query: String, near: String): Single<List<VenueItem>> {
+        val placesSingle = getFoursquareRetrofitApi().requestVenues(near = near,
                 query = query, venuePhotos = 1) // 1 => include photos
+
+        return placesSingle.map {
+            // !! => Throw NPE if list is null, thus triggering onError of subscriber.
+            it.response?.groups!!.flatMap { it.items.orEmpty() }
+        }
     }
 
-    override fun requestVenueTips(venueId: String): Single<FoursquareResponse> {
-        return getFoursquareRetrofitApi()
-                .requestVenueTips(venueId = venueId)
+    override fun requestVenueTips(venueId: String): Single<List<Tip>> {
+        val tipsSingle = getFoursquareRetrofitApi().requestVenueTips(venueId = venueId)
+
+        return tipsSingle.map {
+            // !! => Throw NPE if list is null, thus triggering onError of subscriber.
+            it.response?.tips!!.items
+        }
     }
 
-    override fun requestVenuePhotos(venueId: String): Single<FoursquareResponse> {
-        return getFoursquareRetrofitApi()
-                .requestVenuePhotos(venueId = venueId)
+    override fun requestVenuePhotos(venueId: String): Single<List<String>> {
+        val photosSingle = getFoursquareRetrofitApi().requestVenuePhotos(venueId = venueId)
+
+        return photosSingle.map {
+            // !! => Throw NPE if list is null, thus triggering onError of subscriber.
+            it.response?.photos?.items!!.map { it.getUrl() }
+        }
     }
 
+    // todo: make this a lazy property
     private fun getFoursquareRetrofitApi(): FoursquareApi {
         return Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
