@@ -3,7 +3,6 @@ package website.grahamearley.placefinder.ui.detail
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
-import website.grahamearley.placefinder.FoursquareResponse
 import website.grahamearley.placefinder.Tip
 import website.grahamearley.placefinder.VenueItem
 import website.grahamearley.placefinder.data.FoursquareInteractor

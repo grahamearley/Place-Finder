@@ -1,6 +1,5 @@
 package website.grahamearley.placefinder.ui.detail.contract
 
-import website.grahamearley.placefinder.FoursquareResponse
 import website.grahamearley.placefinder.Tip
 import website.grahamearley.placefinder.VenueItem
 

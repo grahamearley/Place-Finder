@@ -20,6 +20,7 @@ import website.grahamearley.placefinder.ui.detail.contract.PlaceDetailViewContra
  *  the place's website.
  */
 class PlaceDetailActivity : PlaceDetailViewContract, AppCompatActivity() {
+
     companion object {
         fun launch(fromActivity: Activity, venueItem: VenueItem) {
             val intent = Intent(fromActivity, PlaceDetailActivity::class.java)
@@ -40,7 +41,11 @@ class PlaceDetailActivity : PlaceDetailViewContract, AppCompatActivity() {
 
     override val presenter: PlaceDetailPresenterContract = PlaceDetailPresenter(this)
 
+    /**
+     * The venue whose details will be displayed, passed in as an extra.
+     */
     private val venueItem by lazy { intent.getVenueItem() }
+
     private val imageAdapter = ImageRecyclerAdapter()
     private val tipAdapter = TipRecyclerAdapter()
 
@@ -58,6 +63,10 @@ class PlaceDetailActivity : PlaceDetailViewContract, AppCompatActivity() {
         }
     }
 
+    /**
+     * Initialize photo and tip RecyclerViews with layout managers
+     *  and adapters.
+     */
     private fun initializeUi() {
         photoRecyclerView.setHasFixedSize(true)
         photoRecyclerView.layoutManager = LinearLayoutManager(this,
@@ -124,10 +133,26 @@ class PlaceDetailActivity : PlaceDetailViewContract, AppCompatActivity() {
         ratingTextView.text = rating.toString()
     }
 
+    /**
+     * Set the background color of the Rating text view
+     *  to the provided color string.
+     *
+     *  If the string is null or cannot be parsed, the
+     *  color will not be changed.
+     */
     override fun setRatingColor(color: String?) {
         color?.let {
+
             val colorString = "#$color"
-            ratingTextView.setBackgroundColor(Color.parseColor(colorString))
+
+            try {
+                val backgroundColor = Color.parseColor(colorString)
+                ratingTextView.setBackgroundColor(backgroundColor)
+            } catch (exception: IllegalArgumentException) {
+                // Color string was not parsed correctly, so we will
+                //  just stick with the default background color.
+            }
+
         }
     }
 
