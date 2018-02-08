@@ -28,3 +28,5 @@ jobs:
           destination: reports
       - store_test_results:
           path: app/build/test-results
+      - checkout:
+          post: -cp -r licenses/. $ANDROID_HOME/licenses
