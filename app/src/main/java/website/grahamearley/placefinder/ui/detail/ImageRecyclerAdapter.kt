@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import website.grahamearley.placefinder.*
+import website.grahamearley.placefinder.extension.loadImage
 
 /**
  * Adapter for displaying a list of images.

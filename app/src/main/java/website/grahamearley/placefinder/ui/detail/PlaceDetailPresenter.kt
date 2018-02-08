@@ -3,8 +3,8 @@ package website.grahamearley.placefinder.ui.detail
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
-import website.grahamearley.placefinder.Tip
-import website.grahamearley.placefinder.VenueItem
+import website.grahamearley.placefinder.model.Tip
+import website.grahamearley.placefinder.model.VenueItem
 import website.grahamearley.placefinder.data.FoursquareInteractor
 import website.grahamearley.placefinder.data.FoursquareInteractorContract
 import website.grahamearley.placefinder.ui.detail.contract.PlaceDetailPresenterContract

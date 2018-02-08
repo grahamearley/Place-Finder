@@ -1,7 +1,7 @@
 package website.grahamearley.placefinder.ui.detail.contract
 
-import website.grahamearley.placefinder.Tip
-import website.grahamearley.placefinder.VenueItem
+import website.grahamearley.placefinder.model.Tip
+import website.grahamearley.placefinder.model.VenueItem
 
 /**
  * Interface for the Place Detail presenter.

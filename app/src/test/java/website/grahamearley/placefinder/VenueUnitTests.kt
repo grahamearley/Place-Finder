@@ -3,6 +3,7 @@ package website.grahamearley.placefinder
 import org.junit.Test
 
 import org.junit.Assert.*
+import website.grahamearley.placefinder.model.*
 
 /**
  * Unit tests for the [Venue] data model's methods.

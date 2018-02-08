@@ -9,6 +9,11 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_place_list.*
 import kotlinx.android.synthetic.main.search_bar.*
 import website.grahamearley.placefinder.*
+import website.grahamearley.placefinder.extension.hide
+import website.grahamearley.placefinder.extension.hideSoftKeyboard
+import website.grahamearley.placefinder.extension.setElevation
+import website.grahamearley.placefinder.extension.show
+import website.grahamearley.placefinder.model.VenueItem
 import website.grahamearley.placefinder.ui.detail.PlaceDetailActivity
 import website.grahamearley.placefinder.ui.list.contract.PlaceListPresenterContract
 import website.grahamearley.placefinder.ui.list.contract.PlaceListViewContract

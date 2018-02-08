@@ -5,8 +5,8 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import website.grahamearley.placefinder.API_BASE_URL
-import website.grahamearley.placefinder.Tip
-import website.grahamearley.placefinder.VenueItem
+import website.grahamearley.placefinder.model.Tip
+import website.grahamearley.placefinder.model.VenueItem
 
 /**
  *  Makes calls to the Foursquare API, implementing the

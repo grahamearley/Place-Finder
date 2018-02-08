@@ -1,7 +1,7 @@
 package website.grahamearley.placefinder.ui.list.contract
 
 import android.support.annotation.StringRes
-import website.grahamearley.placefinder.VenueItem
+import website.grahamearley.placefinder.model.VenueItem
 
 /**
  * Interface for the Place List view.

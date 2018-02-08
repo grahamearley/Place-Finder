@@ -1,6 +1,6 @@
 package website.grahamearley.placefinder.ui.list.contract
 
-import website.grahamearley.placefinder.VenueItem
+import website.grahamearley.placefinder.model.VenueItem
 import website.grahamearley.placefinder.data.FoursquareInteractorContract
 
 /**
