@@ -8,6 +8,7 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
+import website.grahamearley.placefinder.model.*
 import website.grahamearley.placefinder.ui.detail.PlaceDetailPresenter
 import website.grahamearley.placefinder.ui.detail.contract.PlaceDetailViewContract
 

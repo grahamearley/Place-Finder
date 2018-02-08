@@ -7,7 +7,7 @@ import retrofit2.http.Query
 import website.grahamearley.placefinder.API_VERSION
 import website.grahamearley.placefinder.CLIENT_ID
 import website.grahamearley.placefinder.CLIENT_SECRET
-import website.grahamearley.placefinder.FoursquareResponse
+import website.grahamearley.placefinder.model.FoursquareResponse
 
 /**
  * An interface for making requests from the Foursquare API.

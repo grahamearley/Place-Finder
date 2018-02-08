@@ -9,6 +9,11 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_place_list.*
 import kotlinx.android.synthetic.main.search_bar.*
 import website.grahamearley.placefinder.*
+import website.grahamearley.placefinder.extension.hide
+import website.grahamearley.placefinder.extension.hideSoftKeyboard
+import website.grahamearley.placefinder.extension.setElevation
+import website.grahamearley.placefinder.extension.show
+import website.grahamearley.placefinder.model.VenueItem
 import website.grahamearley.placefinder.ui.detail.PlaceDetailActivity
 import website.grahamearley.placefinder.ui.list.contract.PlaceListPresenterContract
 import website.grahamearley.placefinder.ui.list.contract.PlaceListViewContract
@@ -45,6 +50,7 @@ class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
 
         searchButton.setOnClickListener { onSearchButtonClick() }
 
+        // When the soft keyboard's search button is clicked, trigger a search:
         val keyboardSearchButtonListener = TextView.OnEditorActionListener { _, _, _ ->
             onSearchButtonClick()
             true
@@ -53,6 +59,7 @@ class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
         queryEditText.setOnEditorActionListener(keyboardSearchButtonListener)
         locationEditText.setOnEditorActionListener(keyboardSearchButtonListener)
 
+        // Show search bar in the center when no search is performed. Otherwise, bottom
         if (adapter.isEmpty()) {
             setSearchBarGravityToCenter()
         } else {
@@ -76,7 +83,7 @@ class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
     }
 
     override fun setListItems(venues: List<VenueItem>) {
-        adapter.setVenues(venues)
+        adapter.venues = venues
         recyclerView.scrollToPosition(0)
         adapter.setOnVenueClickListener { venueItem ->
             presenter.onVenueItemClicked(venueItem)

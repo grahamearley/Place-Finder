@@ -1,9 +1,8 @@
 package website.grahamearley.placefinder.data
 
 import io.reactivex.Single
-import website.grahamearley.placefinder.FoursquareResponse
-import website.grahamearley.placefinder.Tip
-import website.grahamearley.placefinder.VenueItem
+import website.grahamearley.placefinder.model.Tip
+import website.grahamearley.placefinder.model.VenueItem
 
 /**
  * Contract for interactors with the Foursquare API.

@@ -4,21 +4,25 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import website.grahamearley.placefinder.*
+import website.grahamearley.placefinder.extension.loadImage
 
 /**
  * Adapter for displaying a list of images.
  */
 class ImageRecyclerAdapter : RecyclerView.Adapter<ImageViewHolder>() {
 
-    private var imageUrls: List<String> = emptyList()
-
-    fun setImageUrls(imageUrls: List<String>) {
-        this.imageUrls = imageUrls
-        notifyDataSetChanged()
-    }
+    var imageUrls: List<String> = emptyList()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun getItemCount(): Int = imageUrls.size
 
+    /**
+     * The view is simply an ImageView, so we only need to
+     *  bind the image to that view.
+     */
     override fun onBindViewHolder(holder: ImageViewHolder?, position: Int) {
         val imageUrl = imageUrls[position]
 

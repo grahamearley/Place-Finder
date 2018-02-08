@@ -10,6 +10,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_place_detail.*
 import website.grahamearley.placefinder.*
+import website.grahamearley.placefinder.extension.*
+import website.grahamearley.placefinder.model.Tip
+import website.grahamearley.placefinder.model.VenueItem
 import website.grahamearley.placefinder.ui.detail.contract.PlaceDetailPresenterContract
 import website.grahamearley.placefinder.ui.detail.contract.PlaceDetailViewContract
 
@@ -86,7 +89,7 @@ class PlaceDetailActivity : PlaceDetailViewContract, AppCompatActivity() {
     override fun hideReason() = reasonTextView.hide()
 
     override fun setVenueImages(urls: List<String>) {
-        imageAdapter.setImageUrls(urls)
+        imageAdapter.imageUrls = urls
     }
 
     override fun showVenueImages() = photoRecyclerView.show()
@@ -94,7 +97,7 @@ class PlaceDetailActivity : PlaceDetailViewContract, AppCompatActivity() {
     override fun hideVenueImages() = photoRecyclerView.hide()
 
     override fun setVenueTips(tips: List<Tip>) {
-        tipAdapter.setTips(tips)
+        tipAdapter.tips = tips
     }
 
     override fun showVenueTips() {

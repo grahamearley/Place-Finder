@@ -4,19 +4,23 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import website.grahamearley.placefinder.*
+import website.grahamearley.placefinder.extension.hide
+import website.grahamearley.placefinder.extension.loadImage
+import website.grahamearley.placefinder.extension.show
+import website.grahamearley.placefinder.model.VenueItem
 
 /**
  * Adapter for displaying lists of Venue cards.
  */
 class VenueRecyclerAdapter : RecyclerView.Adapter<VenueViewHolder>() {
 
-    private var venues: List<VenueItem> = emptyList()
-    private var onItemClicked: (VenueItem) -> Unit = {}
+    var venues: List<VenueItem> = emptyList()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
-    fun setVenues(venues: List<VenueItem>) {
-        this.venues = venues
-        notifyDataSetChanged()
-    }
+    private var onItemClicked: (VenueItem) -> Unit = {}
 
     override fun getItemCount(): Int = venues.size
 

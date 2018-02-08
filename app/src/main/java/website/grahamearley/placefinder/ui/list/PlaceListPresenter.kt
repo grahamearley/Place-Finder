@@ -4,9 +4,8 @@ import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
-import website.grahamearley.placefinder.FoursquareResponse
 import website.grahamearley.placefinder.R
-import website.grahamearley.placefinder.VenueItem
+import website.grahamearley.placefinder.model.VenueItem
 import website.grahamearley.placefinder.data.FoursquareInteractor
 import website.grahamearley.placefinder.data.FoursquareInteractorContract
 import website.grahamearley.placefinder.ui.list.contract.PlaceListPresenterContract
@@ -17,6 +16,10 @@ class PlaceListPresenter(override val view: PlaceListViewContract,
                             = FoursquareInteractor(),
                          private val observationScheduler: Scheduler = AndroidSchedulers.mainThread()) : PlaceListPresenterContract {
 
+    /**
+     * When a new query is performed, request data from the interactor
+     *  and show it in the view.
+     */
     override fun onNewVenueQuery(query: String, near: String) {
         view.setSearchBarGravityToBottom()
 

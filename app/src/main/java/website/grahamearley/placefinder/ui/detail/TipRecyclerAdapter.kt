@@ -4,6 +4,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import website.grahamearley.placefinder.*
+import website.grahamearley.placefinder.extension.hide
+import website.grahamearley.placefinder.extension.loadImageRounded
+import website.grahamearley.placefinder.extension.show
+import website.grahamearley.placefinder.model.Tip
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -12,15 +16,17 @@ import java.util.*
  */
 class TipRecyclerAdapter : RecyclerView.Adapter<TipViewHolder>() {
 
-    private var tips: List<Tip> = emptyList()
-
-    fun setTips(tips: List<Tip>) {
-        this.tips = tips
-        notifyDataSetChanged()
-    }
+    var tips: List<Tip> = emptyList()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun getItemCount(): Int = tips.size
 
+    /**
+     * Bind data to views, and hide any views whose data is missing.
+     */
     override fun onBindViewHolder(holder: TipViewHolder?, position: Int) {
         val tip = tips[position]
 

@@ -3,6 +3,7 @@ package website.grahamearley.placefinder
 import org.junit.Test
 
 import org.junit.Assert.*
+import website.grahamearley.placefinder.model.PhotoItem
 
 /**
  * Unit tests for the [PhotoItem] data model's methods.
