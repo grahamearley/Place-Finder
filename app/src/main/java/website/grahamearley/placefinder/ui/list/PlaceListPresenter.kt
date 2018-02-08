@@ -17,6 +17,10 @@ class PlaceListPresenter(override val view: PlaceListViewContract,
                             = FoursquareInteractor(),
                          private val observationScheduler: Scheduler = AndroidSchedulers.mainThread()) : PlaceListPresenterContract {
 
+    /**
+     * When a new query is performed, request data from the interactor
+     *  and show it in the view.
+     */
     override fun onNewVenueQuery(query: String, near: String) {
         view.setSearchBarGravityToBottom()
 

@@ -86,7 +86,7 @@ class PlaceDetailActivity : PlaceDetailViewContract, AppCompatActivity() {
     override fun hideReason() = reasonTextView.hide()
 
     override fun setVenueImages(urls: List<String>) {
-        imageAdapter.setImageUrls(urls)
+        imageAdapter.imageUrls = urls
     }
 
     override fun showVenueImages() = photoRecyclerView.show()

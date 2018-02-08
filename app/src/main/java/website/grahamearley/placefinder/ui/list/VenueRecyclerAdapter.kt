@@ -10,13 +10,13 @@ import website.grahamearley.placefinder.*
  */
 class VenueRecyclerAdapter : RecyclerView.Adapter<VenueViewHolder>() {
 
-    private var venues: List<VenueItem> = emptyList()
-    private var onItemClicked: (VenueItem) -> Unit = {}
+    var venues: List<VenueItem> = emptyList()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
-    fun setVenues(venues: List<VenueItem>) {
-        this.venues = venues
-        notifyDataSetChanged()
-    }
+    private var onItemClicked: (VenueItem) -> Unit = {}
 
     override fun getItemCount(): Int = venues.size
 

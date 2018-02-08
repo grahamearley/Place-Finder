@@ -21,6 +21,9 @@ class TipRecyclerAdapter : RecyclerView.Adapter<TipViewHolder>() {
 
     override fun getItemCount(): Int = tips.size
 
+    /**
+     * Bind data to views, and hide any views whose data is missing.
+     */
     override fun onBindViewHolder(holder: TipViewHolder?, position: Int) {
         val tip = tips[position]
 

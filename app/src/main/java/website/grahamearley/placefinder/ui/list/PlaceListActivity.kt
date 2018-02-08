@@ -45,6 +45,7 @@ class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
 
         searchButton.setOnClickListener { onSearchButtonClick() }
 
+        // When the soft keyboard's search button is clicked, trigger a search:
         val keyboardSearchButtonListener = TextView.OnEditorActionListener { _, _, _ ->
             onSearchButtonClick()
             true
@@ -53,6 +54,7 @@ class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
         queryEditText.setOnEditorActionListener(keyboardSearchButtonListener)
         locationEditText.setOnEditorActionListener(keyboardSearchButtonListener)
 
+        // Show search bar in the center when no search is performed. Otherwise, bottom
         if (adapter.isEmpty()) {
             setSearchBarGravityToCenter()
         } else {
@@ -76,7 +78,7 @@ class PlaceListActivity : PlaceListViewContract, AppCompatActivity() {
     }
 
     override fun setListItems(venues: List<VenueItem>) {
-        adapter.setVenues(venues)
+        adapter.venues = venues
         recyclerView.scrollToPosition(0)
         adapter.setOnVenueClickListener { venueItem ->
             presenter.onVenueItemClicked(venueItem)

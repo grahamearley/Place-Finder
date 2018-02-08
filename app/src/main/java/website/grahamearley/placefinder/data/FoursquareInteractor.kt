@@ -23,30 +23,36 @@ class FoursquareInteractor : FoursquareInteractorContract {
                 .create(FoursquareApi::class.java)
     }
 
+    /**
+     * Request a list of places near a location for a given query.
+     */
     override fun requestPlaces(query: String, near: String): Single<List<VenueItem>> {
         val placesSingle = foursquareRetrofit.requestVenues(near = near,
                 query = query, venuePhotos = 1) // 1 => include photos
 
         return placesSingle.map {
-            // !! => Throw NPE if list is null, thus triggering onError of subscriber.
             it.response.groups?.flatMap { it.items.orEmpty() }
         }
     }
 
+    /**
+     * Request a list of tips for a venue.
+     */
     override fun requestVenueTips(venueId: String): Single<List<Tip>> {
         val tipsSingle = foursquareRetrofit.requestVenueTips(venueId = venueId)
 
         return tipsSingle.map {
-            // !! => Throw NPE if list is null, thus triggering onError of subscriber.
             it.response.tips?.items
         }
     }
 
+    /**
+     * Request a list of photos for a venue.
+     */
     override fun requestVenuePhotos(venueId: String): Single<List<String>> {
         val photosSingle = foursquareRetrofit.requestVenuePhotos(venueId = venueId)
 
         return photosSingle.map {
-            // !! => Throw NPE if list is null, thus triggering onError of subscriber.
             it.response.photos?.items?.map { it.getUrl() }
         }
     }
