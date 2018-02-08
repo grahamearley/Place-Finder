@@ -29,7 +29,7 @@ class FoursquareInteractor : FoursquareInteractorContract {
 
         return placesSingle.map {
             // !! => Throw NPE if list is null, thus triggering onError of subscriber.
-            it.response?.groups!!.flatMap { it.items.orEmpty() }
+            it.response.groups?.flatMap { it.items.orEmpty() }
         }
     }
 
@@ -38,7 +38,7 @@ class FoursquareInteractor : FoursquareInteractorContract {
 
         return tipsSingle.map {
             // !! => Throw NPE if list is null, thus triggering onError of subscriber.
-            it.response?.tips!!.items
+            it.response.tips?.items
         }
     }
 
@@ -47,7 +47,7 @@ class FoursquareInteractor : FoursquareInteractorContract {
 
         return photosSingle.map {
             // !! => Throw NPE if list is null, thus triggering onError of subscriber.
-            it.response?.photos?.items!!.map { it.getUrl() }
+            it.response.photos?.items?.map { it.getUrl() }
         }
     }
 
