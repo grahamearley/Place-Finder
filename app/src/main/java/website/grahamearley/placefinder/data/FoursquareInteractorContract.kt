@@ -1,21 +1,17 @@
 package website.grahamearley.placefinder.data
 
-import retrofit2.Response
+import io.reactivex.Single
 import website.grahamearley.placefinder.FoursquareResponse
+import website.grahamearley.placefinder.Tip
+import website.grahamearley.placefinder.VenueItem
 
 /**
  * Contract for interactors with the Foursquare API.
  */
 interface FoursquareInteractorContract {
-    fun getPlacesAsync(query: String, near: String,
-                       onResponse: (response: Response<FoursquareResponse>?) -> Unit,
-                       onFailure: (throwable: Throwable?) -> Unit)
+    fun requestPlaces(query: String, near: String): Single<List<VenueItem>>
 
-    fun getVenueTipsAsync(venueId: String,
-                          onResponse: (response: Response<FoursquareResponse>?) -> Unit,
-                          onFailure: (throwable: Throwable?) -> Unit)
+    fun requestVenueTips(venueId: String): Single<List<Tip>>
 
-    fun getVenuePhotosAsync(venueId: String,
-                          onResponse: (response: Response<FoursquareResponse>?) -> Unit,
-                          onFailure: (throwable: Throwable?) -> Unit)
+    fun requestVenuePhotos(venueId: String): Single<List<String>>
 }

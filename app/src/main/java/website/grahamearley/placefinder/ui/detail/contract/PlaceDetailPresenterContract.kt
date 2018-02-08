@@ -1,5 +1,6 @@
 package website.grahamearley.placefinder.ui.detail.contract
 
+import website.grahamearley.placefinder.Tip
 import website.grahamearley.placefinder.VenueItem
 
 /**
@@ -18,6 +19,10 @@ interface PlaceDetailPresenterContract {
     fun onWebsiteButtonClicked()
 
     fun loadTips(venueId: String)
+    fun onTipsLoaded(tips: List<Tip>)
+    fun onTipsRequestError(throwable: Throwable)
 
     fun loadPhotos(venueId: String)
+    fun onPhotosLoaded(photoUrls: List<String>)
+    fun onPhotosRequestError(throwable: Throwable)
 }

@@ -1,14 +1,15 @@
 package website.grahamearley.placefinder
 
-import junit.framework.Assert.*
+import io.reactivex.schedulers.TestScheduler
+import junit.framework.Assert.assertFalse
+import junit.framework.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
+import org.mockito.Mockito.*
 import website.grahamearley.placefinder.ui.list.PlaceListPresenter
 import website.grahamearley.placefinder.ui.list.contract.PlaceListViewContract
-import org.mockito.Mockito.*
-import website.grahamearley.placefinder.data.FoursquareInteractorContract
 
 /**
  * Unit tests for the venue list activity, testing the contract
@@ -25,14 +26,10 @@ import website.grahamearley.placefinder.data.FoursquareInteractorContract
 class VenueListUnitTests {
 
     private val mockedView = mock(PlaceListViewContract::class.java)
-    private val presenter = PlaceListPresenter(mockedView)
+    private val presenter = PlaceListPresenter(mockedView, observationScheduler = TestScheduler())
 
     private val dummyVenue = Venue(name = "Maya Cuisine")
     private val dummyVenueItem = VenueItem(venue = dummyVenue)
-    private val dummyVenueGroup = VenueGroup(items = listOf(dummyVenueItem))
-    private val dummyVenueGroupEmpty = VenueGroup(items = emptyList())
-    private val dummyResponse = Response(groups = listOf(dummyVenueGroup))
-    private val dummyResponseEmpty = Response(groups = listOf(dummyVenueGroupEmpty))
 
     private var progressBarIsVisible = false
     private var listItemsAreVisible = true
@@ -72,7 +69,7 @@ class VenueListUnitTests {
     }
 
     @Test
-    fun onNewVenueQuery_showsErrorForEmptyNearField() {
+    fun showsErrorForEmptyNearField() {
         statusTextIsVisible = false
         progressBarIsVisible = true
         listItemsAreVisible = true
@@ -91,7 +88,7 @@ class VenueListUnitTests {
     }
 
     @Test
-    fun onNewVenueQuery_showsProgressBarForQueryWithLocation() {
+    fun showsProgressBarForQueryWithLocation() {
         progressBarIsVisible = false
         statusTextIsVisible = true
         listItemsAreVisible = true
@@ -103,22 +100,12 @@ class VenueListUnitTests {
     }
 
     @Test
-    fun onNewVenueQuery_showsErrorMessageOnFailure() {
+    fun showsErrorMessageOnVenueRequestError() {
         statusTextIsVisible = false
         progressBarIsVisible = true
         listItemsAreVisible = true
 
-        val errorInteractor = object: FoursquareInteractorContract {
-            override fun getVenueTipsAsync(venueId: String, onResponse: (response: retrofit2.Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
-            override fun getVenuePhotosAsync(venueId: String, onResponse: (response: retrofit2.Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
-
-            override fun getPlacesAsync(query: String, near: String, onResponse: (response: retrofit2.Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {
-                onFailure(null)
-            }
-        }
-
-        val errorPresenter = PlaceListPresenter(mockedView, errorInteractor)
-        errorPresenter.onNewVenueQuery(query = "thali", near = "pune")
+        presenter.onVenuesRequestError(Exception("Error getting places."))
 
         verify(mockedView).setStatusText(R.string.could_not_load_places_error)
         verify(mockedView).showStatusText()
@@ -129,25 +116,12 @@ class VenueListUnitTests {
     }
 
     @Test
-    fun onNewVenueQuery_showsItemsOnResponse() {
+    fun showsItemsOnNonEmptyResponse() {
         listItemsAreVisible = false
         statusTextIsVisible = true
         progressBarIsVisible = true
 
-        val itemsInteractor = object: FoursquareInteractorContract {
-            override fun getVenueTipsAsync(venueId: String, onResponse: (response: retrofit2.Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
-            override fun getVenuePhotosAsync(venueId: String, onResponse: (response: retrofit2.Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
-
-            override fun getPlacesAsync(query: String, near: String, onResponse: (response: retrofit2.Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {
-                val foursquareResponse = FoursquareResponse(response = dummyResponse)
-                val retrofitResponse = retrofit2.Response.success(foursquareResponse)
-
-                onResponse(retrofitResponse)
-            }
-        }
-
-        val itemPresenter = PlaceListPresenter(mockedView, itemsInteractor)
-        itemPresenter.onNewVenueQuery(query = "burritos", near = "minneapolis")
+        presenter.onVenuesLoaded(listOf(dummyVenueItem))
 
         verify(mockedView).setListItems(Mockito.anyList())
         verify(mockedView).showListItems()
@@ -158,25 +132,12 @@ class VenueListUnitTests {
     }
 
     @Test
-    fun onNewVenueQuery_showEmptyStatusTextForEmptyResponse() {
+    fun showsEmptyStatusTextForEmptyResponse() {
         statusTextIsVisible = false
         listItemsAreVisible = true
         progressBarIsVisible = true
 
-        val emptyInteractor = object: FoursquareInteractorContract {
-            override fun getVenueTipsAsync(venueId: String, onResponse: (response: retrofit2.Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
-            override fun getVenuePhotosAsync(venueId: String, onResponse: (response: retrofit2.Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {}
-
-            override fun getPlacesAsync(query: String, near: String, onResponse: (response: retrofit2.Response<FoursquareResponse>?) -> Unit, onFailure: (throwable: Throwable?) -> Unit) {
-                val foursquareResponse = FoursquareResponse(response = dummyResponseEmpty)
-                val retrofitResponse = retrofit2.Response.success(foursquareResponse)
-
-                onResponse(retrofitResponse)
-            }
-        }
-
-        val emptyListPresenter = PlaceListPresenter(mockedView, emptyInteractor)
-        emptyListPresenter.onNewVenueQuery(query = "coffee", near = "san francisco")
+        presenter.onVenuesLoaded(emptyList())
 
         verify(mockedView).setStatusText(R.string.no_places_found)
         verify(mockedView).showStatusText()

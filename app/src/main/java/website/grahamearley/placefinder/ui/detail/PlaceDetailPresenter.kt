@@ -1,5 +1,9 @@
 package website.grahamearley.placefinder.ui.detail
 
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
+import website.grahamearley.placefinder.Tip
 import website.grahamearley.placefinder.VenueItem
 import website.grahamearley.placefinder.data.FoursquareInteractor
 import website.grahamearley.placefinder.data.FoursquareInteractorContract
@@ -10,8 +14,8 @@ import website.grahamearley.placefinder.ui.detail.contract.PlaceDetailViewContra
  * Presenter implementation for the Venue detail view.
  */
 class PlaceDetailPresenter(override val view: PlaceDetailViewContract,
-                           private val interactor: FoursquareInteractorContract = FoursquareInteractor())
-    : PlaceDetailPresenterContract {
+                           private val interactor: FoursquareInteractorContract
+                                = FoursquareInteractor()) : PlaceDetailPresenterContract {
 
     override var venueItem: VenueItem? = null
         set(item) {
@@ -104,34 +108,48 @@ class PlaceDetailPresenter(override val view: PlaceDetailViewContract,
     }
 
     override fun loadTips(venueId: String) {
-        interactor.getVenueTipsAsync(venueId, onResponse = { response ->
-                val tips = response?.body()?.response?.tips?.items
+        interactor.requestVenueTips(venueId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                    onSuccess = this::onTipsLoaded,
+                    onError = this::onTipsRequestError
+                )
+    }
 
-                if (tips != null && tips.isNotEmpty()) {
-                    view.setVenueTips(tips)
-                    view.showVenueTips()
-                } else {
-                    view.hideVenueTips()
-                }
+    override fun onTipsLoaded(tips: List<Tip>) {
+        if (tips.isNotEmpty()) {
+            view.setVenueTips(tips)
+            view.showVenueTips()
+        } else {
+            view.hideVenueTips()
+        }
+    }
 
-            }, onFailure = {
-                view.hideVenueTips()
-            })
+    override fun onTipsRequestError(throwable: Throwable) {
+        view.hideVenueTips()
     }
 
     override fun loadPhotos(venueId: String) {
-        interactor.getVenuePhotosAsync(venueId, onResponse = { response ->
-                val photoUrls = response?.body()?.response?.photos?.items?.map { it.getUrl() }
+        interactor.requestVenuePhotos(venueId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                    onSuccess = this::onPhotosLoaded,
+                    onError = this::onPhotosRequestError
+                )
+    }
 
-                if (photoUrls != null && photoUrls.isNotEmpty()) {
-                    view.setVenueImages(photoUrls)
-                    view.showVenueImages()
-                } else {
-                    view.hideVenueImages()
-                }
+    override fun onPhotosLoaded(photoUrls: List<String>) {
+        if (photoUrls.isNotEmpty()) {
+            view.setVenueImages(photoUrls)
+            view.showVenueImages()
+        } else {
+            view.hideVenueImages()
+        }
+    }
 
-            }, onFailure = {
-                view.hideVenueImages()
-            })
+    override fun onPhotosRequestError(throwable: Throwable) {
+        view.hideVenueImages()
     }
 }

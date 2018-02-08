@@ -1,5 +1,10 @@
 package website.grahamearley.placefinder.ui.list
 
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
+import website.grahamearley.placefinder.FoursquareResponse
 import website.grahamearley.placefinder.R
 import website.grahamearley.placefinder.VenueItem
 import website.grahamearley.placefinder.data.FoursquareInteractor
@@ -9,7 +14,8 @@ import website.grahamearley.placefinder.ui.list.contract.PlaceListViewContract
 
 class PlaceListPresenter(override val view: PlaceListViewContract,
                          override val interactor: FoursquareInteractorContract
-                            = FoursquareInteractor()) : PlaceListPresenterContract {
+                            = FoursquareInteractor(),
+                         private val observationScheduler: Scheduler = AndroidSchedulers.mainThread()) : PlaceListPresenterContract {
 
     override fun onNewVenueQuery(query: String, near: String) {
         view.setSearchBarGravityToBottom()
@@ -23,33 +29,36 @@ class PlaceListPresenter(override val view: PlaceListViewContract,
             view.showStatusText()
         } else {
             view.showProgressBar()
-
-            interactor.getPlacesAsync(query, near,
-                    onResponse = { response ->
-                        val venues = response?.body()?.response?.groups
-                                            ?.flatMap { it.items.orEmpty() }
-                        updateVenuesList(venues)
-                    }, onFailure = { _ ->
-                        showErrorStatus()
-                    })
+            interactor.requestPlaces(query, near)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(observationScheduler)
+                    .subscribeBy(
+                            onSuccess = this::onVenuesLoaded,
+                            onError = this::onVenuesRequestError
+                    )
         }
     }
 
-    override fun onVenueItemClicked(venueItem: VenueItem) {
-        view.launchVenueDetailView(venueItem)
-    }
-
-    private fun updateVenuesList(venues: List<VenueItem>?) {
+    override fun onVenuesLoaded(venues: List<VenueItem>) {
         view.hideListItems()
         view.hideProgressBar()
 
-        if (venues == null || venues.isEmpty()) {
+        if (venues.isEmpty()) {
             view.setStatusText(R.string.no_places_found)
             view.showStatusText()
         } else {
             view.setListItems(venues)
             view.showListItems()
+            view.hideStatusText()
         }
+    }
+
+    override fun onVenuesRequestError(throwable: Throwable) {
+        showErrorStatus()
+    }
+
+    override fun onVenueItemClicked(venueItem: VenueItem) {
+        view.launchVenueDetailView(venueItem)
     }
 
     private fun showErrorStatus() {
@@ -60,3 +69,4 @@ class PlaceListPresenter(override val view: PlaceListViewContract,
         view.showStatusText()
     }
 }
+

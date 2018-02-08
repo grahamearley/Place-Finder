@@ -9,18 +9,16 @@ import kotlinx.android.parcel.Parcelize
  */
 
 data class FoursquareResponse(
-		val meta: Meta? = null,
-		val response: Response? = null
+		val meta: Meta,
+		val response: Response
 )
 
 data class Meta(
-		val code: Int? = null,
-		val requestId: String? = null
+		val code: Int,
+		val requestId: String
 )
 
 data class Response(
-		val headerFullLocation: String? = null,
-		val headerLocationGranularity: String? = null,
 		val groups: List<VenueGroup>? = null,
         val tips: Tips? = null,
         val photos: Photos? = null
