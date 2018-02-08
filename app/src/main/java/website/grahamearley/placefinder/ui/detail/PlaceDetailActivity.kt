@@ -94,7 +94,7 @@ class PlaceDetailActivity : PlaceDetailViewContract, AppCompatActivity() {
     override fun hideVenueImages() = photoRecyclerView.hide()
 
     override fun setVenueTips(tips: List<Tip>) {
-        tipAdapter.setTips(tips)
+        tipAdapter.tips = tips
     }
 
     override fun showVenueTips() {

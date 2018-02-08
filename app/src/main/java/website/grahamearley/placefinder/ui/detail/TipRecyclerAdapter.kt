@@ -12,12 +12,11 @@ import java.util.*
  */
 class TipRecyclerAdapter : RecyclerView.Adapter<TipViewHolder>() {
 
-    private var tips: List<Tip> = emptyList()
-
-    fun setTips(tips: List<Tip>) {
-        this.tips = tips
-        notifyDataSetChanged()
-    }
+    var tips: List<Tip> = emptyList()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun getItemCount(): Int = tips.size
 
