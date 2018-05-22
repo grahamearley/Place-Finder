@@ -2,6 +2,7 @@
 A demo Android app for finding places using the Foursquare API.
 
 [![CircleCI](https://img.shields.io/circleci/project/github/RedSparr0w/node-csgo-parser.svg?style=flat-square)]()
+[![Badge Count](https://img.shields.io/badge/badge%20count-2-8903ba.svg?style=flat-square)]()
 
 <img src="https://i.imgur.com/6ISi1bY.png" width="200px"> <img src="https://i.imgur.com/GBMVDIL.png" width="200px"> <img src="https://i.imgur.com/M41JASb.png" width="200px">
 
